@@ -53,3 +53,6 @@ Route::get('/aviso-privacidad', 'WebController@index')->name('aviso-privacidad')
 Route::get('/ayuda', 'WebController@index')->name('ayuda');
 Route::get('/zona-publicitaria', 'WebController@index')->name('zona');
 Route::get('/zona-publicitaria/{id}', 'WebController@index')->name('zona-show');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

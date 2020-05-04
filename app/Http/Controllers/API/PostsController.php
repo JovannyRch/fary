@@ -6,6 +6,7 @@ use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
 class PostsController extends Controller
@@ -64,7 +65,7 @@ class PostsController extends Controller
         $post->national = $request->national; 
         
         $post->details = $request->details; 
-        $post->user_id = 1; 
+        $post->user_id = Auth::user()->id; 
         
         /* $request->validate([
             'image'=> 'required|mimes:jpeg,bmp,png|max:10240'

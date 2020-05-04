@@ -37,4 +37,15 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+    public function redirectTo(){
+        $rol = Auth::user()->rol;
+        switch ($rol) {
+            case 'admin':
+                return '/dashboard';
+            case 'owner':
+                return'/owner';
+            default:
+                return '/';
+        }
+    }
 }

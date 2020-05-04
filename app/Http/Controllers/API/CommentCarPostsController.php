@@ -6,7 +6,7 @@ use App\CommentCarPost;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class CommentCarPosts extends Controller
+class CommentCarPostsController extends Controller
 {
     public function store(Request $request){
         $comment = new CommentCarPost();

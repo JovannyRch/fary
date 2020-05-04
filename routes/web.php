@@ -30,7 +30,7 @@ Route::get('/post/{id}', 'WebController@showPost')->name('showPost');
 //CARS
 Route::get('/cars', 'WebController@index')->name('cars');
 Route::get('/cars/create', 'WebController@createCarPost')->name('newcar');
-Route::post('/cars/save', 'api\CarsController@store')->name('cars.save');
+Route::post('/cars/save', 'API\CarsController@store')->name('cars.save');
 
 
 //Admin

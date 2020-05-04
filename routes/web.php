@@ -23,7 +23,7 @@ Route::get('/upload/image', 'WebController@uploadImage')->name('uploadImage');
 
 
 Route::get('/posts/create', 'WebController@createPost')->name('createpost');
-Route::post('/posts/save', 'api\PostsController@create')->name('post.save');
+Route::post('/posts/save', 'Api\PostsController@create')->name('post.save');
 Route::get('/post/{id}', 'WebController@showPost')->name('showPost');
 
 

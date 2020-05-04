@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-10">
-                <h1> <i class="fa fas-settings"> </i> Red de Autopartes Usadas Fary </h1>
+                <h1 class="text-white"> <i class="fa fas-settings"> </i> Red de Autopartes Usadas Fary </h1>
             </div>
             <div class="col-md-2">
 

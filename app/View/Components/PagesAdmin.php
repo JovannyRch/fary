@@ -3,6 +3,7 @@
 namespace App\View\Components;
 
 use Illuminate\View\Component;
+use Illuminate\Support\Facades\DB;
 
 class PagesAdmin extends Component
 {
@@ -23,6 +24,13 @@ class PagesAdmin extends Component
      */
     public function render()
     {
-        return view('components.pages-admin');
+        $data = [];
+        $data['users'] = DB::table('users')->count();
+        $data['negocios'] = DB::table('negocios')->count();
+        $data['tipos'] = DB::table('tipos')->count();
+        $data['posts'] = DB::table('posts')->count();
+        $data['cars'] = DB::table('cars')->count();
+        $data['ads'] = DB::table('ads')->count();
+        return view('components.pages-admin',$data);
     }
 }

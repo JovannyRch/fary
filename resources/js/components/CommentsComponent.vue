@@ -1,0 +1,132 @@
+<template>
+  <div class="mt-2">
+    <form @submit.prevent="sendComment()">
+      <div class="row">
+        <div class="col-12 col-md-10 pr-2" v-if="user_id">
+          <div class="form-group">
+            <input
+              type="text"
+              v-model="commentInput"
+              class="form-control"
+              placeholder="Escribe aquí tu comentario"
+              aria-describedby="helpId"
+            />
+          </div>
+        </div>
+        <div class="col-12 col-md-2" v-if="user_id">
+          <button type="submit" name id class="btn btn-secondary text-white">
+            <i class="fa fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+    <div class="mt-1 mb-1" v-if="comments.length">
+      <small>
+        <b>Comentarios</b>
+      </small>
+    </div>
+    <div v-if="comments.length">
+      <div v-for="c in comments" :key="c.id">
+        <div class="row comment">
+          <div class="col-8">
+            <small>
+              <router-link :to="'/user/'+c.user_id">{{c.username}}</router-link>
+            </small>
+          </div>
+          <div class="col-4">
+            <DateComponent :date="c.date"></DateComponent>
+            <span v-if="c.user_id == user_id">
+              <i class="fa fa-trash" style="zomm: 0.7" @click="deleteComment(c.id)"></i>
+            </span>
+          </div>
+          <div class="col-12 pl-3">
+            <p>
+              <small>{{c.content}}</small>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import DateComponent from "./utils/DateComponent.vue";
+export default {
+  components: {
+    DateComponent
+  },
+  props: ["post_id"],
+  created() {
+    this.loadComments();
+  },
+  data() {
+    return {
+      comments: [],
+      commentInput: "",
+      user_id: document
+        .querySelector('meta[name="user_id"]')
+        .getAttribute("content")
+    };
+  },
+  methods: {
+    loadComments: function() {
+      fetch(`/api/posts/${this.post_id}/comments`)
+        .then(response => response.json())
+        .then(json => {
+          this.comments = json.data;
+        });
+    },
+    sendComment() {
+      if (!this.commentInput) return;
+      let data = {
+        content: this.commentInput,
+        post_id: this.post_id,
+        user_id: this.user_id
+      };
+      fetch("/api/comments", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }).then(response => {
+        if (response.status == 200) {
+          this.loadComments();
+          this.commentInput = "";
+        } else {
+          alert("Ocurrió un erro al publicar el comentario");
+        }
+      });
+    },
+    deleteComment(comment_id) {
+      fetch("/api/comments/" + comment_id, {
+        method: "DELETE"
+      }).then(response => {
+        if (response.status == 200) {
+          alert("Eliminado correctamente");
+          this.loadComments();
+        } else {
+          alert("Ocurrió un error al eliminar");
+        }
+      });
+    }
+  }
+};
+</script>
+
+<style>
+.separator {
+  height: 2px;
+  background-color: bisque;
+  width: 60%;
+  margin: 0 auto;
+}
+
+.comment {
+  background-color: rgb(251, 251, 251);
+  margin-bottom: 3px;
+  border-radius: 10px;
+  margin-right: 5px;
+}
+</style>

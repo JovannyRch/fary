@@ -5,4 +5,88 @@
 @import 'variables';
 
 // Bootstrap
+$secondary: #F3941A;
 @import '~bootstrap/scss/bootstrap';
+@import "~vuetify/dist/vuetify.min.css";
+
+@import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
+@import '~@fortawesome/fontawesome-free/scss/solid.scss';
+
+.dark{
+	background-color: #333333;
+	color: white;
+}
+
+#nav{
+    border-bottom: 1px solid #d3d1d1;
+}
+
+.loader {
+    width: 75vw;
+    margin: 0 auto;
+}
+
+.car {
+	&__body {
+		animation: shake 0.2s ease-in-out infinite alternate;
+	}
+	
+	&__line {
+		transform-origin: center right;
+		stroke-dasharray: 22;
+		animation: line 0.8s ease-in-out infinite;
+		animation-fill-mode: both;
+		
+		&--top {
+			animation-delay: 0s;
+		}
+		
+		&--middle {
+			animation-delay: 0.2s;
+		}
+		
+		&--bottom {
+			animation-delay: 0.4s;
+		}
+	}
+}
+
+@keyframes shake {
+	0% {
+		transform: translateY(-1%);
+	}
+	100% {
+		transform: translateY(3%);
+	}
+}
+
+@keyframes line {
+	0% {
+		stroke-dashoffset: 22;
+	}
+	
+	25% {
+		stroke-dashoffset: 22;
+	}
+	
+	50% {
+		stroke-dashoffset: 0;
+	}
+	
+	51% {
+		stroke-dashoffset: 0;
+	}
+	
+	80% {
+		stroke-dashoffset: -22;
+	}
+	
+	100% {
+		stroke-dashoffset: -22;
+	}
+}
+
+    .left-panel{
+		background-color: rgb(221, 218, 215);
+		color: white;
+    }

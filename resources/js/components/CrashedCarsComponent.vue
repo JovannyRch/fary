@@ -17,7 +17,7 @@
               </a>
             </div>
 
-            <div class="col-m12">
+            <div class="col-md-12">
               <div class="posts-container" v-if="!isLoading">
                 <br />
 

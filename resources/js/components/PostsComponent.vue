@@ -11,38 +11,10 @@
         </a>
       </div>
 
-      <div class="col-m12">
+      <div class="col-md-12">
         <div class="posts-container" v-if="!isLoading">
           <br />
-          <!-- <nav>
-            <ul class="pagination justify-content-center">
-              <li :class="prevPageUrl? 'page-item ':'page-item disabled'">
-                <a class="page-link" @click="loadData(prevPageUrl)" aria-label="Previous">
-                  <span aria-hidden="true">&laquo;</span>
-                  <span class="sr-only">Previous</span>
-                </a>
-              </li>
-              <li
-                v-for="(p,index) in ((current_page +3 < total)? current_page+3:total) "
-                :key="index"
-                :class="currentPage == p? 'page-item active':'page-item'"
-              >
-                <a class="page-link" @click="loadData(path+'/?page='+p)">{{p}}</a>
-              </li>
-              <li :class="nextPageUrl? 'page-item':'page-item disabled'">
-                <a class="page-link" @click="loadData(nextPageUrl)" aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-                  <span class="sr-only">Next</span>
-                </a>
-              </li>
-            </ul>
-          </nav>-->
 
-          <!-- div class="container-tools">
-            <span>Interesting</span>
-            <span>Featured</span>
-            <span>Hot</span>
-          </!-->
           <PostComponent
             v-for="p in posts"
             :piece="p.piece"

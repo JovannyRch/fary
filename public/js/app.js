@@ -3148,34 +3148,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -43132,7 +43104,7 @@ var render = function() {
               _vm._v(" "),
               _vm._m(1),
               _vm._v(" "),
-              _c("div", { staticClass: "col-m12" }, [
+              _c("div", { staticClass: "col-md-12" }, [
                 !_vm.isLoading
                   ? _c(
                       "div",
@@ -43360,7 +43332,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "post" }, [
+  return _c("div", { staticClass: "post w-100" }, [
     _c("div", { staticClass: "post-data" }, [
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-8 pl-2" }, [
@@ -43942,7 +43914,7 @@ var render = function() {
         _vm._v(" "),
         _vm._m(1),
         _vm._v(" "),
-        _c("div", { staticClass: "col-m12" }, [
+        _c("div", { staticClass: "col-md-12" }, [
           !_vm.isLoading
             ? _c(
                 "div",

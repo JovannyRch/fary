@@ -1,5 +1,5 @@
 <template>
-  <div class="post">
+  <div class="post w-100">
     <div class="post-data">
       <div class="row">
         <div class="col-8 pl-2">

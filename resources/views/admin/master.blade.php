@@ -19,7 +19,7 @@
 <body>
     <div  id="app">
 
-                <x-headeradmin />
+                <x-HeaderAdmin />
                
                 <div class="container-fluid" style="min-height: 100vh">
                     

@@ -30,7 +30,7 @@
                                             
                                     </video>
                                 @else
-                                    <img src="{{ $ad->url }}" class="img-thumbnail"  alt="Anuncio de {{ $ad->negocio }}" >
+                                    <img src="{{ $ad->url }}" class="img-thumbnail"   >
                                 @endif
                             </td>
                             <td>

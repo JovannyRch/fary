@@ -7,6 +7,7 @@
     <title>Autopartes Fary</title>
    {{--  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet"> --}}
     <link rel="stylesheet" href="{{asset("css/app.css")}}">
+    <link rel="icon" href="/images/icon.png">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @if (Auth::user())
         <meta name="user_id" content="{{ Auth::user()->id }}">

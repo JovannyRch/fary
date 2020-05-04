@@ -16,7 +16,7 @@
           <br />
 
           <PostComponent
-            v-for="p in posts"
+            v-for="(p,index) in posts"
             :piece="p.piece"
             :date="p.created_at"
             :user="p.user_id"
@@ -29,6 +29,7 @@
             :username="p.username"
             :post_user_id="p.user_id"
             :key="p.id"
+            @updateData="deletePost(index)"
           />
         </div>
         <div v-else>
@@ -81,6 +82,10 @@ export default {
           this.total = Math.ceil(data.total / data.per_page);
           this.path = data.path;
         });
+    },
+
+    deletePost(index) {
+      this.posts.splice(index, 1);
     }
   }
 };

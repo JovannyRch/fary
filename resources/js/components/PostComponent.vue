@@ -134,6 +134,7 @@ export default {
         .getAttribute("content")
     };
   },
+
   methods: {
     isValidateImg(img) {},
     deletePost() {
@@ -142,7 +143,7 @@ export default {
       }).then(response => {
         if (response.status == 200) {
           //Éxito al eliminar el post
-          alert("Eliminado correctamente");
+          this.$emit("updateData", "");
         } else {
           //Error al eliminar el post
         }

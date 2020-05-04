@@ -119,4 +119,10 @@ class PostController extends Controller
             File::delete($path);
         }
     }
+
+
+    public function deleteAll(){
+        Post::truncate();
+        return back()->with('msg','Se han eliminado todas las publicaciones');
+    }
 }

@@ -2847,12 +2847,14 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     isValidateImg: function isValidateImg(img) {},
     deletePost: function deletePost() {
+      var _this = this;
+
       fetch("/api/posts/" + this.id, {
         method: "delete"
       }).then(function (response) {
         if (response.status == 200) {
           //Éxito al eliminar el post
-          alert("Eliminado correctamente");
+          _this.$emit("updateData", "");
         } else {//Error al eliminar el post
         }
 
@@ -3148,6 +3150,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3192,6 +3195,9 @@ __webpack_require__.r(__webpack_exports__);
         _this.total = Math.ceil(data.total / data.per_page);
         _this.path = data.path;
       });
+    },
+    deletePost: function deletePost(index) {
+      this.posts.splice(index, 1);
     }
   }
 });
@@ -43922,7 +43928,7 @@ var render = function() {
                 [
                   _c("br"),
                   _vm._v(" "),
-                  _vm._l(_vm.posts, function(p) {
+                  _vm._l(_vm.posts, function(p, index) {
                     return _c("PostComponent", {
                       key: p.id,
                       attrs: {
@@ -43937,6 +43943,11 @@ var render = function() {
                         id: p.id,
                         username: p.username,
                         post_user_id: p.user_id
+                      },
+                      on: {
+                        updateData: function($event) {
+                          return _vm.deletePost(index)
+                        }
                       }
                     })
                   })

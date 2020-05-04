@@ -38,12 +38,12 @@ Route::get('/dashboard','AdminController@dashboard')->middleware('admin')->name(
 Route::resource('comment', 'CommentsController')->middleware("admin");
 Route::delete('commentCar/{id}', 'CommentsController@destroyCarComment')->middleware("admin")->name('comment.car.destroy');
 Route::resource('commentcar', 'CommentsController')->middleware("admin");
-Route::resource('admin/post', 'dashboard\PostController')->middleware("admin");
-Route::resource('admin/user', 'dashboard\UserController')->middleware('admin');
-Route::resource('admin/car', 'dashboard\CarController')->middleware('admin');
-Route::resource('admin/ads', 'dashboard\AdsController')->middleware('admin');
-Route::resource('admin/negocios', 'dashboard\NegociosController')->middleware('admin');
-Route::resource('admin/tipos', 'dashboard\TiposController')->middleware('admin');
+Route::resource('admin/post', 'Dashboard\PostController')->middleware("admin");
+Route::resource('admin/user', 'Dashboard\UserController')->middleware('admin');
+Route::resource('admin/car', 'Dashboard\CarController')->middleware('admin');
+Route::resource('admin/ads', 'Dashboard\AdsController')->middleware('admin');
+Route::resource('admin/negocios', 'Dashboard\NegociosController')->middleware('admin');
+Route::resource('admin/tipos', 'Dashboard\TiposController')->middleware('admin');
 
 
 //Informativos

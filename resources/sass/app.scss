@@ -102,3 +102,11 @@ $success: #5a9146;
 		right: 0;  
 		margin: auto;
 	}
+
+	a,
+	a:hover,
+	a:focus,
+	a:active {
+	  text-decoration: none;
+	  color: inherit;
+	}

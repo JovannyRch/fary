@@ -2,7 +2,7 @@
     @include('admin.partials.validation-error')
     @csrf
     <div class="form-group ">
-        <label for="name">Nombre</label>
+        <label for="name"><b>Nombre</b></label>
         <input
             type="text"
             class="form-control"
@@ -19,7 +19,7 @@
     </div>
 
     <div class="form-group">
-        <label for="name">Teléfono</label>
+        <label for="name"><b>Teléfono</b></label>
         <input
             type="text"
             class="form-control"
@@ -37,7 +37,7 @@
 
 
     <div class="form-group">
-        <label for="name">Dirección</label>
+        <label for="name"><b>Dirección</b></label>
         <input
             type="text"
             class="form-control"
@@ -54,7 +54,7 @@
     </div>
 
     <div class="form-group">
-        <label for="email">Correo</label>
+        <label for="email"><b>Correo</b></label>
         <input
             type="email"
             class="form-control"
@@ -71,7 +71,7 @@
     </div>
 
     <div class="form-group">
-        <label for="rol">Seleccionar tipo de usuario</label>
+        <label for="rol"><b>Seleccionar tipo de usuario</b></label>
         <select class="custom-select" name="rol" id="rol">
             <option value="normal" @if ($user->rol == 'normal')selected @endif> Usuario normal </option>
             <option value="owner" @if ($user->rol == 'owner')selected @endif>Dueño de negocios</option>
@@ -81,7 +81,7 @@
 
    @if ($pass)
     <div class="form-group">
-        <label for="password">Contraseña</label>
+        <label for="password"><b>Contraseña</b></label>
         <input
             type="password"
             class="form-control"

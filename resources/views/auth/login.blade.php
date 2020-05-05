@@ -6,9 +6,9 @@
     
     <div class="row justify-content-center">
         @if (session('message'))
-           <div class="col-12">
-            <div class="alert alert-warning ">
-                {{session('message')}}
+           <div class="col-8 text-center">
+            <div class="alert alert-success ">
+                <b>{{session('message')}}</b>
             </div>
            </div>
         @endif

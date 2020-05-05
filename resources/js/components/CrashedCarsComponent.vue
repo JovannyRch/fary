@@ -1,19 +1,19 @@
 <template>
   <div class="mt-4 main">
     <div class="row">
-      <div class="col-md-2" id="s-1">
+      <!--  <div class="col-md-2" id="s-1">
         <AdsComponent />
-      </div>
-      <div class="col-md-8" id="s-2">
+      </div>-->
+      <div class="col-md-8 offset-md-1" id="s-2">
         <div class="container" id="container-post">
           <div class="row">
             <div class="col-md-8 col-12">
               <h1 class="title-page">Autos chocados</h1>
             </div>
             <div class="col-md-4 col-12">
-              <a class="btn btn-secondary text-white" href="/cars/create">
+              <a class="btn btn-success text-white float-right" href="/cars/create">
                 <i class="fa fa-plus"></i>
-                Hacer una publicación
+                Crear una publicación
               </a>
             </div>
 

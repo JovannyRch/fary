@@ -2,12 +2,12 @@
   <div class="container" id="container-post">
     <div class="row">
       <div class="col-md-8 col-12">
-        <h1 class="title-page">Autopartes</h1>
+        <h1 class="title-page">Autos chocados</h1>
       </div>
-      <div class="col-md-4 col-12 float-right">
-        <a class="btn btn-secondary text-white" href="/posts/create">
+      <div class="col-md-4 col-12">
+        <a class="btn btn-success text-white float-right" href="/cars/create">
           <i class="fa fa-plus"></i>
-          Hacer una publicación
+          Crear una publicación
         </a>
       </div>
 

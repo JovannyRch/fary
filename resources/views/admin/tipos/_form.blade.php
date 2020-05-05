@@ -2,7 +2,7 @@
     @include('admin.partials.validation-error')
     @csrf
     <div class="form-group ">
-        <label for="name">Nombre del tipo de negocio</label>
+        <label for="name"><b>Nombre del tipo de negocio</b></label>
         <input
             type="text"
             class="form-control"

@@ -116,24 +116,7 @@ export default {
 </script>
 
 <style>
-a:link {
-  color: #f3941a;
-}
 
-/* visited link */
-a:visited {
-  color: #f3941a;
-}
-
-/* mouse over link */
-a:hover {
-  color: #f3941a;
-}
-
-/* selected link */
-a:active {
-  color: #f3941a;
-}
 
 .post-data {
   font-size: 1.2em;

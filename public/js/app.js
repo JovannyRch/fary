@@ -2638,9 +2638,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 
 
@@ -8109,7 +8106,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\na:link {\n  color: #f3941a;\n}\n\n/* visited link */\na:visited {\n  color: #f3941a;\n}\n\n/* mouse over link */\na:hover {\n  color: #f3941a;\n}\n\n/* selected link */\na:active {\n  color: #f3941a;\n}\n.post-data {\n  font-size: 1.2em;\n}\n.separator {\n  height: 1px;\n  border-radius: 10px;\n  background-color: gainsboro;\n}\n.post-detail {\n  color: #a7a7a7;\n}\n.post-user {\n}\n.post-info {\n  margin-top: 1%;\n  margin-bottom: 1%;\n  padding: 1%;\n}\n.topics-container {\n  margin-top: 1%;\n  margin-bottom: 1%;\n  padding: 1%;\n}\n.topic {\n  background-color: #e7f3ff;\n  margin-right: 4px;\n  color: #427fc2;\n  font-size: 0.7em;\n  padding: 2%;\n  padding-bottom: 0.7%;\n  padding-top: 0.7%;\n  border-radius: 5px;\n  font-weight: 600;\n}\n.grid {\n  display: grid;\n  grid-template-columns: repeat(5, 1fr);\n  grid-template-rows: 1fr;\n  grid-column-gap: 0px;\n  grid-row-gap: 0px;\n}\n.grid-1 {\n  grid-area: 1 / 1 / 2 / 4;\n}\n.grid-2 {\n  grid-area: 1 / 4 / 2 / 6;\n}\n.details {\n  width: 100%;\n}\n.details p {\n  width: 100%;\n}\n.main-row {\n  width: inherit;\n}\n", ""]);
+exports.push([module.i, "\n.post-data {\n  font-size: 1.2em;\n}\n.separator {\n  height: 1px;\n  border-radius: 10px;\n  background-color: gainsboro;\n}\n.post-detail {\n  color: #a7a7a7;\n}\n.post-user {\n}\n.post-info {\n  margin-top: 1%;\n  margin-bottom: 1%;\n  padding: 1%;\n}\n.topics-container {\n  margin-top: 1%;\n  margin-bottom: 1%;\n  padding: 1%;\n}\n.topic {\n  background-color: #e7f3ff;\n  margin-right: 4px;\n  color: #427fc2;\n  font-size: 0.7em;\n  padding: 2%;\n  padding-bottom: 0.7%;\n  padding-top: 0.7%;\n  border-radius: 5px;\n  font-weight: 600;\n}\n.grid {\n  display: grid;\n  grid-template-columns: repeat(5, 1fr);\n  grid-template-rows: 1fr;\n  grid-column-gap: 0px;\n  grid-row-gap: 0px;\n}\n.grid-1 {\n  grid-area: 1 / 1 / 2 / 4;\n}\n.grid-2 {\n  grid-area: 1 / 4 / 2 / 6;\n}\n.details {\n  width: 100%;\n}\n.details p {\n  width: 100%;\n}\n.main-row {\n  width: inherit;\n}\n", ""]);
 
 // exports
 
@@ -8204,7 +8201,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\na:link {\n  color: #f3941a;\n}\n\n/* visited link */\na:visited {\n  color: #f3941a;\n}\n\n/* mouse over link */\na:hover {\n  color: #f3941a;\n}\n\n/* selected link */\na:active {\n  color: #f3941a;\n}\n.post-data {\n  font-size: 1.2em;\n}\n.separator {\n  height: 1px;\n  border-radius: 10px;\n  background-color: gainsboro;\n}\n.post {\n  padding: 3%;\n  background-color: white;\n  border-radius: 10px;\n  margin-bottom: 3%;\n}\n.post-detail {\n  color: #a7a7a7;\n}\n.post-user {\n}\n.post-info {\n  margin-top: 1%;\n  margin-bottom: 1%;\n  padding: 1%;\n}\n.topics-container {\n  margin-top: 1%;\n  margin-bottom: 1%;\n  padding: 1%;\n}\n.topic {\n  background-color: #e7f3ff;\n  margin-right: 4px;\n  color: #427fc2;\n  font-size: 0.7em;\n  padding: 2%;\n  padding-bottom: 0.7%;\n  padding-top: 0.7%;\n  border-radius: 5px;\n  font-weight: 600;\n}\n.grid {\n  display: grid;\n  grid-template-columns: repeat(5, 1fr);\n  grid-template-rows: 1fr;\n  grid-column-gap: 0px;\n  grid-row-gap: 0px;\n}\n.grid-1 {\n  grid-area: 1 / 1 / 2 / 4;\n}\n.grid-2 {\n  grid-area: 1 / 4 / 2 / 6;\n}\n.details {\n  width: 100%;\n}\n.details p {\n  width: 100%;\n}\n.main-row {\n  width: inherit;\n}\n", ""]);
+exports.push([module.i, "\n.post-data {\n  font-size: 1.2em;\n}\n.separator {\n  height: 1px;\n  border-radius: 10px;\n  background-color: gainsboro;\n}\n.post {\n  padding: 3%;\n  background-color: white;\n  border-radius: 10px;\n  margin-bottom: 3%;\n}\n.post-detail {\n  color: #a7a7a7;\n}\n.post-user {\n}\n.post-info {\n  margin-top: 1%;\n  margin-bottom: 1%;\n  padding: 1%;\n}\n.topics-container {\n  margin-top: 1%;\n  margin-bottom: 1%;\n  padding: 1%;\n}\n.topic {\n  background-color: #e7f3ff;\n  margin-right: 4px;\n  color: #427fc2;\n  font-size: 0.7em;\n  padding: 2%;\n  padding-bottom: 0.7%;\n  padding-top: 0.7%;\n  border-radius: 5px;\n  font-weight: 600;\n}\n.grid {\n  display: grid;\n  grid-template-columns: repeat(5, 1fr);\n  grid-template-rows: 1fr;\n  grid-column-gap: 0px;\n  grid-row-gap: 0px;\n}\n.grid-1 {\n  grid-area: 1 / 1 / 2 / 4;\n}\n.grid-2 {\n  grid-area: 1 / 4 / 2 / 6;\n}\n.details {\n  width: 100%;\n}\n.details p {\n  width: 100%;\n}\n.main-row {\n  width: inherit;\n}\n", ""]);
 
 // exports
 
@@ -43093,14 +43090,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "mt-4 main" }, [
     _c("div", { staticClass: "row" }, [
-      _c(
-        "div",
-        { staticClass: "col-md-2", attrs: { id: "s-1" } },
-        [_c("AdsComponent")],
-        1
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-8", attrs: { id: "s-2" } }, [
+      _c("div", { staticClass: "col-md-8 offset-md-1", attrs: { id: "s-2" } }, [
         _c(
           "div",
           { staticClass: "container", attrs: { id: "container-post" } },
@@ -43167,12 +43157,12 @@ var staticRenderFns = [
       _c(
         "a",
         {
-          staticClass: "btn btn-secondary text-white",
+          staticClass: "btn btn-success text-white float-right",
           attrs: { href: "/cars/create" }
         },
         [
           _c("i", { staticClass: "fa fa-plus" }),
-          _vm._v("\n              Hacer una publicación\n            ")
+          _vm._v("\n              Crear una publicación\n            ")
         ]
       )
     ])
@@ -43203,14 +43193,7 @@ var render = function() {
     _c("div", { staticClass: "row" }, [
       _c(
         "div",
-        { staticClass: "col-md-2", attrs: { id: "s-1" } },
-        [_c("AdsComponent")],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-md-8", attrs: { id: "s-2" } },
+        { staticClass: "col-md-8 offset-md-1", attrs: { id: "s-2" } },
         [_c("PostsComponent")],
         1
       ),
@@ -43966,23 +43949,23 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-md-8 col-12" }, [
-      _c("h1", { staticClass: "title-page" }, [_vm._v("Autopartes")])
+      _c("h1", { staticClass: "title-page" }, [_vm._v("Autos chocados")])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-4 col-12 float-right" }, [
+    return _c("div", { staticClass: "col-md-4 col-12" }, [
       _c(
         "a",
         {
-          staticClass: "btn btn-secondary text-white",
-          attrs: { href: "/posts/create" }
+          staticClass: "btn btn-success text-white float-right",
+          attrs: { href: "/cars/create" }
         },
         [
           _c("i", { staticClass: "fa fa-plus" }),
-          _vm._v("\n        Hacer una publicación\n      ")
+          _vm._v("\n        Crear una publicación\n      ")
         ]
       )
     ])

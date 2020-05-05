@@ -11,16 +11,16 @@
     </button>
   
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
+      <ul class="navbar-nav mr-auto ">
         <li class="nav-item">
-          <router-link class="nav-link" to="/">Autopartes</router-link>
+          <router-link class="nav-link text-white" to="/">Autopartes</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/cars"> Autos Chocados</router-link>
+          <router-link class="nav-link text-white" to="/cars"> Autos Chocados</router-link>
         </li>
 
         <li class="nav-item">
-          <router-link class="nav-link" to="/zona-publicitaria"> Zona Publicitaria</router-link>
+          <router-link class="nav-link text-white" to="/zona-publicitaria"> Zona Publicitaria</router-link>
         </li>
        
       </ul>
@@ -29,11 +29,15 @@
         <!-- Authentication Links -->
         @guest
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('login') }}">Iniciar sesión</a>
+                <a class="nav-link text-white" href="{{ route('login') }}">
+                  <b>Iniciar sesión</b>
+                </a>
             </li>
             @if (Route::has('register'))
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('register') }}">Registrarse</a>
+                    <a class="nav-link text-white" href="{{ route('register') }}">
+                      <b>Registrarse</b>
+                    </a>
                 </li>
             @endif
         @else

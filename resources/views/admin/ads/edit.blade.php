@@ -5,7 +5,7 @@
   
 
     <div class="card">
-        <div class="card-header bg-dark text-white">
+        <div class="card-header bg-success text-white">
             Editar publicitario
         </div>
         <div class="card-body">

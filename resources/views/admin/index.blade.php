@@ -5,7 +5,7 @@
 
 
     <div class="card ">
-        <div class="card-header bg-dark text-white">
+        <div class="card-header bg-success text-white">
             Resumen de la web en los útlimos 7 días
         </div>
         <div class="card-body">
@@ -32,7 +32,7 @@
     </div>
 
     <div class="card mt-5 ">
-        <div class="card-header bg-dark text-white">
+        <div class="card-header bg-success text-white">
             Últimos usuarios registrados
         </div>
         <div class="card-body">

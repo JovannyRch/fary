@@ -1,10 +1,7 @@
 <template>
   <div class="mt-4 main">
     <div class="row">
-      <div class="col-md-2" id="s-1">
-        <AdsComponent />
-      </div>
-      <div class="col-md-8" id="s-2">
+      <div class="col-md-8 offset-md-1" id="s-2">
         <PostsComponent />
       </div>
       <div class="col-md-2" id="s-3">

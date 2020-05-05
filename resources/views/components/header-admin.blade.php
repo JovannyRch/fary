@@ -2,12 +2,15 @@
     <div class="container">
         <div class="row">
             <div class="col-md-10">
-                <h1 class="text-white"> <i class="fa fas-settings"> </i> Red de Autopartes Usadas Fary </h1>
+                <h4  class="text-white" >
+                    <img src="/images/icon.png" width="5%" >
+                  <b>Red de Autopartes Usadas Fary</b>
+                  </h4>
             </div>
             <div class="col-md-2">
 
                 <div class="btn-group">
-                    <button class="btn btn-secondary dropdown-toggle text-white" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
+                    <button class="btn btn-success dropdown-toggle text-white" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
                                Cuenta
                     </button>

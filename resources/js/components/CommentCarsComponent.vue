@@ -2,7 +2,7 @@
   <div class="mt-2">
     <form @submit.prevent="sendComment()">
       <div class="row">
-        <div class="col-12 col-md-10 pr-2" v-if="user_id">
+        <div class="col-12 col-md-10 pr-2 pl-4" v-if="user_id">
           <div class="form-group">
             <input
               type="text"
@@ -28,17 +28,21 @@
     <div v-if="comments.length">
       <div v-for="c in comments" :key="c.id">
         <div class="row comment">
-          <div class="col-8">
+          <div class="col-12">
             <small>
-              <router-link :to="'/user/'+c.user_id">{{c.username}}</router-link>
+              <router-link :to="'/user/'+c.user_id">
+                <b>{{c.username}}</b>
+              </router-link>
             </small>
+
+            <div class="float-right pr-4">
+              <DateComponent :date="c.date"></DateComponent>
+              <span v-if="c.user_id == user_id">
+                <i class="fa fa-trash" style="zomm: 0.7" @click="deleteComment(c.id)"></i>
+              </span>
+            </div>
           </div>
-          <div class="col-4">
-            <DateComponent :date="c.date"></DateComponent>
-            <span v-if="c.user_id == user_id">
-              <i class="fa fa-trash" style="zomm: 0.7" @click="deleteComment(c.id)"></i>
-            </span>
-          </div>
+
           <div class="col-12 pl-3">
             <p>
               <small>{{c.content}}</small>
@@ -124,9 +128,16 @@ export default {
 }
 
 .comment {
-  background-color: rgb(251, 251, 251);
-  margin-bottom: 3px;
+  background-color: rgb(235, 236, 233);
+  margin-bottom: 15px;
+  padding-top: 1.5%;
+  padding-left: 1.5%;
+  padding-right: 1.5%;
   border-radius: 10px;
-  margin-right: 5px;
+  margin-right: 7px;
+  margin-left: 2px;
+  -webkit-box-shadow: 6px 9px 18px -11px rgba(191, 191, 191, 1);
+  -moz-box-shadow: 6px 9px 18px -11px rgba(191, 191, 191, 1);
+  box-shadow: 6px 9px 18px -11px rgba(191, 191, 191, 1);
 }
 </style>

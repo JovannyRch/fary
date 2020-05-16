@@ -2274,6 +2274,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2407,12 +2411,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     DateComponent: _utils_DateComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: ["post_id"],
+  props: ["post_id", "owner_post"],
   created: function created() {
     this.loadComments();
   },
@@ -2420,7 +2430,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       comments: [],
       commentInput: "",
-      user_id: document.querySelector('meta[name="user_id"]').getAttribute("content")
+      user_id: document.querySelector('meta[name="user_id"]').getAttribute("content"),
+      type: document.querySelector('meta[name="type"]').getAttribute("content")
     };
   },
   methods: {
@@ -2465,8 +2476,6 @@ __webpack_require__.r(__webpack_exports__);
         method: "DELETE"
       }).then(function (response) {
         if (response.status == 200) {
-          alert("Eliminado correctamente");
-
           _this3.loadComments();
         } else {
           alert("Ocurrió un error al eliminar");
@@ -2584,7 +2593,8 @@ __webpack_require__.r(__webpack_exports__);
       total: 1,
       path: "",
       ads: [],
-      currentAds: []
+      currentAds: [],
+      user_id: document.querySelector('meta[name="user_id"]').getAttribute("content")
     };
   },
   methods: {
@@ -2878,6 +2888,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2888,7 +2903,6 @@ __webpack_require__.r(__webpack_exports__);
   props: ["content", "date", "user", "img", "id", "post_user_id", "username"],
   data: function data() {
     return {
-      topics: ["python", "sql"],
       user_id: document.querySelector('meta[name="user_id"]').getAttribute("content")
     };
   },
@@ -8149,7 +8163,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.separator {\n  height: 2px;\n  background-color: bisque;\n  width: 60%;\n  margin: 0 auto;\n}\n.comment {\n  background-color: rgb(251, 251, 251);\n  margin-bottom: 3px;\n  border-radius: 10px;\n  margin-right: 5px;\n}\n", ""]);
+exports.push([module.i, "\n.separator {\n  height: 2px;\n  background-color: bisque;\n  width: 60%;\n  margin: 0 auto;\n}\n.comment {\n  background-color: rgb(235, 236, 233);\n  margin-bottom: 15px;\n  padding-top: 1.5%;\n  padding-left: 1.5%;\n  padding-right: 1.5%;\n  border-radius: 10px;\n  margin-right: 7px;\n  margin-left: 2px;\n  box-shadow: 6px 9px 18px -11px rgba(191, 191, 191, 1);\n}\n", ""]);
 
 // exports
 
@@ -8168,7 +8182,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.separator {\n  height: 2px;\n  background-color: bisque;\n  width: 60%;\n  margin: 0 auto;\n}\n.comment {\n  background-color: rgb(251, 251, 251);\n  margin-bottom: 3px;\n  border-radius: 10px;\n  margin-right: 5px;\n}\n", ""]);
+exports.push([module.i, "\n.separator {\n  height: 2px;\n  background-color: bisque;\n  width: 60%;\n  margin: 0 auto;\n}\n.comment {\n  background-color: rgb(235, 236, 233);\n  margin-bottom: 15px;\n  padding-top: 1.5%;\n  padding-left: 1.5%;\n  padding-right: 1.5%;\n  border-radius: 10px;\n  margin-right: 7px;\n  margin-left: 2px;\n  box-shadow: 6px 9px 18px -11px rgba(191, 191, 191, 1);\n}\n", ""]);
 
 // exports
 
@@ -8187,7 +8201,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#container-post {\n  height: 80vh;\n  margin-bottom: 10%;\n  overflow-y: scroll;\n}\n.title-page {\n  font-weight: bold;\n  margin-bottom: 1%;\n  margin-top: 1.5%;\n}\n.container-tools {\n  height: 30px;\n}\n", ""]);
+exports.push([module.i, "\n#container-post {\n  height: 80vh;\n  margin-bottom: 10%;\n  overflow-y: scroll;\n}\n.container-tools {\n  height: 30px;\n}\n", ""]);
 
 // exports
 
@@ -42398,23 +42412,28 @@ var render = function() {
   return _c("div", { staticClass: "post" }, [
     _c("div", { staticClass: "post-data" }, [
       _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-8 pl-2" }, [
-          _c(
-            "span",
-            { staticClass: "post-user" },
-            [
-              _c("router-link", { attrs: { to: "/users/" + _vm.user_id } }, [
-                _c("small", [_vm._v(_vm._s(_vm.username))])
-              ])
-            ],
-            1
-          )
-        ]),
-        _vm._v(" "),
         _c(
           "div",
-          { staticClass: "col-4 pl-2" },
-          [_c("DateComponent", { attrs: { date: _vm.date } })],
+          { staticClass: "col-12 pl-2" },
+          [
+            _c(
+              "span",
+              { staticClass: "post-user" },
+              [
+                _c("router-link", { attrs: { to: "/users/" + _vm.user_id } }, [
+                  _c("small", [_c("b", [_vm._v(_vm._s(_vm.username))])])
+                ])
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("DateComponent", {
+              staticClass: "float-right",
+              attrs: { date: _vm.date }
+            }),
+            _vm._v(" "),
+            _c("hr")
+          ],
           1
         ),
         _vm._v(" "),
@@ -42815,7 +42834,7 @@ var render = function() {
       [
         _c("div", { staticClass: "row" }, [
           _vm.user_id
-            ? _c("div", { staticClass: "col-12 col-md-10 pr-2" }, [
+            ? _c("div", { staticClass: "col-12 col-md-10 pr-2 pl-4" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("input", {
                     directives: [
@@ -42863,42 +42882,42 @@ var render = function() {
           _vm._l(_vm.comments, function(c) {
             return _c("div", { key: c.id }, [
               _c("div", { staticClass: "row comment" }, [
-                _c("div", { staticClass: "col-8" }, [
+                _c("div", { staticClass: "col-12" }, [
                   _c(
                     "small",
                     [
                       _c(
                         "router-link",
                         { attrs: { to: "/user/" + c.user_id } },
-                        [_vm._v(_vm._s(c.username))]
+                        [_c("b", [_vm._v(_vm._s(c.username))])]
                       )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "float-right pr-4" },
+                    [
+                      _c("DateComponent", { attrs: { date: c.date } }),
+                      _vm._v(" "),
+                      c.user_id == _vm.user_id
+                        ? _c("span", [
+                            _c("i", {
+                              staticClass: "fa fa-trash",
+                              staticStyle: { zomm: "0.7" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.deleteComment(c.id)
+                                }
+                              }
+                            })
+                          ])
+                        : _vm._e()
                     ],
                     1
                   )
                 ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "col-4" },
-                  [
-                    _c("DateComponent", { attrs: { date: c.date } }),
-                    _vm._v(" "),
-                    c.user_id == _vm.user_id
-                      ? _c("span", [
-                          _c("i", {
-                            staticClass: "fa fa-trash",
-                            staticStyle: { zomm: "0.7" },
-                            on: {
-                              click: function($event) {
-                                return _vm.deleteComment(c.id)
-                              }
-                            }
-                          })
-                        ])
-                      : _vm._e()
-                  ],
-                  1
-                ),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-12 pl-3" }, [
                   _c("p", [_c("small", [_vm._v(_vm._s(c.content))])])
@@ -42954,20 +42973,20 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "mt-2" }, [
-    _c(
-      "form",
-      {
-        on: {
-          submit: function($event) {
-            $event.preventDefault()
-            return _vm.sendComment()
-          }
-        }
-      },
-      [
-        _c("div", { staticClass: "row" }, [
-          _vm.user_id
-            ? _c("div", { staticClass: "col-12 col-md-10 pr-2" }, [
+    _vm.user_id && (_vm.owner_post == _vm.user_id || _vm.type != "normal")
+      ? _c(
+          "form",
+          {
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.sendComment()
+              }
+            }
+          },
+          [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-10 col-md-10 pr-2" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("input", {
                     directives: [
@@ -42995,15 +43014,13 @@ var render = function() {
                     }
                   })
                 ])
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.user_id
-            ? _c("div", { staticClass: "col-12 col-md-2" }, [_vm._m(0)])
-            : _vm._e()
-        ])
-      ]
-    ),
+              ]),
+              _vm._v(" "),
+              _vm._m(0)
+            ])
+          ]
+        )
+      : _vm._e(),
     _vm._v(" "),
     _vm.comments.length
       ? _c("div", { staticClass: "mt-1 mb-1" }, [_vm._m(1)])
@@ -43015,42 +43032,42 @@ var render = function() {
           _vm._l(_vm.comments, function(c) {
             return _c("div", { key: c.id }, [
               _c("div", { staticClass: "row comment" }, [
-                _c("div", { staticClass: "col-8" }, [
+                _c("div", { staticClass: "col-12" }, [
                   _c(
                     "small",
                     [
                       _c(
                         "router-link",
                         { attrs: { to: "/user/" + c.user_id } },
-                        [_vm._v(_vm._s(c.username))]
+                        [_c("b", [_vm._v(_vm._s(c.username))])]
                       )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "float-right pr-4" },
+                    [
+                      _c("DateComponent", { attrs: { date: c.date } }),
+                      _vm._v(" "),
+                      c.user_id == _vm.user_id
+                        ? _c("span", [
+                            _c("i", {
+                              staticClass: "fa fa-trash",
+                              staticStyle: { zomm: "0.7" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.deleteComment(c.id)
+                                }
+                              }
+                            })
+                          ])
+                        : _vm._e()
                     ],
                     1
                   )
                 ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "col-4" },
-                  [
-                    _c("DateComponent", { attrs: { date: c.date } }),
-                    _vm._v(" "),
-                    c.user_id == _vm.user_id
-                      ? _c("span", [
-                          _c("i", {
-                            staticClass: "fa fa-trash",
-                            staticStyle: { zomm: "0.7" },
-                            on: {
-                              click: function($event) {
-                                return _vm.deleteComment(c.id)
-                              }
-                            }
-                          })
-                        ])
-                      : _vm._e()
-                  ],
-                  1
-                ),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-12 pl-3" }, [
                   _c("p", [_c("small", [_vm._v(_vm._s(c.content))])])
@@ -43068,14 +43085,16 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "btn btn-secondary text-white",
-        attrs: { type: "submit", name: "", id: "" }
-      },
-      [_c("i", { staticClass: "fa fa-paper-plane" })]
-    )
+    return _c("div", { staticClass: "col-12 col-md-2" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-secondary text-white",
+          attrs: { type: "submit", name: "", id: "" }
+        },
+        [_c("i", { staticClass: "fa fa-paper-plane" })]
+      )
+    ])
   },
   function() {
     var _vm = this
@@ -43402,25 +43421,29 @@ var render = function() {
   return _c("div", { staticClass: "post w-100" }, [
     _c("div", { staticClass: "post-data" }, [
       _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-8 pl-2" }, [
-          _c(
-            "span",
-            { staticClass: "post-user" },
-            [
-              _c("router-link", { attrs: { to: "/users/" + _vm.user_id } }, [
-                _c("small", [_vm._v(_vm._s(_vm.username))])
-              ])
-            ],
-            1
-          )
+        _c("div", { staticClass: "col-12" }, [
+          _c("div", { staticClass: "col-12 pl-2" }, [
+            _c(
+              "span",
+              { staticClass: "post-user" },
+              [
+                _c("router-link", { attrs: { to: "/users/" + _vm.user_id } }, [
+                  _c("small", [_c("b", [_vm._v(_vm._s(_vm.username))])])
+                ])
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "float-right" },
+              [_c("DateComponent", { attrs: { date: _vm.date } })],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("hr")
         ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-4 pl-2" },
-          [_c("DateComponent", { attrs: { date: _vm.date } })],
-          1
-        ),
         _vm._v(" "),
         _vm.img
           ? _c("div", { staticClass: "col-12 col-md-6 p-2" }, [
@@ -43474,7 +43497,11 @@ var render = function() {
         _c(
           "div",
           { staticClass: "col-12 pl-2" },
-          [_c("CommentsComponent", { attrs: { post_id: _vm.id } })],
+          [
+            _c("CommentsComponent", {
+              attrs: { owner_post: _vm.post_user_id, post_id: _vm.id }
+            })
+          ],
           1
         )
       ])

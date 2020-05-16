@@ -11,6 +11,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @if (Auth::user())
         <meta name="user_id" content="{{ Auth::user()->id }}">
+        <meta name="type" content="{{ Auth::user()->rol }}">
     @else
         <meta name="user_id" content="">
     @endif

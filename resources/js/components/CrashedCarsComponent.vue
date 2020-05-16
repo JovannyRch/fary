@@ -92,7 +92,10 @@ export default {
       total: 1,
       path: "",
       ads: [],
-      currentAds: []
+      currentAds: [],
+      user_id: document
+        .querySelector('meta[name="user_id"]')
+        .getAttribute("content")
     };
   },
   methods: {
@@ -149,12 +152,6 @@ export default {
   height: 80vh;
   margin-bottom: 10%;
   overflow-y: scroll;
-}
-
-.title-page {
-  font-weight: bold;
-  margin-bottom: 1%;
-  margin-top: 1.5%;
 }
 
 .container-tools {

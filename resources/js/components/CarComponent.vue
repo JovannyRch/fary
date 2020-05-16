@@ -2,16 +2,16 @@
   <div class="post">
     <div class="post-data">
       <div class="row">
-        <div class="col-8 pl-2">
+        <div class="col-12 pl-2">
           <span class="post-user">
             <router-link :to="'/users/'+user_id">
-              <small>{{username}}</small>
+              <small>
+                <b>{{username}}</b>
+              </small>
             </router-link>
           </span>
-        </div>
-
-        <div class="col-4 pl-2">
-          <DateComponent :date="date" />
+          <DateComponent class="float-right" :date="date" />
+          <hr />
         </div>
 
         <div class="col-12 col-md-12 pl-2">
@@ -116,8 +116,6 @@ export default {
 </script>
 
 <style>
-
-
 .post-data {
   font-size: 1.2em;
 }

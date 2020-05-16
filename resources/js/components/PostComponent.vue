@@ -2,16 +2,21 @@
   <div class="post w-100">
     <div class="post-data">
       <div class="row">
-        <div class="col-8 pl-2">
-          <span class="post-user">
-            <router-link :to="'/users/'+user_id">
-              <small>{{username}}</small>
-            </router-link>
-          </span>
-        </div>
+        <div class="col-12">
+          <div class="col-12 pl-2">
+            <span class="post-user">
+              <router-link :to="'/users/'+user_id">
+                <small>
+                  <b>{{username}}</b>
+                </small>
+              </router-link>
+            </span>
+            <div class="float-right">
+              <DateComponent :date="date" />
+            </div>
+          </div>
 
-        <div class="col-4 pl-2">
-          <DateComponent :date="date" />
+          <hr />
         </div>
         <div v-if="img" class="col-12 col-md-6 p-2">
           <img :src="img" width="100%" />
@@ -42,7 +47,7 @@
           </div>
         </div>
         <div class="col-12 pl-2">
-          <CommentsComponent :post_id="id"></CommentsComponent>
+          <CommentsComponent :owner_post="post_user_id" :post_id="id"></CommentsComponent>
         </div>
       </div>
     </div>
@@ -88,7 +93,6 @@ export default {
   props: ["content", "date", "user", "img", "id", "post_user_id", "username"],
   data() {
     return {
-      topics: ["python", "sql"],
       user_id: document
         .querySelector('meta[name="user_id"]')
         .getAttribute("content")

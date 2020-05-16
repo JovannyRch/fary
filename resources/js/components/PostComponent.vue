@@ -20,7 +20,7 @@
         <div :class="img? 'col-12 col-md-6 pl-2': 'col-12 col-md-12 pl-2'">
           <div class="d-flex bd-highlight">
             <div class="p-2 w-100 bd-highlight">
-              <b class="text-secondary grid-1">{{piece}}</b>
+              <b class="text-secondary grid-1">{{content}}</b>
             </div>
             <div class="p-2 flex-shrink-1 bd-highlight">
               <div class="dropdown show float-right grid-2" v-if="post_user_id == user_id">
@@ -39,34 +39,6 @@
                 </div>
               </div>
             </div>
-          </div>
-
-          <div>
-            <small>{{national == 1? 'Nacional':'Extranjero'}}</small>
-          </div>
-          <div class="model">
-            <small>
-              <span>
-                <b>Marca:</b>
-                {{brand}}
-              </span>
-            </small>
-          </div>
-          <div>
-            <small>
-              <span style="marging-left: 5px">
-                <b>Modelo:</b>
-                {{model}}
-              </span>
-            </small>
-          </div>
-
-          <div class="details">
-            <small>
-              <b>Descripción:</b>
-            </small>
-
-            <div>{{details}}</div>
           </div>
         </div>
         <div class="col-12 pl-2">
@@ -113,19 +85,7 @@ export default {
     DateComponent,
     CommentsComponent
   },
-  props: [
-    "piece",
-    "date",
-    "user",
-    "model",
-    "brand",
-    "national",
-    "details",
-    "img",
-    "id",
-    "post_user_id",
-    "username"
-  ],
+  props: ["content", "date", "user", "img", "id", "post_user_id", "username"],
   data() {
     return {
       topics: ["python", "sql"],

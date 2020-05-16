@@ -5,12 +5,11 @@
     <div class="row justify-content-center">
         <div class="col-md-9">
             <div class="card">
-               
-
+            
                 <div class="card-body">
                     <div class="row">
                         <div class="col-8 col-md-5 offset-2 offset-md-0">
-                            <img id="logo" class="w-100" src="/images/logo.png" alt="" srcset="">
+                            <img id="logo" class="w-100" src="/images/logo.jpg" alt="" srcset="">
                         </div>
                         <div class="col-12 col-md-7">
                             <div class="text-center mb-3">

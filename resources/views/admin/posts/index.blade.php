@@ -13,9 +13,8 @@
             <table class="table table-striped">
                 <thead class="thead-light">
                     <tr>
-                        <th scope="col">Pieza</th>
-                        <th >Modelo</th>
-                        <th >Marca</th>
+                        <th scope="col">Contenido</th>
+                       
                         <th >Usuario</th>
                         <th >Cantidad de comentarios</th>
                         <th >Fecha de creación</th>
@@ -30,10 +29,9 @@
                                 <img src="{{$post->img}}" alt="" height="50px">
                                 <br>
                             @endif
-                            <b>{{$post->piece}}</b>
+                            <b>{{$post->content}}</b>
                         </td>
-                        <td>{{$post->model}}</td>
-                        <td>{{$post->brand}}</td>
+                      
                         <td>{{ucwords($post->username)}}</td>
                         <td>{{$post->comments}}</td>
                         <td>{{$post->created_at->format('d-m-Y')}}</td>
@@ -42,7 +40,7 @@
                             <a type="button" href="{{route('post.show',$post->id)}}" >
                                 Ver
                             </a>
-                        <a href="#" data-toggle="modal" data-target="#delete-data" data-action="{{route('post.destroy','')}}" data-name="{{$post->piece}}"  data-id="{{$post->id}}" >
+                        <a href="#" data-toggle="modal" data-target="#delete-data" data-action="{{route('post.destroy','')}}" data-name="{{$post->content}}"  data-id="{{$post->id}}" >
                            Eliminar
                         </a>
             

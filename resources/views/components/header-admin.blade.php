@@ -4,7 +4,7 @@
             <div class="col-md-10">
                 <h4  class="text-white" >
                     <img src="/images/icon.png" width="5%" >
-                  <b>Red de Autopartes Usadas Fary</b>
+                  <b>Fary</b>
                   </h4>
             </div>
             <div class="col-md-2">

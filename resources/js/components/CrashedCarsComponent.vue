@@ -1,36 +1,51 @@
 <template>
   <div class="mt-4 main">
     <div class="row">
-      <!--  <div class="col-md-2" id="s-1">
-        <AdsComponent />
-      </div>-->
-      <div class="col-md-8 offset-md-1" id="s-2">
+      <div class="col-md-2 d-none d-md-block" id="s-1">
+        <AdsComponent :ads="currentAds" />
+      </div>
+      <div class="col-md-8" id="s-2">
         <div class="container" id="container-post">
           <div class="row">
             <div class="col-md-8 col-12">
               <h1 class="title-page">Autos chocados</h1>
             </div>
             <div class="col-md-4 col-12">
-              <a class="btn btn-success text-white float-right" href="/cars/create">
+              <a v-if="!user_id" class="btn btn-success text-white float-right" href="/cars/create">
                 <i class="fa fa-plus"></i>
                 Crear una publicación
               </a>
+
+              <router-link v-else to="/cars/create" class="btn btn-success text-white float-right">
+                <i class="fa fa-plus"></i>
+                Crear una publicación
+              </router-link>
             </div>
 
             <div class="col-md-12">
               <div class="posts-container" v-if="!isLoading">
                 <br />
+                <div v-if="cars.length != 0">
+                  <div style="background-color: transparent" v-for="(c,index) in cars" :key="c.id">
+                    <img
+                      :src="currentAds[(index-2)/2].url"
+                      v-if=" (index -2) >= 0 &&(index-2)% 2==0 && (index-2)/2 < currentAds.length  "
+                      class="d-block d-md-none text-center mb-3"
+                    />
 
-                <CarComponent
-                  v-for="c in cars"
-                  :content="c.content"
-                  :username="c.username"
-                  :post_user_id="c.user_id"
-                  :date="c.created_at"
-                  :imgs="c.imgs"
-                  :key="c.id"
-                  :id="c.id"
-                />
+                    <CarComponent
+                      :content="c.content"
+                      :username="c.username"
+                      :post_user_id="c.user_id"
+                      :date="c.created_at"
+                      :imgs="c.imgs"
+                      :id="c.id"
+                    />
+                  </div>
+                </div>
+                <div v-else class="text-center pt-5">
+                  <h3>Aún no se han hecho publicaciones</h3>
+                </div>
               </div>
               <div v-else>
                 <LoaderComponent></LoaderComponent>
@@ -39,7 +54,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-2" id="s-3">
+      <div class="col-md-2 d-none d-md-block" id="s-3">
         <NegociosComponent />
       </div>
     </div>
@@ -62,6 +77,7 @@ export default {
   },
   mounted() {
     this.loadData();
+    this.getAds();
   },
   data() {
     return {
@@ -74,7 +90,9 @@ export default {
       prevPageUrl: "",
       lastPage: 1,
       total: 1,
-      path: ""
+      path: "",
+      ads: [],
+      currentAds: []
     };
   },
   methods: {
@@ -94,6 +112,33 @@ export default {
           this.total = Math.ceil(data.total / data.per_page);
           this.path = data.path;
         });
+    },
+    getAds() {
+      this.isLoading = true;
+      fetch("/api/ads")
+        .then(response => response.json())
+        .then(json => {
+          this.ads = json.data;
+
+          if (this.ads.length >= 3) {
+            this.canUpdate = true;
+            for (let i = 0; i <= 3; i++) {
+              this.currentAds.push(this.ads.pop());
+            }
+          } else {
+            while (this.ads.length > 0) {
+              this.currentAds.push(this.ads.pop());
+            }
+          }
+          this.isLoading = false;
+        });
+    },
+
+    getRandom() {
+      return this.ads[Math.floor(Math.random() * this.ads.length)];
+    },
+    shuffle(array) {
+      array.sort(() => Math.random() - 0.5);
     }
   }
 };

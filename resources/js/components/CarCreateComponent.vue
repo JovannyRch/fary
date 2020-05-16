@@ -1,11 +1,18 @@
 <template>
   <div class="container" id="form-container">
     <h2 class="title-page">Crear una publicación de auto chocado</h2>
-    <form action="/cars/save" method="post" enctype="multipart/form-data">
+    <form
+      @submi.prevent="addLocation"
+      id="form-create"
+      action="/cars/save"
+      method="post"
+      enctype="multipart/form-data"
+    >
       <div class="form-container">
         <div class="row">
           <input type="hidden" name="_token" :value="csrf" />
           <input type="hidden" name="user_id" :value="user_id" />
+
           <div class="col-12 form-group">
             <label for="content">
               <b>Contenido</b>
@@ -24,7 +31,7 @@
 
           <div v-show="!images.length" class="col-12">
             <br />
-            <input type="file" name="imgs[]" multiple @change="onFileChange" />
+            <input required type="file" name="imgs[]" multiple @change="onFileChange" />
           </div>
           <div v-show="images.length">
             <div class="row">
@@ -52,6 +59,7 @@
 
 <script>
 export default {
+  created() {},
   data() {
     return {
       content: "",
@@ -63,6 +71,8 @@ export default {
       img: "",
       details: "",
       imgs: [1],
+      lat: null,
+      long: null,
       user_id: document
         .querySelector('meta[name="user_id"]')
         .getAttribute("content"),
@@ -97,6 +107,25 @@ export default {
     },
     removeImage: function(index) {
       this.images.splice(index, 1);
+    },
+    addLocation() {
+      navigator.geolocation.getCurrentPosition(function(location) {
+        let lat = location.coords.latitude;
+        let long = location.coords.longitude;
+        alert(lat);
+        alert(long);
+        $("<input />")
+          .attr("type", "hidden")
+          .attr("name", "latitud")
+          .attr("value", lat)
+          .appendTo("#form");
+        $("<input />")
+          .attr("type", "hidden")
+          .attr("name", "logitud")
+          .attr("value", long)
+          .appendTo("#form");
+        $("#form-create").submit();
+      });
     }
   },
   computed: {

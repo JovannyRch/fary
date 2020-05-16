@@ -59,12 +59,8 @@ class PostsController extends Controller
         
         $post = new Post();
         $data = $request->all();
-        $post->piece = $request->piece;
-        $post->model = $request->model;
-        $post->brand = $request->brand;
-        $post->national = $request->national; 
+        $post->content = $request->content;
         
-        $post->details = $request->details; 
         $post->user_id = Auth::user()->id; 
         
         /* $request->validate([

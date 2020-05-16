@@ -5,32 +5,39 @@
         <h1 class="title-page">Autopartes</h1>
       </div>
       <div class="col-md-4 col-12">
-        <a class="btn btn-success text-white float-right" href="/cars/create">
+        <a v-if="!user_id" class="btn btn-success text-white float-right" href="/posts/create">
           <i class="fa fa-plus"></i>
           Crear una publicación
         </a>
+
+        <router-link v-else to="/posts/create" class="btn btn-success text-white float-right">
+          <i class="fa fa-plus"></i>
+          Crear una publicación
+        </router-link>
       </div>
 
       <div class="col-md-12">
         <div class="posts-container" v-if="!isLoading">
           <br />
 
-          <PostComponent
-            v-for="(p,index) in posts"
-            :piece="p.piece"
-            :date="p.created_at"
-            :user="p.user_id"
-            :model="p.model"
-            :brand="p.brand"
-            :national="p.national"
-            :details="p.details"
-            :img="p.img"
-            :id="p.id"
-            :username="p.username"
-            :post_user_id="p.user_id"
-            :key="p.id"
-            @updateData="deletePost(index)"
-          />
+          <div style="background-color: transparent" v-for="(p,index) in posts" :key="p.id">
+            <img
+              :src="ads[(index-2)/2].url"
+              v-if=" (index -2) >= 0 &&(index-2)% 2==0 && (index-2)/2 < ads.length  "
+              class="d-block d-md-none text-center mb-3"
+            />
+
+            <PostComponent
+              :content="p.content"
+              :date="p.created_at"
+              :user="p.user_id"
+              :img="p.img"
+              :id="p.id"
+              :username="p.username"
+              :post_user_id="p.user_id"
+              @updateData="deletePost(index)"
+            />
+          </div>
         </div>
         <div v-else>
           <LoaderComponent></LoaderComponent>
@@ -44,6 +51,7 @@ import PostComponent from "./PostComponent.vue";
 import LoaderComponent from "./utils/LoaderComponent.vue";
 
 export default {
+  props: ["ads"],
   components: {
     PostComponent,
     LoaderComponent
@@ -62,7 +70,10 @@ export default {
       prevPageUrl: "",
       lastPage: 1,
       total: 1,
-      path: ""
+      path: "",
+      user_id: document
+        .querySelector('meta[name="user_id"]')
+        .getAttribute("content")
     };
   },
   methods: {
@@ -106,5 +117,9 @@ export default {
 
 .container-tools {
   height: 30px;
+}
+
+.ad {
+  background-color: transparent;
 }
 </style>

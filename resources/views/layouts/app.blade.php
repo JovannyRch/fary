@@ -21,7 +21,7 @@
 </head>
 <body>
     <div id="app">
-       {{--  <nav class="navbar navbar-expand-md shadow-sm navbar-dark bg-dark text-white">
+       <nav class="navbar navbar-expand-md shadow-sm navbar-dark bg-dark text-white">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <h4 >
@@ -73,7 +73,7 @@
                     </ul>
                 </div>
             </div>
-        </nav> --}}
+        </nav>
 
         <main class="py-4">
             @yield('content')

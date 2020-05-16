@@ -1918,53 +1918,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["ads"],
   data: function data() {
-    return {
-      ads: [],
-      currentAds: [],
-      isLoading: false,
-      canUpdate: false
-    };
+    return {};
   },
-  mounted: function mounted() {
-    this.getAds();
-  },
+  mounted: function mounted() {},
   methods: {
-    getAds: function getAds() {
-      var _this = this;
-
-      this.isLoading = true;
-      fetch("/api/ads").then(function (response) {
-        return response.json();
-      }).then(function (json) {
-        _this.ads = json.data;
-
-        if (_this.ads.length >= 3) {
-          _this.canUpdate = true;
-
-          for (var i = 0; i <= 3; i++) {
-            _this.currentAds.push(_this.ads.pop());
-          }
-        } else {
-          while (_this.ads.length > 0) {
-            _this.currentAds.push(_this.ads.pop());
-          }
-        }
-
-        _this.isLoading = false;
-      });
-    },
     isVideo: function isVideo(src) {
-      console.log(src);
       return src.endsWith("mp4");
-    },
-    getRandom: function getRandom() {
-      return this.ads[Math.floor(Math.random() * this.ads.length)];
-    },
-    shuffle: function shuffle(array) {
-      array.sort(function () {
-        return Math.random() - 0.5;
-      });
     }
   }
 });
@@ -2164,7 +2125,15 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  created: function created() {},
   data: function data() {
     return {
       content: "",
@@ -2176,6 +2145,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       img: "",
       details: "",
       imgs: [1],
+      lat: null,
+      "long": null,
       user_id: document.querySelector('meta[name="user_id"]').getAttribute("content"),
       selectedFile: null,
       csrf: document.querySelector('meta[name="csrf-token"]').getAttribute("content")
@@ -2217,6 +2188,17 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     },
     removeImage: function removeImage(index) {
       this.images.splice(index, 1);
+    },
+    addLocation: function addLocation() {
+      navigator.geolocation.getCurrentPosition(function (location) {
+        var lat = location.coords.latitude;
+        var _long = location.coords.longitude;
+        alert(lat);
+        alert(_long);
+        $("<input />").attr("type", "hidden").attr("name", "latitud").attr("value", lat).appendTo("#form");
+        $("<input />").attr("type", "hidden").attr("name", "logitud").attr("value", _long).appendTo("#form");
+        $("#form-create").submit();
+      });
     }
   },
   computed: {
@@ -2557,6 +2539,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2572,6 +2569,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.loadData();
+    this.getAds();
   },
   data: function data() {
     return {
@@ -2584,7 +2582,9 @@ __webpack_require__.r(__webpack_exports__);
       prevPageUrl: "",
       lastPage: 1,
       total: 1,
-      path: ""
+      path: "",
+      ads: [],
+      currentAds: []
     };
   },
   methods: {
@@ -2606,6 +2606,38 @@ __webpack_require__.r(__webpack_exports__);
         _this.isLoading = false;
         _this.total = Math.ceil(data.total / data.per_page);
         _this.path = data.path;
+      });
+    },
+    getAds: function getAds() {
+      var _this2 = this;
+
+      this.isLoading = true;
+      fetch("/api/ads").then(function (response) {
+        return response.json();
+      }).then(function (json) {
+        _this2.ads = json.data;
+
+        if (_this2.ads.length >= 3) {
+          _this2.canUpdate = true;
+
+          for (var i = 0; i <= 3; i++) {
+            _this2.currentAds.push(_this2.ads.pop());
+          }
+        } else {
+          while (_this2.ads.length > 0) {
+            _this2.currentAds.push(_this2.ads.pop());
+          }
+        }
+
+        _this2.isLoading = false;
+      });
+    },
+    getRandom: function getRandom() {
+      return this.ads[Math.floor(Math.random() * this.ads.length)];
+    },
+    shuffle: function shuffle(array) {
+      array.sort(function () {
+        return Math.random() - 0.5;
       });
     }
   }
@@ -2638,6 +2670,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -2646,6 +2681,50 @@ __webpack_require__.r(__webpack_exports__);
     PostsComponent: _PostsComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     AdsComponent: _AdsComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     NegociosComponent: _NegociosComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
+  data: function data() {
+    return {
+      ads: [],
+      currentAds: [],
+      isLoading: false
+    };
+  },
+  created: function created() {
+    this.getAds();
+  },
+  methods: {
+    getAds: function getAds() {
+      var _this = this;
+
+      this.isLoading = true;
+      fetch("/api/ads").then(function (response) {
+        return response.json();
+      }).then(function (json) {
+        _this.ads = json.data;
+
+        if (_this.ads.length >= 3) {
+          _this.canUpdate = true;
+
+          for (var i = 0; i <= 3; i++) {
+            _this.currentAds.push(_this.ads.pop());
+          }
+        } else {
+          while (_this.ads.length > 0) {
+            _this.currentAds.push(_this.ads.pop());
+          }
+        }
+
+        _this.isLoading = false;
+      });
+    },
+    getRandom: function getRandom() {
+      return this.ads[Math.floor(Math.random() * this.ads.length)];
+    },
+    shuffle: function shuffle(array) {
+      array.sort(function () {
+        return Math.random() - 0.5;
+      });
+    }
   }
 });
 
@@ -2799,34 +2878,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2834,7 +2885,7 @@ __webpack_require__.r(__webpack_exports__);
     DateComponent: _utils_DateComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     CommentsComponent: _CommentsComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  props: ["piece", "date", "user", "model", "brand", "national", "details", "img", "id", "post_user_id", "username"],
+  props: ["content", "date", "user", "img", "id", "post_user_id", "username"],
   data: function data() {
     return {
       topics: ["python", "sql"],
@@ -2924,66 +2975,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      piece: "",
-      model: "",
-      brand: "",
-      national: 1,
+      content: "",
       img: "",
-      details: "",
       user_id: document.querySelector('meta[name="user_id"]').getAttribute("content"),
       selectedFile: null,
       csrf: document.querySelector('meta[name="csrf-token"]').getAttribute("content")
@@ -3148,9 +3144,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["ads"],
   components: {
     PostComponent: _PostComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     LoaderComponent: _utils_LoaderComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
@@ -3169,7 +3173,8 @@ __webpack_require__.r(__webpack_exports__);
       prevPageUrl: "",
       lastPage: 1,
       total: 1,
-      path: ""
+      path: "",
+      user_id: document.querySelector('meta[name="user_id"]').getAttribute("content")
     };
   },
   methods: {
@@ -8258,7 +8263,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#container-post {\n  height: 80vh;\n  margin-bottom: 10%;\n  overflow-y: scroll;\n}\n.title-page {\n  font-weight: bold;\n  margin-bottom: 1%;\n  margin-top: 1.5%;\n}\n.container-tools {\n  height: 30px;\n}\n", ""]);
+exports.push([module.i, "\n#container-post {\n  height: 80vh;\n  margin-bottom: 10%;\n  overflow-y: scroll;\n}\n.title-page {\n  font-weight: bold;\n  margin-bottom: 1%;\n  margin-top: 1.5%;\n}\n.container-tools {\n  height: 30px;\n}\n.ad {\n  background-color: transparent;\n}\n", ""]);
 
 // exports
 
@@ -42351,7 +42356,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    _vm._l(_vm.currentAds, function(ad, index) {
+    _vm._l(_vm.ads, function(ad, index) {
       return _c("div", { key: index, staticClass: "text-center mt-4" }, [
         !_vm.isVideo(ad.url)
           ? _c("img", { staticClass: "img-thumbnail", attrs: { src: ad.url } })
@@ -42614,9 +42619,16 @@ var render = function() {
         "form",
         {
           attrs: {
+            id: "form-create",
             action: "/cars/save",
             method: "post",
             enctype: "multipart/form-data"
+          },
+          on: {
+            submi: function($event) {
+              $event.preventDefault()
+              return _vm.addLocation($event)
+            }
           }
         },
         [
@@ -42659,7 +42671,12 @@ var render = function() {
                   _c("br"),
                   _vm._v(" "),
                   _c("input", {
-                    attrs: { type: "file", name: "imgs[]", multiple: "" },
+                    attrs: {
+                      required: "",
+                      type: "file",
+                      name: "imgs[]",
+                      multiple: ""
+                    },
                     on: { change: _vm.onFileChange }
                   })
                 ]
@@ -43090,7 +43107,14 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "mt-4 main" }, [
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-8 offset-md-1", attrs: { id: "s-2" } }, [
+      _c(
+        "div",
+        { staticClass: "col-md-2 d-none d-md-block", attrs: { id: "s-1" } },
+        [_c("AdsComponent", { attrs: { ads: _vm.currentAds } })],
+        1
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-8", attrs: { id: "s-2" } }, [
         _c(
           "div",
           { staticClass: "container", attrs: { id: "container-post" } },
@@ -43098,32 +43122,94 @@ var render = function() {
             _c("div", { staticClass: "row" }, [
               _vm._m(0),
               _vm._v(" "),
-              _vm._m(1),
+              _c(
+                "div",
+                { staticClass: "col-md-4 col-12" },
+                [
+                  !_vm.user_id
+                    ? _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-success text-white float-right",
+                          attrs: { href: "/cars/create" }
+                        },
+                        [
+                          _c("i", { staticClass: "fa fa-plus" }),
+                          _vm._v(
+                            "\n              Crear una publicación\n            "
+                          )
+                        ]
+                      )
+                    : _c(
+                        "router-link",
+                        {
+                          staticClass: "btn btn-success text-white float-right",
+                          attrs: { to: "/cars/create" }
+                        },
+                        [
+                          _c("i", { staticClass: "fa fa-plus" }),
+                          _vm._v(
+                            "\n              Crear una publicación\n            "
+                          )
+                        ]
+                      )
+                ],
+                1
+              ),
               _vm._v(" "),
               _c("div", { staticClass: "col-md-12" }, [
                 !_vm.isLoading
-                  ? _c(
-                      "div",
-                      { staticClass: "posts-container" },
-                      [
-                        _c("br"),
-                        _vm._v(" "),
-                        _vm._l(_vm.cars, function(c) {
-                          return _c("CarComponent", {
-                            key: c.id,
-                            attrs: {
-                              content: c.content,
-                              username: c.username,
-                              post_user_id: c.user_id,
-                              date: c.created_at,
-                              imgs: c.imgs,
-                              id: c.id
-                            }
-                          })
-                        })
-                      ],
-                      2
-                    )
+                  ? _c("div", { staticClass: "posts-container" }, [
+                      _c("br"),
+                      _vm._v(" "),
+                      _vm.cars.length != 0
+                        ? _c(
+                            "div",
+                            _vm._l(_vm.cars, function(c, index) {
+                              return _c(
+                                "div",
+                                {
+                                  key: c.id,
+                                  staticStyle: {
+                                    "background-color": "transparent"
+                                  }
+                                },
+                                [
+                                  index - 2 >= 0 &&
+                                  (index - 2) % 2 == 0 &&
+                                  (index - 2) / 2 < _vm.currentAds.length
+                                    ? _c("img", {
+                                        staticClass:
+                                          "d-block d-md-none text-center mb-3",
+                                        attrs: {
+                                          src:
+                                            _vm.currentAds[(index - 2) / 2].url
+                                        }
+                                      })
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _c("CarComponent", {
+                                    attrs: {
+                                      content: c.content,
+                                      username: c.username,
+                                      post_user_id: c.user_id,
+                                      date: c.created_at,
+                                      imgs: c.imgs,
+                                      id: c.id
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            }),
+                            0
+                          )
+                        : _c("div", { staticClass: "text-center pt-5" }, [
+                            _c("h3", [
+                              _vm._v("Aún no se han hecho publicaciones")
+                            ])
+                          ])
+                    ])
                   : _c("div", [_c("LoaderComponent")], 1)
               ])
             ])
@@ -43133,7 +43219,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "col-md-2", attrs: { id: "s-3" } },
+        { staticClass: "col-md-2 d-none d-md-block", attrs: { id: "s-3" } },
         [_c("NegociosComponent")],
         1
       )
@@ -43147,24 +43233,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-md-8 col-12" }, [
       _c("h1", { staticClass: "title-page" }, [_vm._v("Autos chocados")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-4 col-12" }, [
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-success text-white float-right",
-          attrs: { href: "/cars/create" }
-        },
-        [
-          _c("i", { staticClass: "fa fa-plus" }),
-          _vm._v("\n              Crear una publicación\n            ")
-        ]
-      )
     ])
   }
 ]
@@ -43193,14 +43261,24 @@ var render = function() {
     _c("div", { staticClass: "row" }, [
       _c(
         "div",
-        { staticClass: "col-md-8 offset-md-1", attrs: { id: "s-2" } },
-        [_c("PostsComponent")],
+        { staticClass: "col-md-2 d-none d-md-block", attrs: { id: "s-1" } },
+        [_c("AdsComponent", { attrs: { ads: _vm.currentAds } })],
         1
       ),
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "col-md-2", attrs: { id: "s-3" } },
+        { staticClass: "col-md-8 col-12", attrs: { id: "s-2" } },
+        [_c("PostsComponent", { attrs: { ads: _vm.currentAds } })],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "col-md-2 col-md-2 d-none d-md-block",
+          attrs: { id: "s-3" }
+        },
         [_c("NegociosComponent")],
         1
       )
@@ -43357,7 +43435,7 @@ var render = function() {
             _c("div", { staticClass: "d-flex bd-highlight" }, [
               _c("div", { staticClass: "p-2 w-100 bd-highlight" }, [
                 _c("b", { staticClass: "text-secondary grid-1" }, [
-                  _vm._v(_vm._s(_vm.piece))
+                  _vm._v(_vm._s(_vm.content))
                 ])
               ]),
               _vm._v(" "),
@@ -43389,40 +43467,6 @@ var render = function() {
                     )
                   : _vm._e()
               ])
-            ]),
-            _vm._v(" "),
-            _c("div", [
-              _c("small", [
-                _vm._v(_vm._s(_vm.national == 1 ? "Nacional" : "Extranjero"))
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "model" }, [
-              _c("small", [
-                _c("span", [
-                  _c("b", [_vm._v("Marca:")]),
-                  _vm._v(
-                    "\n              " + _vm._s(_vm.brand) + "\n            "
-                  )
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", [
-              _c("small", [
-                _c("span", { staticStyle: { "marging-left": "5px" } }, [
-                  _c("b", [_vm._v("Modelo:")]),
-                  _vm._v(
-                    "\n              " + _vm._s(_vm.model) + "\n            "
-                  )
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "details" }, [
-              _vm._m(1),
-              _vm._v(" "),
-              _c("div", [_vm._v(_vm._s(_vm.details))])
             ])
           ]
         ),
@@ -43457,7 +43501,7 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(2),
+              _vm._m(1),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _vm._v("¿Estás seguro de eliminar la publicación?")
@@ -43516,12 +43560,6 @@ var staticRenderFns = [
         )
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("small", [_c("b", [_vm._v("Descripción:")])])
   },
   function() {
     var _vm = this
@@ -43591,52 +43629,7 @@ var render = function() {
             domProps: { value: _vm.csrf }
           }),
           _vm._v(" "),
-          _c("div", { staticClass: "form-container" }, [
-            _c("div", { staticClass: "row" }, [
-              _vm._m(0),
-              _vm._v(" "),
-              _vm._m(1),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-12 col-md-4 form-group" }, [
-                _vm._m(2),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.model,
-                      expression: "model"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "text",
-                    name: "model",
-                    id: "model",
-                    placeholder: "Escriba aquí el modelo"
-                  },
-                  domProps: { value: _vm.model },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.model = $event.target.value
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _vm._m(3),
-              _vm._v(" "),
-              _vm._m(4),
-              _vm._v(" "),
-              _vm._m(5),
-              _vm._v(" "),
-              _vm._m(6)
-            ])
-          ])
+          _vm._m(0)
         ]
       )
     ]
@@ -43647,140 +43640,73 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-12 form-group" }, [
-      _c("label", { attrs: { for: "piece" } }, [
-        _c("b", [_vm._v("Pieza o refacción")])
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "text",
-          name: "piece",
-          id: "piece",
-          placeholder: "Escribe aquí la pieza o refacción"
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-12 col-md-4 form-group" }, [
-      _c("label", { attrs: { for: "brand" } }, [_c("b", [_vm._v("Marca")])]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "text",
-          name: "brand",
-          id: "brand",
-          placeholder: "Escribe aquí la marca"
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "model" } }, [
-      _c("b", [_vm._v("Modelo")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-12 col-md-4" }, [
-      _c("div", { staticClass: "form-check" }, [
-        _c("label", { staticClass: "form-check-label" }, [
-          _c("input", {
-            staticClass: "form-check-input",
-            attrs: {
-              type: "radio",
-              name: "national",
-              id: "1",
-              value: "1",
-              checked: ""
-            }
-          }),
-          _vm._v("\n              Nacional\n            ")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-check" }, [
-        _c("label", { staticClass: "form-check-label" }, [
-          _c("input", {
-            staticClass: "form-check-input",
-            attrs: {
-              type: "radio",
-              name: "national",
-              id: "nacional",
-              value: "0"
-            }
-          }),
-          _vm._v("\n              Extranjero\n            ")
+    return _c("div", { staticClass: "form-container" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-12 col-md-4" }, [
+          _c("div", { staticClass: "alert alert-warning text-justify" }, [
+            _vm._v(
+              "Realiza tu anuncio detallando la marca, submarca, modelo, si es vehículo nacional o extranjero, factura original o refacturado y especifica la situación en la que se encuentre."
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-8 col-12" }, [
+          _c("div", { staticClass: "col-12 form-group" }, [
+            _c("label", { attrs: { for: "content" } }, [
+              _c("b", [_vm._v("Pieza o refacción")])
+            ]),
+            _vm._v(" "),
+            _c("textarea", {
+              staticClass: "form-control",
+              attrs: {
+                type: "text",
+                name: "content",
+                id: "content",
+                placeholder: "Escribe aquí la pieza o refacción",
+                cols: "30",
+                rows: "5"
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group col-12" }, [
+            _c("label", { attrs: { for: "file" } }, [
+              _c("b", [_vm._v("Foto o imagen")]),
+              _vm._v(" "),
+              _c(
+                "small",
+                {
+                  staticClass: "form-text text-muted",
+                  attrs: { id: "fileHelpId" }
+                },
+                [_vm._v("*Opcional")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "form-control-file",
+              attrs: {
+                type: "file",
+                name: "file",
+                id: "file",
+                placeholder: "Subir archivo",
+                "aria-describedby": "fileHelpId"
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-12" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-secondary text-white",
+                attrs: { type: "submit" }
+              },
+              [_vm._v("Hacer publicación")]
+            )
+          ])
         ])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-12 form-group" }, [
-      _c("label", { attrs: { for: "details" } }, [
-        _c("b", [_vm._v("Especificaciones")])
-      ]),
-      _vm._v(" "),
-      _c("textarea", {
-        staticClass: "form-control",
-        attrs: { name: "details", id: "details", rows: "3" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group col-12" }, [
-      _c("label", { attrs: { for: "file" } }, [
-        _c("b", [_vm._v("Foto o imagen")])
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control-file",
-        attrs: {
-          type: "file",
-          name: "file",
-          id: "file",
-          placeholder: "Subir archivo",
-          "aria-describedby": "fileHelpId"
-        }
-      }),
-      _vm._v(" "),
-      _c(
-        "small",
-        { staticClass: "form-text text-muted", attrs: { id: "fileHelpId" } },
-        [_vm._v("*Opcional")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-12" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary text-white",
-          attrs: { type: "submit" }
-        },
-        [_vm._v("Hacer publicación")]
-      )
     ])
   }
 ]
@@ -43901,7 +43827,36 @@ var render = function() {
       _c("div", { staticClass: "row" }, [
         _vm._m(0),
         _vm._v(" "),
-        _vm._m(1),
+        _c(
+          "div",
+          { staticClass: "col-md-4 col-12" },
+          [
+            !_vm.user_id
+              ? _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-success text-white float-right",
+                    attrs: { href: "/posts/create" }
+                  },
+                  [
+                    _c("i", { staticClass: "fa fa-plus" }),
+                    _vm._v("\n        Crear una publicación\n      ")
+                  ]
+                )
+              : _c(
+                  "router-link",
+                  {
+                    staticClass: "btn btn-success text-white float-right",
+                    attrs: { to: "/posts/create" }
+                  },
+                  [
+                    _c("i", { staticClass: "fa fa-plus" }),
+                    _vm._v("\n        Crear una publicación\n      ")
+                  ]
+                )
+          ],
+          1
+        ),
         _vm._v(" "),
         _c("div", { staticClass: "col-md-12" }, [
           !_vm.isLoading
@@ -43912,27 +43867,41 @@ var render = function() {
                   _c("br"),
                   _vm._v(" "),
                   _vm._l(_vm.posts, function(p, index) {
-                    return _c("PostComponent", {
-                      key: p.id,
-                      attrs: {
-                        piece: p.piece,
-                        date: p.created_at,
-                        user: p.user_id,
-                        model: p.model,
-                        brand: p.brand,
-                        national: p.national,
-                        details: p.details,
-                        img: p.img,
-                        id: p.id,
-                        username: p.username,
-                        post_user_id: p.user_id
+                    return _c(
+                      "div",
+                      {
+                        key: p.id,
+                        staticStyle: { "background-color": "transparent" }
                       },
-                      on: {
-                        updateData: function($event) {
-                          return _vm.deletePost(index)
-                        }
-                      }
-                    })
+                      [
+                        index - 2 >= 0 &&
+                        (index - 2) % 2 == 0 &&
+                        (index - 2) / 2 < _vm.ads.length
+                          ? _c("img", {
+                              staticClass: "d-block d-md-none text-center mb-3",
+                              attrs: { src: _vm.ads[(index - 2) / 2].url }
+                            })
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c("PostComponent", {
+                          attrs: {
+                            content: p.content,
+                            date: p.created_at,
+                            user: p.user_id,
+                            img: p.img,
+                            id: p.id,
+                            username: p.username,
+                            post_user_id: p.user_id
+                          },
+                          on: {
+                            updateData: function($event) {
+                              return _vm.deletePost(index)
+                            }
+                          }
+                        })
+                      ],
+                      1
+                    )
                   })
                 ],
                 2
@@ -43950,24 +43919,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-md-8 col-12" }, [
       _c("h1", { staticClass: "title-page" }, [_vm._v("Autopartes")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-4 col-12" }, [
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-success text-white float-right",
-          attrs: { href: "/cars/create" }
-        },
-        [
-          _c("i", { staticClass: "fa fa-plus" }),
-          _vm._v("\n        Crear una publicación\n      ")
-        ]
-      )
     ])
   }
 ]

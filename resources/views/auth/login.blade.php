@@ -13,7 +13,7 @@
            </div>
         @endif
        
-        <div class="col-md-9 mt-5">
+        <div class="col-md-9">
             <div class="card">
 
                 <div class="card-body">
@@ -23,7 +23,7 @@
                    <div class="row ">
 
                        <div class="col-8 col-md-5 offset-2 offset-md-0">
-                           <img class="w-100" src="/images/logo.png" alt="" srcset="">
+                           <img class="w-100" src="/images/logo.jpg" alt="" srcset="">
                        </div>
                        <div class="col-12 col-md-7">
                         <div class="text-center mb-3">
@@ -61,8 +61,9 @@
                                 </div>
                             </div>
     
-    
+                            
                             <div class="form-group row mb-0  text-center" >
+                                
                                 <div class="col-md-8 offset-md-2">
                                     <button type="submit" class="btn btn-success text-white">
                                         {{ __('Ingresar') }}

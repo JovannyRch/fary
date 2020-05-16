@@ -20,19 +20,8 @@
                 class="col-12 col-md-12 p-3"
                 @endif
                 >
-                     <h3 class="title"><b>{{ $post->piece }}</b> </h3>
-                    <b>Importación: </b> 
-                    @if ($post->national == 1)
-                        Nacional
-                    @else
-                        Extranjero
-                    @endif <br>
-                    <b>Marca: </b> {{ $post->brand }} <br>
-                    <b>Modelo: </b> {{ $post->model }} <br>
-                    <b>Descripción: </b> 
-                    <p>
-                        {{ $post->details }} 
-                    </p>
+                     <h3 class="title"><b>{{ $post->content }}</b> </h3>
+                    
                     <br>
                     <i>
                         Publicado el  {{$post->created_at->format('d-m-Y')}}

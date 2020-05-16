@@ -5,95 +5,44 @@
       <input type="hidden" name="_token" :value="csrf" />
       <div class="form-container">
         <div class="row">
-          <div class="col-12 form-group">
-            <label for="piece">
-              <b>Pieza o refacción</b>
-            </label>
-            <input
-              type="text"
-              name="piece"
-              id="piece"
-              class="form-control"
-              placeholder="Escribe aquí la pieza o refacción"
-            />
-          </div>
-          <div class="col-12 col-md-4 form-group">
-            <label for="brand">
-              <b>Marca</b>
-            </label>
-            <input
-              type="text"
-              name="brand"
-              id="brand"
-              class="form-control"
-              placeholder="Escribe aquí la marca"
-            />
-          </div>
-          <div class="col-12 col-md-4 form-group">
-            <label for="model">
-              <b>Modelo</b>
-            </label>
-            <input
-              v-model="model"
-              type="text"
-              name="model"
-              id="model"
-              class="form-control"
-              placeholder="Escriba aquí el modelo"
-            />
-          </div>
           <div class="col-12 col-md-4">
-            <div class="form-check">
-              <label class="form-check-label">
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="national"
-                  id="1"
-                  value="1"
-                  checked
-                />
-                Nacional
+            <div
+              class="alert alert-warning text-justify"
+            >Realiza tu anuncio detallando la marca, submarca, modelo, si es vehículo nacional o extranjero, factura original o refacturado y especifica la situación en la que se encuentre.</div>
+          </div>
+          <div class="col-md-8 col-12">
+            <div class="col-12 form-group">
+              <label for="content">
+                <b>Pieza o refacción</b>
               </label>
+              <textarea
+                type="text"
+                name="content"
+                id="content"
+                class="form-control"
+                placeholder="Escribe aquí la pieza o refacción"
+                cols="30"
+                rows="5"
+              ></textarea>
             </div>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="national"
-                  id="nacional"
-                  value="0"
-                />
-                Extranjero
+
+            <div class="form-group col-12">
+              <label for="file">
+                <b>Foto o imagen</b>
+                <small id="fileHelpId" class="form-text text-muted">*Opcional</small>
               </label>
+              <input
+                type="file"
+                class="form-control-file"
+                name="file"
+                id="file"
+                placeholder="Subir archivo"
+                aria-describedby="fileHelpId"
+              />
             </div>
-          </div>
-
-          <div class="col-12 form-group">
-            <label for="details">
-              <b>Especificaciones</b>
-            </label>
-            <textarea class="form-control" name="details" id="details" rows="3"></textarea>
-          </div>
-
-          <div class="form-group col-12">
-            <label for="file">
-              <b>Foto o imagen</b>
-            </label>
-            <input
-              type="file"
-              class="form-control-file"
-              name="file"
-              id="file"
-              placeholder="Subir archivo"
-              aria-describedby="fileHelpId"
-            />
-            <small id="fileHelpId" class="form-text text-muted">*Opcional</small>
-          </div>
-
-          <div class="col-12">
-            <button type="submit" class="btn btn-secondary text-white">Hacer publicación</button>
+            <div class="col-12">
+              <button type="submit" class="btn btn-secondary text-white">Hacer publicación</button>
+            </div>
           </div>
         </div>
       </div>
@@ -105,12 +54,8 @@
 export default {
   data() {
     return {
-      piece: "",
-      model: "",
-      brand: "",
-      national: 1,
+      content: "",
       img: "",
-      details: "",
       user_id: document
         .querySelector('meta[name="user_id"]')
         .getAttribute("content"),

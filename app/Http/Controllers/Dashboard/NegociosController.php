@@ -61,7 +61,6 @@ class NegociosController extends Controller
         
         $tipos = $request->tipos;
         DB::delete('delete from tipos_negocios where negocio_id = ?',[$negocio->id]);
-        //$negocio->tipos()->sync($request->tipos);
         foreach ($tipos as $tipo ) {
             DB::insert('INSERT into tipos_negocios(negocio_id,tipo_id,created_at,updated_at) values(?,?,NOW(),NOW())', [$negocio->id, $tipo]);
         }

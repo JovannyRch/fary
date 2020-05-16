@@ -24,7 +24,9 @@ class CarsController extends Controller
     }
 
     public function store(Request $request){
+        dd($request->latitud);
         $car = new Car();
+    
         if($request->content && $request->imgs ){
             $car->user_id = $request->user_id;
             $car->content = $request->content;
@@ -35,6 +37,8 @@ class CarsController extends Controller
             }
             return back();
         }
+        $message = "";
+        
         return back();
     }
 

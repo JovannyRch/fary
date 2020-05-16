@@ -25,8 +25,8 @@
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <h4 >
-                        <img src="/images/icon.png" width="10%" >
-                      <b>Red de Autopartes Usadas Fary</b>
+                       
+                      <b>Fary</b>
                       </h4>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">

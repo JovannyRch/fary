@@ -2164,7 +2164,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       try {
         for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var img = _step.value;
-          console.log("Agregar esto:");
           this.createImage(img);
           i++;
           if (i == 7) break;
@@ -2893,6 +2892,48 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2905,6 +2946,16 @@ __webpack_require__.r(__webpack_exports__);
     return {
       user_id: document.querySelector('meta[name="user_id"]').getAttribute("content")
     };
+  },
+  mounted: function mounted() {
+    $("#show-img").on("show.bs.modal", function (event) {
+      var button = $(event.relatedTarget);
+      var img = button.data("img");
+      var content = button.data("post");
+      var modal = $(this);
+      modal.find(".modal-title").text(content);
+      modal.find("img").attr("src", img);
+    });
   },
   methods: {
     isValidateImg: function isValidateImg(img) {},
@@ -2937,6 +2988,20 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2996,10 +3061,45 @@ __webpack_require__.r(__webpack_exports__);
       img: "",
       user_id: document.querySelector('meta[name="user_id"]').getAttribute("content"),
       selectedFile: null,
-      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
+      images: []
     };
   },
-  methods: {}
+  methods: {
+    onFileChange: function onFileChange(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length) return;
+      var i = 1;
+
+      var _iterator = _createForOfIteratorHelper(files),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var img = _step.value;
+          this.createImage(img);
+          i++;
+          if (i == 7) break;
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+    },
+    createImage: function createImage(file) {
+      var image = new Image();
+      this.images = [];
+      var vm = this;
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        vm.images.push(e.target.result);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  }
 });
 
 /***/ }),
@@ -8163,7 +8263,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.separator {\n  height: 2px;\n  background-color: bisque;\n  width: 60%;\n  margin: 0 auto;\n}\n.comment {\n  background-color: rgb(235, 236, 233);\n  margin-bottom: 15px;\n  padding-top: 1.5%;\n  padding-left: 1.5%;\n  padding-right: 1.5%;\n  border-radius: 10px;\n  margin-right: 7px;\n  margin-left: 2px;\n  box-shadow: 6px 9px 18px -11px rgba(191, 191, 191, 1);\n}\n", ""]);
+exports.push([module.i, "\n.separator {\n  height: 2px;\n  background-color: bisque;\n  width: 60%;\n  margin: 0 auto;\n}\n.comment {\n  background-color: rgb(243, 243, 242);\n  margin-bottom: 15px;\n  padding-top: 1.5%;\n  padding-left: 1.5%;\n  padding-right: 1.5%;\n  border-radius: 10px;\n  margin-right: 7px;\n  margin-left: 2px;\n  box-shadow: 6px 9px 18px -11px rgba(191, 191, 191, 1);\n}\n", ""]);
 
 // exports
 
@@ -8182,7 +8282,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.separator {\n  height: 2px;\n  background-color: bisque;\n  width: 60%;\n  margin: 0 auto;\n}\n.comment {\n  background-color: rgb(235, 236, 233);\n  margin-bottom: 15px;\n  padding-top: 1.5%;\n  padding-left: 1.5%;\n  padding-right: 1.5%;\n  border-radius: 10px;\n  margin-right: 7px;\n  margin-left: 2px;\n  box-shadow: 6px 9px 18px -11px rgba(191, 191, 191, 1);\n}\n", ""]);
+exports.push([module.i, "\n.separator {\n  height: 2px;\n  background-color: bisque;\n  width: 60%;\n  margin: 0 auto;\n}\n.comment {\n  background-color: rgb(243, 243, 242);\n  margin-bottom: 15px;\n  padding-top: 1.5%;\n  padding-left: 1.5%;\n  padding-right: 1.5%;\n  border-radius: 10px;\n  margin-right: 7px;\n  margin-left: 2px;\n  box-shadow: 6px 9px 18px -11px rgba(191, 191, 191, 1);\n}\n", ""]);
 
 // exports
 
@@ -8220,7 +8320,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.post-data {\n  font-size: 1.2em;\n}\n.separator {\n  height: 1px;\n  border-radius: 10px;\n  background-color: gainsboro;\n}\n.post {\n  padding: 3%;\n  background-color: white;\n  border-radius: 10px;\n  margin-bottom: 3%;\n}\n.post-detail {\n  color: #a7a7a7;\n}\n.post-user {\n}\n.post-info {\n  margin-top: 1%;\n  margin-bottom: 1%;\n  padding: 1%;\n}\n.topics-container {\n  margin-top: 1%;\n  margin-bottom: 1%;\n  padding: 1%;\n}\n.topic {\n  background-color: #e7f3ff;\n  margin-right: 4px;\n  color: #427fc2;\n  font-size: 0.7em;\n  padding: 2%;\n  padding-bottom: 0.7%;\n  padding-top: 0.7%;\n  border-radius: 5px;\n  font-weight: 600;\n}\n.grid {\n  display: grid;\n  grid-template-columns: repeat(5, 1fr);\n  grid-template-rows: 1fr;\n  grid-column-gap: 0px;\n  grid-row-gap: 0px;\n}\n.grid-1 {\n  grid-area: 1 / 1 / 2 / 4;\n}\n.grid-2 {\n  grid-area: 1 / 4 / 2 / 6;\n}\n.details {\n  width: 100%;\n}\n.details p {\n  width: 100%;\n}\n.main-row {\n  width: inherit;\n}\n", ""]);
+exports.push([module.i, "\n.post-data {\n  font-size: 1.2em;\n}\n.separator {\n  height: 1px;\n  border-radius: 10px;\n  background-color: gainsboro;\n}\n.post {\n  padding: 3%;\n  background-color: white;\n  border-radius: 10px;\n  margin-bottom: 3%;\n  box-shadow: 1px 9px 18px -11px rgba(191, 191, 191, 1);\n}\n.post-detail {\n  color: #a7a7a7;\n}\n.post-info {\n  margin-top: 1%;\n  margin-bottom: 1%;\n  padding: 1%;\n}\n.topics-container {\n  margin-top: 1%;\n  margin-bottom: 1%;\n  padding: 1%;\n}\n.topic {\n  background-color: #e7f3ff;\n  margin-right: 4px;\n  color: #427fc2;\n  font-size: 0.7em;\n  padding: 2%;\n  padding-bottom: 0.7%;\n  padding-top: 0.7%;\n  border-radius: 5px;\n  font-weight: 600;\n}\n.grid {\n  display: grid;\n  grid-template-columns: repeat(5, 1fr);\n  grid-template-rows: 1fr;\n  grid-column-gap: 0px;\n  grid-row-gap: 0px;\n}\n.grid-1 {\n  grid-area: 1 / 1 / 2 / 4;\n}\n.grid-2 {\n  grid-area: 1 / 4 / 2 / 6;\n}\n.details {\n  width: 100%;\n}\n.details p {\n  width: 100%;\n}\n.main-row {\n  width: inherit;\n}\n", ""]);
 
 // exports
 
@@ -43446,14 +43546,31 @@ var render = function() {
         ]),
         _vm._v(" "),
         _vm.img
-          ? _c("div", { staticClass: "col-12 col-md-6 p-2" }, [
-              _c("img", { attrs: { src: _vm.img, width: "100%" } })
+          ? _c("div", { staticClass: "col-12 col-md-4 p-2 text-center" }, [
+              _c("img", { attrs: { src: _vm.img, height: "180px" } }),
+              _vm._v(" "),
+              _c("div", { staticClass: "text-center" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-light btn-sm",
+                    attrs: {
+                      type: "button",
+                      "data-toggle": "modal",
+                      "data-target": "#show-img",
+                      "data-img": _vm.img,
+                      "data-post": _vm.content
+                    }
+                  },
+                  [_c("i", { staticClass: "fa fa-eye" })]
+                )
+              ])
             ])
           : _vm._e(),
         _vm._v(" "),
         _c(
           "div",
-          { class: _vm.img ? "col-12 col-md-6 pl-2" : "col-12 col-md-12 pl-2" },
+          { class: _vm.img ? "col-12 col-md-8 pl-2" : "col-12 col-md-12 pl-2" },
           [
             _c("div", { staticClass: "d-flex bd-highlight" }, [
               _c("div", { staticClass: "p-2 w-100 bd-highlight" }, [
@@ -43562,7 +43679,9 @@ var render = function() {
           ]
         )
       ]
-    )
+    ),
+    _vm._v(" "),
+    _vm._m(2)
   ])
 }
 var staticRenderFns = [
@@ -43612,6 +43731,73 @@ var staticRenderFns = [
         [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
       )
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "show-img",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "modelTitleId",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c("h5", { staticClass: "modal-title" }, [
+                  _vm._v("Modal title")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "close",
+                    attrs: {
+                      type: "button",
+                      "data-dismiss": "modal",
+                      "aria-label": "Close"
+                    }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("×")
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "w-100 text-center" }, [
+                  _c("img", { attrs: { src: "", alt: "", width: "100%" } })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("Ok")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -43656,7 +43842,104 @@ var render = function() {
             domProps: { value: _vm.csrf }
           }),
           _vm._v(" "),
-          _vm._m(0)
+          _c("div", { staticClass: "form-container" }, [
+            _c("div", { staticClass: "row" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-8 col-12" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c(
+                    "div",
+                    {
+                      class: _vm.images.length
+                        ? "col-12 col-md-4 text-center"
+                        : ""
+                    },
+                    [
+                      _c("img", {
+                        staticClass: "img-fluid",
+                        staticStyle: { "max-height": "200px" },
+                        attrs: { src: _vm.images[0] }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      class: _vm.images.length
+                        ? "col-md-8 col-12 form-group"
+                        : "col-12 col-md-12 form-group"
+                    },
+                    [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c("textarea", {
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          name: "content",
+                          id: "content",
+                          placeholder: "Escribe aquí la pieza o refacción",
+                          cols: "30",
+                          rows: "3"
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: !_vm.images.length,
+                          expression: "!images.length"
+                        }
+                      ],
+                      staticClass: "form-group col-12"
+                    },
+                    [
+                      _vm._m(2),
+                      _vm._v(" "),
+                      _c("input", {
+                        staticClass: "form-control-file",
+                        attrs: {
+                          type: "file",
+                          name: "file",
+                          id: "file",
+                          placeholder: "Subir archivo",
+                          "aria-describedby": "fileHelpId"
+                        },
+                        on: { change: _vm.onFileChange }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      class: _vm.images.length
+                        ? "col-md-8 offset-md-4"
+                        : "col-12"
+                    },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-secondary text-white",
+                          attrs: { type: "submit" }
+                        },
+                        [_vm._v("Hacer publicación")]
+                      )
+                    ]
+                  )
+                ])
+              ])
+            ])
+          ])
         ]
       )
     ]
@@ -43667,73 +43950,34 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-container" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-12 col-md-4" }, [
-          _c("div", { staticClass: "alert alert-warning text-justify" }, [
-            _vm._v(
-              "Realiza tu anuncio detallando la marca, submarca, modelo, si es vehículo nacional o extranjero, factura original o refacturado y especifica la situación en la que se encuentre."
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-8 col-12" }, [
-          _c("div", { staticClass: "col-12 form-group" }, [
-            _c("label", { attrs: { for: "content" } }, [
-              _c("b", [_vm._v("Pieza o refacción")])
-            ]),
-            _vm._v(" "),
-            _c("textarea", {
-              staticClass: "form-control",
-              attrs: {
-                type: "text",
-                name: "content",
-                id: "content",
-                placeholder: "Escribe aquí la pieza o refacción",
-                cols: "30",
-                rows: "5"
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group col-12" }, [
-            _c("label", { attrs: { for: "file" } }, [
-              _c("b", [_vm._v("Foto o imagen")]),
-              _vm._v(" "),
-              _c(
-                "small",
-                {
-                  staticClass: "form-text text-muted",
-                  attrs: { id: "fileHelpId" }
-                },
-                [_vm._v("*Opcional")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control-file",
-              attrs: {
-                type: "file",
-                name: "file",
-                id: "file",
-                placeholder: "Subir archivo",
-                "aria-describedby": "fileHelpId"
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-12" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-secondary text-white",
-                attrs: { type: "submit" }
-              },
-              [_vm._v("Hacer publicación")]
-            )
-          ])
-        ])
+    return _c("div", { staticClass: "col-12 col-md-4" }, [
+      _c("div", { staticClass: "alert alert-warning text-justify" }, [
+        _vm._v(
+          "Realiza tu anuncio detallando la marca, submarca, modelo, si es vehículo nacional o extranjero, factura original o refacturado y especifica la situación en la que se encuentre."
+        )
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "content" } }, [
+      _c("b", [_vm._v("Pieza o refacción")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "file" } }, [
+      _c("b", [_vm._v("Foto o imagen")]),
+      _vm._v(" "),
+      _c(
+        "small",
+        { staticClass: "form-text text-muted", attrs: { id: "fileHelpId" } },
+        [_vm._v("*Opcional")]
+      )
     ])
   }
 ]
@@ -101206,12 +101450,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _assets_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./assets/router */ "./resources/js/assets/router.js");
 /* harmony import */ var vuetify__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuetify */ "./node_modules/vuetify/dist/vuetify.js");
 /* harmony import */ var vuetify__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuetify__WEBPACK_IMPORTED_MODULE_1__);
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
@@ -101221,115 +101459,6 @@ var app = new Vue({
   router: _assets_router__WEBPACK_IMPORTED_MODULE_0__["default"],
   vuetify: new vuetify__WEBPACK_IMPORTED_MODULE_1___default.a()
 });
-
-var MyUploadAdapter = /*#__PURE__*/function () {
-  function MyUploadAdapter(loader, url) {
-    _classCallCheck(this, MyUploadAdapter);
-
-    // The file loader instance to use during the upload.
-    this.loader = loader;
-    this.url = url;
-  } // Starts the upload process.
-
-
-  _createClass(MyUploadAdapter, [{
-    key: "upload",
-    value: function upload() {
-      var _this = this;
-
-      return this.loader.file.then(function (file) {
-        return new Promise(function (resolve, reject) {
-          _this._initRequest();
-
-          _this._initListeners(resolve, reject, file);
-
-          _this._sendRequest(file);
-        });
-      });
-    } // Aborts the upload process.
-
-  }, {
-    key: "abort",
-    value: function abort() {
-      if (this.xhr) {
-        this.xhr.abort();
-      }
-    } // Initializes the XMLHttpRequest object using the URL passed to the constructor.
-
-  }, {
-    key: "_initRequest",
-    value: function _initRequest() {
-      var xhr = this.xhr = new XMLHttpRequest(); // Note that your request may look different. It is up to you and your editor
-      // integration to choose the right communication channel. This example uses
-      // a POST request with JSON as a data structure but your configuration
-      // could be different.
-
-      xhr.open('POST', this.url, true);
-      xhr.responseType = 'json';
-    } // Initializes XMLHttpRequest listeners.
-
-  }, {
-    key: "_initListeners",
-    value: function _initListeners(resolve, reject, file) {
-      var xhr = this.xhr;
-      var loader = this.loader;
-      var genericErrorText = "Couldn't upload file: ".concat(file.name, ".");
-      xhr.addEventListener('error', function () {
-        return reject(genericErrorText);
-      });
-      xhr.addEventListener('abort', function () {
-        return reject();
-      });
-      xhr.addEventListener('load', function () {
-        var response = xhr.response; // This example assumes the XHR server's "response" object will come with
-        // an "error" which has its own "message" that can be passed to reject()
-        // in the upload promise.
-        //
-        // Your integration may handle upload errors in a different way so make sure
-        // it is done properly. The reject() function must be called when the upload fails.
-
-        if (!response || response.error) {
-          return reject(response && response.error ? response.error.message : genericErrorText);
-        } // If the upload is successful, resolve the upload promise with an object containing
-        // at least the "default" URL, pointing to the image on the server.
-        // This URL will be used to display the image in the content. Learn more in the
-        // UploadAdapter#upload documentation.
-
-
-        resolve({
-          "default": response.url
-        });
-      }); // Upload progress when it is supported. The file loader has the #uploadTotal and #uploaded
-      // properties which are used e.g. to display the upload progress bar in the editor
-      // user interface.
-
-      if (xhr.upload) {
-        xhr.upload.addEventListener('progress', function (evt) {
-          if (evt.lengthComputable) {
-            loader.uploadTotal = evt.total;
-            loader.uploaded = evt.loaded;
-          }
-        });
-      }
-    } // Prepares the data and sends the request.
-
-  }, {
-    key: "_sendRequest",
-    value: function _sendRequest(file) {
-      // Prepare the form data.
-      var data = new FormData();
-      data.append('upload', file); // Important note: This is the right place to implement security mechanisms
-      // like authentication and CSRF protection. For instance, you can use
-      // XMLHttpRequest.setRequestHeader() to set the request headers containing
-      // the CSRF token generated earlier by your application.
-      // Send the request.
-
-      this.xhr.send(data);
-    }
-  }]);
-
-  return MyUploadAdapter;
-}();
 
 /***/ }),
 

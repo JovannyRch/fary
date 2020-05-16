@@ -18,11 +18,24 @@
 
           <hr />
         </div>
-        <div v-if="img" class="col-12 col-md-6 p-2">
-          <img :src="img" width="100%" />
+        <div v-if="img" class="col-12 col-md-4 p-2 text-center">
+          <img :src="img" height="180px" />
+
+          <div class="text-center">
+            <button
+              type="button"
+              class="btn btn-light btn-sm"
+              data-toggle="modal"
+              data-target="#show-img"
+              :data-img="img"
+              :data-post="content"
+            >
+              <i class="fa fa-eye"></i>
+            </button>
+          </div>
         </div>
 
-        <div :class="img? 'col-12 col-md-6 pl-2': 'col-12 col-md-12 pl-2'">
+        <div :class="img? 'col-12 col-md-8 pl-2': 'col-12 col-md-12 pl-2'">
           <div class="d-flex bd-highlight">
             <div class="p-2 w-100 bd-highlight">
               <b class="text-secondary grid-1">{{content}}</b>
@@ -78,6 +91,35 @@
         </div>
       </div>
     </div>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="show-img"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="modelTitleId"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="w-100 text-center">
+              <img src alt width="100%" />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -98,7 +140,17 @@ export default {
         .getAttribute("content")
     };
   },
+  mounted() {
+    $("#show-img").on("show.bs.modal", function(event) {
+      var button = $(event.relatedTarget);
+      var img = button.data("img");
+      var content = button.data("post");
 
+      var modal = $(this);
+      modal.find(".modal-title").text(content);
+      modal.find("img").attr("src", img);
+    });
+  },
   methods: {
     isValidateImg(img) {},
     deletePost() {
@@ -134,12 +186,12 @@ export default {
   background-color: white;
   border-radius: 10px;
   margin-bottom: 3%;
+  -webkit-box-shadow: 1px 9px 18px -11px rgba(191, 191, 191, 1);
+  -moz-box-shadow: 1px 9px 18px -11px rgba(191, 191, 191, 1);
+  box-shadow: 1px 9px 18px -11px rgba(191, 191, 191, 1);
 }
 .post-detail {
   color: #a7a7a7;
-}
-
-.post-user {
 }
 
 .post-info {

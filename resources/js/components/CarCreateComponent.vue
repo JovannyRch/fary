@@ -88,8 +88,6 @@ export default {
       if (!files.length) return;
       let i = 1;
       for (const img of files) {
-        console.log("Agregar esto:");
-
         this.createImage(img);
         i++;
         if (i == 7) break;

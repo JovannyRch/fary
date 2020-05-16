@@ -11,37 +11,45 @@
             >Realiza tu anuncio detallando la marca, submarca, modelo, si es vehículo nacional o extranjero, factura original o refacturado y especifica la situación en la que se encuentre.</div>
           </div>
           <div class="col-md-8 col-12">
-            <div class="col-12 form-group">
-              <label for="content">
-                <b>Pieza o refacción</b>
-              </label>
-              <textarea
-                type="text"
-                name="content"
-                id="content"
-                class="form-control"
-                placeholder="Escribe aquí la pieza o refacción"
-                cols="30"
-                rows="5"
-              ></textarea>
-            </div>
+            <div class="row">
+              <div :class="images.length? 'col-12 col-md-4 text-center':''">
+                <img style="max-height: 200px" class="img-fluid" :src="images[0]" />
+              </div>
+              <div
+                :class="images.length?'col-md-8 col-12 form-group':'col-12 col-md-12 form-group'"
+              >
+                <label for="content">
+                  <b>Pieza o refacción</b>
+                </label>
+                <textarea
+                  type="text"
+                  name="content"
+                  id="content"
+                  class="form-control"
+                  placeholder="Escribe aquí la pieza o refacción"
+                  cols="30"
+                  rows="3"
+                ></textarea>
+              </div>
+              <div v-show="!images.length" class="form-group col-12">
+                <label for="file">
+                  <b>Foto o imagen</b>
+                  <small id="fileHelpId" class="form-text text-muted">*Opcional</small>
+                </label>
+                <input
+                  type="file"
+                  class="form-control-file"
+                  name="file"
+                  id="file"
+                  placeholder="Subir archivo"
+                  aria-describedby="fileHelpId"
+                  @change="onFileChange"
+                />
+              </div>
 
-            <div class="form-group col-12">
-              <label for="file">
-                <b>Foto o imagen</b>
-                <small id="fileHelpId" class="form-text text-muted">*Opcional</small>
-              </label>
-              <input
-                type="file"
-                class="form-control-file"
-                name="file"
-                id="file"
-                placeholder="Subir archivo"
-                aria-describedby="fileHelpId"
-              />
-            </div>
-            <div class="col-12">
-              <button type="submit" class="btn btn-secondary text-white">Hacer publicación</button>
+              <div :class="images.length?'col-md-8 offset-md-4':'col-12'">
+                <button type="submit" class="btn btn-secondary text-white">Hacer publicación</button>
+              </div>
             </div>
           </div>
         </div>
@@ -62,10 +70,32 @@ export default {
       selectedFile: null,
       csrf: document
         .querySelector('meta[name="csrf-token"]')
-        .getAttribute("content")
+        .getAttribute("content"),
+      images: []
     };
   },
-  methods: {}
+  methods: {
+    onFileChange(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length) return;
+      let i = 1;
+      for (const img of files) {
+        this.createImage(img);
+        i++;
+        if (i == 7) break;
+      }
+    },
+    createImage(file) {
+      var image = new Image();
+      this.images = [];
+      var vm = this;
+      var reader = new FileReader();
+      reader.onload = e => {
+        vm.images.push(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  }
 };
 </script>
 

@@ -130,7 +130,7 @@ export default {
 }
 
 .comment {
-  background-color: rgb(235, 236, 233);
+  background-color: rgb(243, 243, 242);
   margin-bottom: 15px;
   padding-top: 1.5%;
   padding-left: 1.5%;

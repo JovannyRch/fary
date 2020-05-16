@@ -24,7 +24,7 @@ class CarsController extends Controller
     }
 
     public function store(Request $request){
-        dd($request->latitud);
+        
         $car = new Car();
     
         if($request->content && $request->imgs ){

@@ -1,22 +1,24 @@
 <template>
   <div class="mt-2">
-    <form @submit.prevent="sendComment()">
-      <div class="row">
-        <div class="col-12 col-md-10 pr-2 pl-4" v-if="user_id">
-          <div class="form-group">
-            <input
-              type="text"
-              v-model="commentInput"
-              class="form-control"
-              placeholder="Escribe aquí tu comentario"
-              aria-describedby="helpId"
-            />
+    <form @submit.prevent="sendComment()" v-if="user_id ">
+      <div class="row ml-2">
+        <div class="col-11 col-md-11">
+          <div class="form-row text-center">
+            <div class="form-group col-10">
+              <input
+                type="text"
+                v-model="commentInput"
+                class="form-control"
+                placeholder="Escribe aquí tu comentario"
+                aria-describedby="helpId"
+              />
+            </div>
+            <div class="form-group col-1 col-md-1">
+              <button type="submit" name id class="btn btn-secondary text-white">
+                <i class="fa fa-paper-plane"></i>
+              </button>
+            </div>
           </div>
-        </div>
-        <div class="col-12 col-md-2" v-if="user_id">
-          <button type="submit" name id class="btn btn-secondary text-white">
-            <i class="fa fa-paper-plane"></i>
-          </button>
         </div>
       </div>
     </form>
@@ -70,7 +72,8 @@ export default {
       commentInput: "",
       user_id: document
         .querySelector('meta[name="user_id"]')
-        .getAttribute("content")
+        .getAttribute("content"),
+      type: document.querySelector('meta[name="type"]').getAttribute("content")
     };
   },
   methods: {

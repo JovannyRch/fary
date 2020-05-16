@@ -4,26 +4,28 @@
       @submit.prevent="sendComment()"
       v-if="user_id && (owner_post == user_id || type != 'normal')"
     >
-      <div class="row">
-        <div class="col-10 col-md-10 pr-2">
-          <div class="form-group">
-            <input
-              type="text"
-              v-model="commentInput"
-              class="form-control"
-              placeholder="Escribe aquí tu comentario"
-              aria-describedby="helpId"
-            />
+      <div class="row ml-2">
+        <div class="col-11 col-md-11">
+          <div class="form-row text-center">
+            <div class="form-group col-10">
+              <input
+                type="text"
+                v-model="commentInput"
+                class="form-control"
+                placeholder="Escribe aquí tu comentario"
+                aria-describedby="helpId"
+              />
+            </div>
+            <div class="form-group col-1 col-md-1">
+              <button type="submit" name id class="btn btn-secondary text-white">
+                <i class="fa fa-paper-plane"></i>
+              </button>
+            </div>
           </div>
-        </div>
-        <div class="col-12 col-md-2">
-          <button type="submit" name id class="btn btn-secondary text-white">
-            <i class="fa fa-paper-plane"></i>
-          </button>
         </div>
       </div>
     </form>
-    <div class="mt-1 mb-1" v-if="comments.length">
+    <div class="mb-1" v-if="comments.length">
       <small>
         <b>Comentarios</b>
       </small>
@@ -136,7 +138,7 @@ export default {
   padding-left: 1.5%;
   padding-right: 1.5%;
   border-radius: 10px;
-  margin-right: 7px;
+  margin-right: 2px;
   margin-left: 2px;
   -webkit-box-shadow: 6px 9px 18px -11px rgba(191, 191, 191, 1);
   -moz-box-shadow: 6px 9px 18px -11px rgba(191, 191, 191, 1);

@@ -29,6 +29,7 @@
                   <div style="background-color: transparent" v-for="(c,index) in cars" :key="c.id">
                     <img
                       :src="currentAds[(index-2)/2].url"
+                      width="100%"
                       v-if=" (index -2) >= 0 &&(index-2)% 2==0 && (index-2)/2 < currentAds.length  "
                       class="d-block d-md-none text-center mb-3"
                     />

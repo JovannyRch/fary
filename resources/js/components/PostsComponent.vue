@@ -23,6 +23,7 @@
           <div style="background-color: transparent" v-for="(p,index) in posts" :key="p.id">
             <img
               :src="ads[(index-2)/2].url"
+              width="100%"
               v-if=" (index -2) >= 0 &&(index-2)% 2==0 && (index-2)/2 < ads.length  "
               class="d-block d-md-none text-center mb-3"
             />

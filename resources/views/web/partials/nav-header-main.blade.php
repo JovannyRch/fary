@@ -2,8 +2,8 @@
     <div class="container">
       <router-link to="/" class="navbar-brand">
         <h4 >
-          <img src="/images/icon.png" width="10%" >
-        <b>Fary</b>
+        <b class="d-block d-md-none" style="font-size: 1.3em">Fary</b>
+        <b class="d-none d-md-block">Fary</b>
         </h4>
       </router-link>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

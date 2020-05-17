@@ -2132,6 +2132,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {},
   data: function data() {
@@ -42760,107 +42767,111 @@ var render = function() {
         [
           _c("div", { staticClass: "form-container" }, [
             _c("div", { staticClass: "row" }, [
-              _c("input", {
-                attrs: { type: "hidden", name: "_token" },
-                domProps: { value: _vm.csrf }
-              }),
-              _vm._v(" "),
-              _c("input", {
-                attrs: { type: "hidden", name: "user_id" },
-                domProps: { value: _vm.user_id }
-              }),
-              _vm._v(" "),
               _vm._m(0),
               _vm._v(" "),
-              _c("b", [_vm._v("Fotos o imágenes")]),
-              _vm._v(" "),
-              _c(
-                "small",
-                { staticClass: "text-muted ml-2", attrs: { id: "helpId" } },
-                [_vm._v("* Máximo 6 archivos")]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: !_vm.images.length,
-                      expression: "!images.length"
-                    }
-                  ],
-                  staticClass: "col-12"
-                },
-                [
-                  _c("br"),
-                  _vm._v(" "),
-                  _c("input", {
-                    attrs: {
-                      required: "",
-                      type: "file",
-                      name: "imgs[]",
-                      multiple: ""
-                    },
-                    on: { change: _vm.onFileChange }
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.images.length,
-                      expression: "images.length"
-                    }
+              _c("div", { staticClass: "col-md-8 col-12" }, [
+                _c("input", {
+                  attrs: { type: "hidden", name: "_token" },
+                  domProps: { value: _vm.csrf }
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  attrs: { type: "hidden", name: "user_id" },
+                  domProps: { value: _vm.user_id }
+                }),
+                _vm._v(" "),
+                _vm._m(1),
+                _vm._v(" "),
+                _c("b", [_vm._v("Fotos o imágenes")]),
+                _vm._v(" "),
+                _c(
+                  "small",
+                  { staticClass: "text-muted ml-2", attrs: { id: "helpId" } },
+                  [_vm._v("* Máximo 6 archivos")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: !_vm.images.length,
+                        expression: "!images.length"
+                      }
+                    ],
+                    staticClass: "col-12"
+                  },
+                  [
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("input", {
+                      attrs: {
+                        required: "",
+                        type: "file",
+                        name: "imgs[]",
+                        multiple: ""
+                      },
+                      on: { change: _vm.onFileChange }
+                    })
                   ]
-                },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "row" },
-                    _vm._l(_vm.images, function(img, index) {
-                      return _c(
-                        "div",
-                        { key: index, class: "col-4 p-3 col-md-" + _vm.calc },
-                        [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-outline-light text-dark",
-                              attrs: { type: "button" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.removeImage(index)
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.images.length,
+                        expression: "images.length"
+                      }
+                    ]
+                  },
+                  [
+                    _c(
+                      "div",
+                      { staticClass: "row" },
+                      _vm._l(_vm.images, function(img, index) {
+                        return _c(
+                          "div",
+                          { key: index, class: "col-4 p-3 col-md-" + _vm.calc },
+                          [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-outline-light text-dark",
+                                attrs: { type: "button" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.removeImage(index)
+                                  }
                                 }
-                              }
-                            },
-                            [_vm._v("Quitar")]
-                          ),
-                          _vm._v(" "),
-                          _c("br"),
-                          _vm._v(" "),
-                          _c("br"),
-                          _vm._v(" "),
-                          _c("img", {
-                            staticClass: "img-fluid",
-                            staticStyle: { "max-height": "300px" },
-                            attrs: { src: img }
-                          })
-                        ]
-                      )
-                    }),
-                    0
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _vm._m(1)
+                              },
+                              [_vm._v("Quitar")]
+                            ),
+                            _vm._v(" "),
+                            _c("br"),
+                            _vm._v(" "),
+                            _c("br"),
+                            _vm._v(" "),
+                            _c("img", {
+                              staticClass: "img-fluid",
+                              staticStyle: { "max-height": "300px" },
+                              attrs: { src: img }
+                            })
+                          ]
+                        )
+                      }),
+                      0
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _vm._m(2)
+              ])
             ])
           ])
         ]
@@ -42869,6 +42880,18 @@ var render = function() {
   )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-12 col-md-4" }, [
+      _c("div", { staticClass: "alert alert-warning text-justify" }, [
+        _vm._v(
+          "Realiza tu anuncio detallando la marca, submarca, modelo, si es vehículo nacional o extranjero, factura original o refacturado y especifica la situación en la que se encuentre."
+        )
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -43965,7 +43988,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "col-12 col-md-4" }, [
       _c("div", { staticClass: "alert alert-warning text-justify" }, [
         _vm._v(
-          "Realiza tu anuncio detallando la marca, submarca, modelo, si es vehículo nacional o extranjero, factura original o refacturado y especifica la situación en la que se encuentre."
+          "Para un comentario de calidad escriba su pieza o refacción que busca, marca, submarca, si es nacional o extranjera y alguna descripción que complete la información"
         )
       ])
     ])

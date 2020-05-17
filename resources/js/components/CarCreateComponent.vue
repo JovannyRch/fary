@@ -10,46 +10,45 @@
     >
       <div class="form-container">
         <div class="row">
-          <input type="hidden" name="_token" :value="csrf" />
-          <input type="hidden" name="user_id" :value="user_id" />
-
-          <div class="col-12 form-group">
-            <label for="content">
-              <b>Contenido</b>
-            </label>
-            <input
-              type="text"
-              name="content"
-              id="content"
-              class="form-control"
-              required
-              placeholder="Escribe aquí la información sobre el auto"
-            />
+          <div class="col-12 col-md-4">
+            <div
+              class="alert alert-warning text-justify"
+            >Realiza tu anuncio detallando la marca, submarca, modelo, si es vehículo nacional o extranjero, factura original o refacturado y especifica la situación en la que se encuentre.</div>
           </div>
-          <b>Fotos o imágenes</b>
-          <small id="helpId" class="text-muted ml-2">* Máximo 6 archivos</small>
+          <div class="col-md-8 col-12">
+            <input type="hidden" name="_token" :value="csrf" />
+            <input type="hidden" name="user_id" :value="user_id" />
 
-          <div v-show="!images.length" class="col-12">
-            <br />
-            <input required type="file" name="imgs[]" multiple @change="onFileChange" />
-          </div>
-          <div v-show="images.length">
-            <div class="row">
-              <div v-for="(img,index) in images" :key="index" :class="'col-4 p-3 col-md-'+calc">
-                <button
-                  type="button"
-                  class="btn btn-outline-light text-dark"
-                  @click="removeImage(index)"
-                >Quitar</button>
-                <br />
-                <br />
+            <div class="col-12 form-group">
+              <label for="content">
+                <b>Contenido</b>
+              </label>
+              <input
+                type="text"
+                name="content"
+                id="content"
+                class="form-control"
+                required
+                placeholder="Escribe aquí la información sobre el auto"
+              />
+            </div>
+            <b>Fotos o imágenes</b>
+            <small id="helpId" class="text-muted ml-2">* Máximo 6 archivos</small>
 
-                <img style="max-height: 300px" class="img-fluid" :src="img" />
+            <div v-show="!images.length" class="col-12">
+              <br />
+              <input required type="file" name="imgs[]" multiple @change="onFileChange" />
+            </div>
+            <div v-show="images.length">
+              <div class="row">
+                <div v-for="(img,index) in images" :key="index" :class="'col-4 p-3 col-md-'+calc">
+                  <img style="max-height: 300px" class="img-fluid" :src="img" />
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-12 mt-2">
-            <button type="submit" class="btn btn-secondary text-white">Hacer publicación</button>
+            <div class="col-12 mt-2">
+              <button type="submit" class="btn btn-secondary text-white">Hacer publicación</button>
+            </div>
           </div>
         </div>
       </div>

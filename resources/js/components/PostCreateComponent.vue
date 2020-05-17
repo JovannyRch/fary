@@ -8,7 +8,7 @@
           <div class="col-12 col-md-4">
             <div
               class="alert alert-warning text-justify"
-            >Realiza tu anuncio detallando la marca, submarca, modelo, si es vehículo nacional o extranjero, factura original o refacturado y especifica la situación en la que se encuentre.</div>
+            >Para un comentario de calidad escriba su pieza o refacción que busca, marca, submarca, si es nacional o extranjera y alguna descripción que complete la información</div>
           </div>
           <div class="col-md-8 col-12">
             <div class="row">

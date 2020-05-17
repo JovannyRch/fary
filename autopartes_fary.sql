@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 17-05-2020 a las 01:42:36
+-- Tiempo de generación: 17-05-2020 a las 02:00:05
 -- Versión del servidor: 10.1.36-MariaDB
 -- Versión de PHP: 5.6.38
 
@@ -21,6 +21,29 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `autopartes_fary`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `ads`
+--
+
+CREATE TABLE `ads` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `url` text NOT NULL,
+  `negocio_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `tiempo` tinyint(3) UNSIGNED DEFAULT '7',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `ads`
+--
+
+INSERT INTO `ads` (`id`, `url`, `negocio_id`, `tiempo`, `created_at`, `updated_at`) VALUES
+(8, '/images/1589585497.jpeg', 1, 7, '2020-05-16 04:31:37', '2020-05-16 04:31:37'),
+(9, '/images/1589585536.jpeg', 2, 7, '2020-05-16 04:32:16', '2020-05-16 04:32:16');
 
 -- --------------------------------------------------------
 
@@ -232,6 +255,62 @@ INSERT INTO `posts` (`id`, `img`, `content`, `created_at`, `updated_at`, `user_i
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `tipos`
+--
+
+CREATE TABLE `tipos` (
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `tipos`
+--
+
+INSERT INTO `tipos` (`created_at`, `updated_at`, `id`, `name`) VALUES
+('2020-04-28 10:25:42', '2020-04-28 10:25:42', 2, 'TALLERES MECANICOS'),
+('2020-04-28 10:25:47', '2020-04-28 10:25:47', 3, 'LAVADO DE AUTOS'),
+('2020-04-28 10:26:00', '2020-04-28 10:26:00', 5, 'TALLERES DE HOJALATERIA Y PINTURA'),
+('2020-04-28 10:26:08', '2020-04-28 10:26:08', 7, 'TALACHERAS'),
+('2020-04-28 10:26:11', '2020-04-28 10:26:11', 8, 'REPARACION DE CAJAS AUTOMATICAS'),
+('2020-05-01 02:20:24', '2020-05-01 02:20:24', 9, 'NEGOCIOS DE AUTO PARTES USADAS'),
+('2020-05-01 02:20:45', '2020-05-01 02:20:45', 10, 'TALLERES ELECTRICOS'),
+('2020-05-01 02:21:34', '2020-05-01 02:21:34', 11, 'REFACCIONARIAS');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipos_negocios`
+--
+
+CREATE TABLE `tipos_negocios` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `negocio_id` bigint(20) UNSIGNED NOT NULL,
+  `tipo_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `tipos_negocios`
+--
+
+INSERT INTO `tipos_negocios` (`id`, `negocio_id`, `tipo_id`, `created_at`, `updated_at`) VALUES
+(2, 1, 2, '2020-04-28 05:27:02', '2020-04-28 05:27:02'),
+(3, 1, 5, '2020-04-28 05:27:02', '2020-04-28 05:27:02'),
+(10, 2, 5, '2020-04-30 21:14:16', '2020-04-30 21:14:16'),
+(11, 2, 8, '2020-04-30 21:14:16', '2020-04-30 21:14:16'),
+(12, 3, 11, '2020-04-30 21:23:57', '2020-04-30 21:23:57'),
+(25, 4, 2, '2020-04-30 21:44:56', '2020-04-30 21:44:56'),
+(26, 4, 8, '2020-04-30 21:44:56', '2020-04-30 21:44:56'),
+(27, 5, 9, '2020-04-30 21:47:22', '2020-04-30 21:47:22'),
+(28, 6, 11, '2020-04-30 21:51:41', '2020-04-30 21:51:41');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `users`
 --
 
@@ -263,9 +342,27 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `ad
 (6, 'Otro usuario', 'jovannyrch3@gmail.com', NULL, '$2y$10$YrQnfZxoq4NkmJqFkVSpN.Ln3FnUCVmcg8ZNdR4pBOy5xL9iE2m/6', 'Toluca, Edomex', '123123123', NULL, '2020-05-07 07:38:56', '2020-05-07 07:38:56', NULL, 'normal'),
 (7, 'Dueño de negocio', 'correo4@gmail.com', NULL, '$2y$10$bhrHOeiNR351R6M5ulmACO1.inAFzF4sZHsg/kLyl9mnf9svaLu8y', 'Toluca, Edomex', '7121397374', NULL, '2020-05-17 00:17:01', '2020-05-17 00:17:01', NULL, 'normal');
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `visitas`
+--
+
+CREATE TABLE `visitas` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `contador` bigint(20) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=koi8u;
+
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `ads`
+--
+ALTER TABLE `ads`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `negocio_id` (`negocio_id`);
 
 --
 -- Indices de la tabla `cars`
@@ -324,6 +421,20 @@ ALTER TABLE `posts`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Indices de la tabla `tipos`
+--
+ALTER TABLE `tipos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `tipos_negocios`
+--
+ALTER TABLE `tipos_negocios`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `negocio_id` (`negocio_id`),
+  ADD KEY `tipo_id` (`tipo_id`);
+
+--
 -- Indices de la tabla `users`
 --
 ALTER TABLE `users`
@@ -331,8 +442,20 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `users_api_token_unique` (`api_token`);
 
 --
+-- Indices de la tabla `visitas`
+--
+ALTER TABLE `visitas`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
+
+--
+-- AUTO_INCREMENT de la tabla `ads`
+--
+ALTER TABLE `ads`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `cars`
@@ -383,14 +506,38 @@ ALTER TABLE `posts`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
+-- AUTO_INCREMENT de la tabla `tipos`
+--
+ALTER TABLE `tipos`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT de la tabla `tipos_negocios`
+--
+ALTER TABLE `tipos_negocios`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT de la tabla `visitas`
+--
+ALTER TABLE `visitas`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `ads`
+--
+ALTER TABLE `ads`
+  ADD CONSTRAINT `ads_ibfk_1` FOREIGN KEY (`negocio_id`) REFERENCES `negocios` (`id`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `cars`
@@ -429,6 +576,13 @@ ALTER TABLE `negocios`
 --
 ALTER TABLE `posts`
   ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `tipos_negocios`
+--
+ALTER TABLE `tipos_negocios`
+  ADD CONSTRAINT `tipos_negocios_ibfk_1` FOREIGN KEY (`negocio_id`) REFERENCES `negocios` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `tipos_negocios_ibfk_2` FOREIGN KEY (`tipo_id`) REFERENCES `tipos` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

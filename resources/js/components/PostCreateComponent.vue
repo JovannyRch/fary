@@ -1,7 +1,13 @@
 <template>
   <div class="container" id="form-container">
     <h2 class="title-page">Crear un pedido</h2>
-    <form action="/posts/save" method="post" enctype="multipart/form-data">
+    <form
+      action="/posts/save"
+      @submit.prevent="addLocation"
+      id="form-create"
+      method="post"
+      enctype="multipart/form-data"
+    >
       <input type="hidden" name="_token" :value="csrf" />
       <div class="form-container">
         <div class="row">
@@ -94,6 +100,28 @@ export default {
         vm.images.push(e.target.result);
       };
       reader.readAsDataURL(file);
+    },
+    async addLocation() {
+      let result = await navigator.permissions.query({ name: "geolocation" });
+      if (result.state === "granted") {
+        navigator.geolocation.getCurrentPosition(location => {
+          console.log("Obteniendo ubicacion");
+          let lat = location.coords.latitude;
+          let long = location.coords.longitude;
+          this.insertLocation(lat, long);
+          $("#form-create").submit();
+        });
+      } else {
+        $("#form-create").submit();
+      }
+    },
+    insertLocation(lat, long) {
+      $("#form-create").append(
+        `<input type="hidden"   name='latitud'  value=${lat} />`
+      );
+      $("#form-create").append(
+        `<input type="hidden"  name='longitud'  value=${long} />`
+      );
     }
   }
 };

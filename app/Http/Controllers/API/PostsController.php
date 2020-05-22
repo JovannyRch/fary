@@ -63,9 +63,13 @@ class PostsController extends Controller
         
         $post->user_id = Auth::user()->id; 
         
-        /* $request->validate([
-            'image'=> 'required|mimes:jpeg,bmp,png|max:10240'
-        ]); */
+        
+        if($request->latitud && $request->longitud){
+            //Guardar ubicacion
+            $post->latitud = $request->latitud;
+            $post->longitud = $request->longitud;
+        }
+
         if($request->hasFile('file')){
             $filename = time().".".$request->file->extension();
             $request->file->move(public_path('images'),$filename);

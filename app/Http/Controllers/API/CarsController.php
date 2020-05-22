@@ -30,6 +30,13 @@ class CarsController extends Controller
         if($request->content && $request->imgs ){
             $car->user_id = $request->user_id;
             $car->content = $request->content;
+
+            if($request->latitud && $request->longitud){
+                //Guardar ubicacion
+                $car->latitud = $request->latitud;
+                $car->longitud = $request->longitud;
+            }
+
             $car->save();
             if($car->id){
                 $this->saveImgs($request->imgs,$car->id);
@@ -37,6 +44,8 @@ class CarsController extends Controller
             }
             return back();
         }
+        
+
         $message = "";
         
         return back();

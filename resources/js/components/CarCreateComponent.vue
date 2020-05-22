@@ -2,7 +2,7 @@
   <div class="container" id="form-container">
     <h2 class="title-page">Crear una publicación de auto chocado</h2>
     <form
-      @submi.prevent="addLocation"
+      @submit.prevent="addLocation"
       id="form-create"
       action="/cars/save"
       method="post"
@@ -105,24 +105,27 @@ export default {
     removeImage: function(index) {
       this.images.splice(index, 1);
     },
-    addLocation() {
-      navigator.geolocation.getCurrentPosition(function(location) {
-        let lat = location.coords.latitude;
-        let long = location.coords.longitude;
-        alert(lat);
-        alert(long);
-        $("<input />")
-          .attr("type", "hidden")
-          .attr("name", "latitud")
-          .attr("value", lat)
-          .appendTo("#form");
-        $("<input />")
-          .attr("type", "hidden")
-          .attr("name", "logitud")
-          .attr("value", long)
-          .appendTo("#form");
+    async addLocation() {
+      let result = await navigator.permissions.query({ name: "geolocation" });
+      if (result.state === "granted") {
+        navigator.geolocation.getCurrentPosition(location => {
+          console.log("Obteniendo ubicacion");
+          let lat = location.coords.latitude;
+          let long = location.coords.longitude;
+          this.insertLocation(lat, long);
+          $("#form-create").submit();
+        });
+      } else {
         $("#form-create").submit();
-      });
+      }
+    },
+    insertLocation(lat, long) {
+      $("#form-create").append(
+        `<input type="hidden"   name='latitud'  value=${lat} />`
+      );
+      $("#form-create").append(
+        `<input type="hidden"  name='longitud'  value=${long} />`
+      );
     }
   },
   computed: {

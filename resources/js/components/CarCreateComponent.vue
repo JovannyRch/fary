@@ -107,9 +107,8 @@ export default {
     },
     async addLocation() {
       let result = await navigator.permissions.query({ name: "geolocation" });
-      if (result.state === "granted") {
+      if (result.state === "granted" || result.state == "prompt") {
         navigator.geolocation.getCurrentPosition(location => {
-          console.log("Obteniendo ubicacion");
           let lat = location.coords.latitude;
           let long = location.coords.longitude;
           this.insertLocation(lat, long);

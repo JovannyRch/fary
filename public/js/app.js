@@ -2224,9 +2224,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
               case 2:
                 result = _context.sent;
 
-                if (result.state === "granted") {
+                if (result.state === "granted" || result.state == "prompt") {
                   navigator.geolocation.getCurrentPosition(function (location) {
-                    console.log("Obteniendo ubicacion");
                     var lat = location.coords.latitude;
                     var _long = location.coords.longitude;
 
@@ -3187,9 +3186,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
               case 2:
                 result = _context.sent;
 
-                if (result.state === "granted") {
+                if (result.state === "granted" || result.state == "prompt") {
                   navigator.geolocation.getCurrentPosition(function (location) {
-                    console.log("Obteniendo ubicacion");
                     var lat = location.coords.latitude;
                     var _long = location.coords.longitude;
 

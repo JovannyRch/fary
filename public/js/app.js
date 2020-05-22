@@ -2131,14 +2131,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {},
   data: function data() {
@@ -42839,24 +42831,6 @@ var render = function() {
                           "div",
                           { key: index, class: "col-4 p-3 col-md-" + _vm.calc },
                           [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-outline-light text-dark",
-                                attrs: { type: "button" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.removeImage(index)
-                                  }
-                                }
-                              },
-                              [_vm._v("Quitar")]
-                            ),
-                            _vm._v(" "),
-                            _c("br"),
-                            _vm._v(" "),
-                            _c("br"),
-                            _vm._v(" "),
                             _c("img", {
                               staticClass: "img-fluid",
                               staticStyle: { "max-height": "300px" },

@@ -53,6 +53,28 @@ class PostsController extends Controller
         }
     }
 
+    public function filterPosts($latitud, $longitud, $distance = 30){
+        $sql = " SELECT * FROM (
+            SELECT *, 
+                (
+                    (
+                        (
+                            acos(
+                                sin(( $LATITUDE * pi() / 180))
+                                *
+                                sin(( `latitud` * pi() / 180)) + cos(( $LATITUDE * pi() /180 ))
+                                *
+                                cos(( `latitud` * pi() / 180)) * cos((( $LONGITUDE - `longitud`) * pi()/180)))
+                        ) * 180/pi()
+                    ) * 60 * 1.1515 * 1.609344
+                )
+            as distance FROM `posts`
+        ) posts
+        WHERE distance <= $distance
+        LIMIT 15;
+    ";  
+    }
+
 
     public function create(Request $request){
         
@@ -80,3 +102,4 @@ class PostsController extends Controller
         return redirect('/');
     }
 }
+

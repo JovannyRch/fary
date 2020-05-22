@@ -3185,6 +3185,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
               case 2:
                 result = _context.sent;
+                console.log(result);
 
                 if (result.state === "granted" || result.state == "prompt") {
                   navigator.geolocation.getCurrentPosition(function (location) {
@@ -3199,7 +3200,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
                   $("#form-create").submit();
                 }
 
-              case 4:
+              case 5:
               case "end":
                 return _context.stop();
             }

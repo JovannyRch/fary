@@ -24,10 +24,7 @@
        <nav class="navbar navbar-expand-md shadow-sm navbar-dark bg-dark text-white">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <h4 >
-                       
-                      <b>Fary</b>
-                      </h4>
+                    <h1><span class="badge badge-secondary">Fary</span></h1>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>

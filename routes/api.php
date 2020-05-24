@@ -23,6 +23,10 @@ Route::middleware('auth:API')->get('/user', function (Request $request) {
  //Posts
  Route::post('posts/', 'API\PostsController@create');
  Route::get('posts/', 'API\PostsController@index');
+ Route::get('posts/user/{user_id}', 'API\PostsController@myPosts');
+ Route::get('posts/{lat}/{long}', 'API\PostsController@index');
+ Route::get('posts/search/{content}', 'API\PostsController@search');
+ Route::get('posts/search/{content}/{lat}/{long}', 'API\PostsController@search');
  Route::get('posts/{id}', 'API\PostsController@show');
  Route::delete('posts/{id}', 'API\PostsController@destroy');
  
@@ -34,6 +38,11 @@ Route::middleware('auth:API')->get('/user', function (Request $request) {
  
  //Cars
  Route::get('cars/','API\CarsController@index'); 
+ Route::get('cars/user/{user_id}','API\CarsController@myPosts'); 
+ Route::get('cars/{lat}/{long}','API\CarsController@index'); 
+ Route::get('cars/search/{content}','API\CarsController@search'); 
+ Route::get('cars/search/{content}/{lat}/{long}','API\CarsController@search'); 
+
  Route::post('cars/','API\CarsController@store'); 
  Route::delete('cars/{id}','API\CarsController@destroy'); 
  

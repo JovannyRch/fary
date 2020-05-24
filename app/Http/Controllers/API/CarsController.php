@@ -11,17 +11,92 @@ use Illuminate\Support\Facades\File;
 
 class CarsController extends Controller
 {
-    public function index(){
+    public function index($lat = null, $long = null){
+        if($lat == null && $long == null){
+            $cars = Car::
+            join('users', 'users.id', '=', 'cars.user_id')
+            ->select('cars.*', 'users.name as username')
+            ->orderBy('created_at','desc')
+            ->paginate(40);
+            foreach ($cars as &$car) {
+                $car['imgs'] = DB::select('select url from imgs_cars where car_id = ?', [$car->id]);
+            }
+        }else{
+            $location = $this->queryLocation($lat,$long);
+            $cars = Car::
+            join('users', 'users.id', '=', 'cars.user_id')
+            ->select('cars.*', 'users.name as username',DB::raw($location))
+            ->orderBy('distance','desc')
+            ->orderBy('created_at','desc')
+            ->paginate(40);
+            foreach ($cars as &$car) {
+                $car['imgs'] = DB::select('select url from imgs_cars where car_id = ?', [$car->id]);
+            }
+        }
+        return response()->json(['data' => $cars], 200);
+    }
+
+    public function queryLocation($lat, $long){
+        $lat = doubleval($lat);
+        $long = doubleval($long);
+        return " (
+            (
+                (
+                    acos(
+                        sin(( $lat * pi() / 180))
+                        *
+                        sin(( `latitud` * pi() / 180)) + cos(( $lat * pi() /180 ))
+                        *
+                        cos(( `latitud` * pi() / 180)) * cos((( $long - `longitud`) * pi()/180)))
+                ) * 180/pi()
+            ) * 60 * 1.1515 * 1.609344
+        ) as distance";
+    }
+
+    public function search($content,$lat = null, $long = null){
+        if($lat == null && $long == null){
+            $cars = Car::
+            join('users', 'users.id', '=', 'cars.user_id')
+            ->select('cars.*', 'users.name as username')
+            ->orderBy('created_at','desc')
+            ->where("cars.content","like","%$content%")
+            ->paginate(40);
+            foreach ($cars as &$car) {
+                $car['imgs'] = DB::select('select url from imgs_cars where car_id = ?', [$car->id]);
+            }
+        }else {
+            $location = $this->queryLocation($lat,$long);
+            $cars = Car::
+            join('users', 'users.id', '=', 'cars.user_id')
+            ->select('cars.*', 'users.name as username', DB::raw($location) )
+            ->orderBy('distance','desc')
+            ->orderBy('created_at','desc')
+            ->where("cars.content","like","%$content%")
+            ->paginate(40);
+            foreach ($cars as &$car) {
+                $car['imgs'] = DB::select('select url from imgs_cars where car_id = ?', [$car->id]);
+            }
+        }
+        return response()->json(['data' => $cars], 200);
+    }
+
+
+    public function myPosts($user_id){
+    
+        
         $cars = Car::
         join('users', 'users.id', '=', 'cars.user_id')
         ->select('cars.*', 'users.name as username')
         ->orderBy('created_at','desc')
-        ->paginate(10);
+        ->where("cars.user_id","=",$user_id)
+        ->paginate(40);
         foreach ($cars as &$car) {
             $car['imgs'] = DB::select('select url from imgs_cars where car_id = ?', [$car->id]);
         }
+        
         return response()->json(['data' => $cars], 200);
     }
+
 
     public function store(Request $request){
         

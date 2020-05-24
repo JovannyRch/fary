@@ -2,10 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-10">
-                <h4  class="text-white" >
-                    <img src="/images/icon.png" width="5%" >
-                  <b>Fary</b>
-                  </h4>
+                <h1><span class="badge badge-secondary">Fary</span></h1>
             </div>
             <div class="col-md-2">
 

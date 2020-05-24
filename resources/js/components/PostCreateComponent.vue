@@ -103,7 +103,7 @@ export default {
     },
     async addLocation() {
       let result = await navigator.permissions.query({ name: "geolocation" });
-      console.log(result);
+
       if (result.state === "granted" || result.state == "prompt") {
         navigator.geolocation.getCurrentPosition(location => {
           let lat = location.coords.latitude;

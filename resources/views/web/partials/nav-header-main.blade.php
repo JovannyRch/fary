@@ -1,11 +1,7 @@
 <nav id="nav" class="navbar navbar-expand-lg navbar-dark bg-dark text-white">
     <div class="container">
       <router-link to="/" class="navbar-brand">
-        <h4 >
-       
-        <b class="d-block d-md-none" style="font-size: 1.3em">    Fary</b>
-        <b class="d-none d-md-block">    Fary</b>
-        </h4>
+        <h1><span class="badge badge-secondary">Fary</span></h1>
       </router-link>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>

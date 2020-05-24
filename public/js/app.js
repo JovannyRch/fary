@@ -2168,7 +2168,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       "long": null,
       user_id: document.querySelector('meta[name="user_id"]').getAttribute("content"),
       selectedFile: null,
-      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+      csrf: document.querySelector('meta[name="type"]').getAttribute("content")
     };
   },
   methods: {
@@ -2550,11 +2550,64 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _MenuIzquierdoComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MenuIzquierdoComponent.vue */ "./resources/js/components/MenuIzquierdoComponent.vue");
-/* harmony import */ var _CarComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CarComponent.vue */ "./resources/js/components/CarComponent.vue");
-/* harmony import */ var _utils_LoaderComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/LoaderComponent.vue */ "./resources/js/components/utils/LoaderComponent.vue");
-/* harmony import */ var _AdsComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AdsComponent.vue */ "./resources/js/components/AdsComponent.vue");
-/* harmony import */ var _NegociosComponent_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NegociosComponent.vue */ "./resources/js/components/NegociosComponent.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _MenuIzquierdoComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MenuIzquierdoComponent.vue */ "./resources/js/components/MenuIzquierdoComponent.vue");
+/* harmony import */ var _CarComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CarComponent.vue */ "./resources/js/components/CarComponent.vue");
+/* harmony import */ var _utils_LoaderComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils/LoaderComponent.vue */ "./resources/js/components/utils/LoaderComponent.vue");
+/* harmony import */ var _AdsComponent_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./AdsComponent.vue */ "./resources/js/components/AdsComponent.vue");
+/* harmony import */ var _NegociosComponent_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NegociosComponent.vue */ "./resources/js/components/NegociosComponent.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2625,15 +2678,51 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    MenuIzquierdo: _MenuIzquierdoComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    CarComponent: _CarComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    LoaderComponent: _utils_LoaderComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    AdsComponent: _AdsComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-    NegociosComponent: _NegociosComponent_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+    MenuIzquierdo: _MenuIzquierdoComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    CarComponent: _CarComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    LoaderComponent: _utils_LoaderComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    AdsComponent: _AdsComponent_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+    NegociosComponent: _NegociosComponent_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   mounted: function mounted() {
-    this.loadData();
-    this.getAds();
+    var _this = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      var result;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _this.isLoading = true;
+              _context.next = 3;
+              return navigator.permissions.query({
+                name: "geolocation"
+              });
+
+            case 3:
+              result = _context.sent;
+
+              if (result.state === "granted" || result.state == "prompt") {
+                _this.locationPermission = true;
+              } else {
+                _this.locationPermission = false;
+              }
+
+              if (_this.user_id && _this.type == "normal") {
+                _this.myPosts();
+              } else {
+                _this.allPosts();
+              }
+
+              _this.getAds();
+
+            case 7:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
   },
   data: function data() {
     return {
@@ -2649,52 +2738,120 @@ __webpack_require__.r(__webpack_exports__);
       path: "",
       ads: [],
       currentAds: [],
-      user_id: document.querySelector('meta[name="user_id"]').getAttribute("content")
+      isMyPosts: true,
+      busqueda: "",
+      busquedaAux: "",
+      isBusqueda: false,
+      lat: null,
+      "long": null,
+      locationPermission: false,
+      user_id: document.querySelector('meta[name="user_id"]').getAttribute("content"),
+      type: document.querySelector('meta[name="type"]') ? document.querySelector('meta[name="type"]').getAttribute("content") : null
     };
   },
   methods: {
+    allPosts: function allPosts() {
+      this.busqueda = "";
+      this.loadData();
+      this.isBusqueda = false;
+      this.isMyPosts = false;
+    },
     loadData: function loadData() {
-      var _this = this;
+      var _this2 = this;
 
       var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "/api/cars";
       this.isLoading = true;
+
+      if (this.locationPermission && url == "/api/cars") {
+        navigator.geolocation.getCurrentPosition(function (location) {
+          var lat = location.coords.latitude;
+          var _long = location.coords.longitude;
+          url = "/api/cars/".concat(lat, "/").concat(_long);
+
+          _this2.loadData(url);
+
+          return;
+        }, function (error) {
+          _this2.locationPermission = false;
+
+          _this2.loadData();
+
+          return;
+        });
+        return;
+      }
+
       fetch(url).then(function (response) {
         return response.json();
       }).then(function (json) {
         var data = json.data;
-        _this.cars = data.data;
-        _this.currentPage = data.current_page;
-        _this.firtsPageUrl = data.first_page_url;
-        _this.lastPage = data.last_page;
-        _this.nextPageUrl = data.next_page_url;
-        _this.prevPageUrl = data.prev_page_url;
-        _this.isLoading = false;
-        _this.total = Math.ceil(data.total / data.per_page);
-        _this.path = data.path;
+        _this2.cars = data.data;
+        _this2.currentPage = data.current_page;
+        _this2.firtsPageUrl = data.first_page_url;
+        _this2.lastPage = data.last_page;
+        _this2.nextPageUrl = data.next_page_url;
+        _this2.prevPageUrl = data.prev_page_url;
+        _this2.isLoading = false;
+        _this2.total = Math.ceil(data.total / data.per_page);
+        _this2.path = data.path;
       });
     },
+    myPosts: function myPosts() {
+      this.busqueda = "";
+      this.loadData("/api/cars/user/" + this.user_id);
+      this.isBusqueda = false;
+      this.isMyPosts = true;
+    },
+    buscar: function buscar() {
+      var _this3 = this;
+
+      this.isBusqueda = true;
+      this.busquedaAux = this.busqueda;
+
+      if (this.locationPermission) {
+        navigator.geolocation.getCurrentPosition(function (location) {
+          var lat = location.coords.latitude;
+          var _long2 = location.coords.longitude;
+          var url = "/api/cars/search/".concat(_this3.busqueda, "/").concat(lat, "/").concat(_long2);
+
+          _this3.loadData(url);
+
+          return;
+        }, function (error) {
+          _this3.locationPermission = false;
+          var url = "/api/cars/search/".concat(_this3.busqueda);
+
+          _this3.loadData(url);
+
+          return;
+        });
+      } else {
+        var url = "/api/cars/search/".concat(this.busqueda);
+        this.loadData(url);
+      }
+    },
     getAds: function getAds() {
-      var _this2 = this;
+      var _this4 = this;
 
       this.isLoading = true;
       fetch("/api/ads").then(function (response) {
         return response.json();
       }).then(function (json) {
-        _this2.ads = json.data;
+        _this4.ads = json.data;
 
-        if (_this2.ads.length >= 3) {
-          _this2.canUpdate = true;
+        if (_this4.ads.length >= 3) {
+          _this4.canUpdate = true;
 
           for (var i = 0; i <= 3; i++) {
-            _this2.currentAds.push(_this2.ads.pop());
+            _this4.currentAds.push(_this4.ads.pop());
           }
         } else {
-          while (_this2.ads.length > 0) {
-            _this2.currentAds.push(_this2.ads.pop());
+          while (_this4.ads.length > 0) {
+            _this4.currentAds.push(_this4.ads.pop());
           }
         }
 
-        _this2.isLoading = false;
+        _this4.isLoading = false;
       });
     },
     getRandom: function getRandom() {
@@ -3185,7 +3342,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
               case 2:
                 result = _context.sent;
-                console.log(result);
 
                 if (result.state === "granted" || result.state == "prompt") {
                   navigator.geolocation.getCurrentPosition(function (location) {
@@ -3200,7 +3356,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
                   $("#form-create").submit();
                 }
 
-              case 5:
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -3328,8 +3484,66 @@ var timeAgo = new javascript_time_ago__WEBPACK_IMPORTED_MODULE_0__["default"]("e
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _PostComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PostComponent.vue */ "./resources/js/components/PostComponent.vue");
-/* harmony import */ var _utils_LoaderComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils/LoaderComponent.vue */ "./resources/js/components/utils/LoaderComponent.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _PostComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PostComponent.vue */ "./resources/js/components/PostComponent.vue");
+/* harmony import */ var _utils_LoaderComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/LoaderComponent.vue */ "./resources/js/components/utils/LoaderComponent.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3384,11 +3598,45 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["ads"],
   components: {
-    PostComponent: _PostComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    LoaderComponent: _utils_LoaderComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    PostComponent: _PostComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    LoaderComponent: _utils_LoaderComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   mounted: function mounted() {
-    this.loadData();
+    var _this = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      var result;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return navigator.permissions.query({
+                name: "geolocation"
+              });
+
+            case 2:
+              result = _context.sent;
+
+              if (result.state === "granted" || result.state == "prompt") {
+                _this.locationPermission = true;
+              } else {
+                _this.locationPermission = false;
+              }
+
+              if (_this.user_id && _this.type == "normal") {
+                _this.myPosts();
+              } else {
+                _this.allPosts();
+              }
+
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
   },
   data: function data() {
     return {
@@ -3402,32 +3650,123 @@ __webpack_require__.r(__webpack_exports__);
       lastPage: 1,
       total: 1,
       path: "",
-      user_id: document.querySelector('meta[name="user_id"]').getAttribute("content")
+      isMyPosts: true,
+      busqueda: "",
+      busquedaAux: "",
+      isBusqueda: false,
+      locationPermission: false,
+      user_id: document.querySelector('meta[name="user_id"]').getAttribute("content"),
+      type: document.querySelector('meta[name="type"]') ? document.querySelector('meta[name="type"]').getAttribute("content") : null
     };
   },
   methods: {
-    loadData: function loadData() {
-      var _this = this;
+    loadData: function () {
+      var _loadData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var _this2 = this;
 
-      var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "/api/posts";
-      this.isLoading = true;
-      fetch(url).then(function (response) {
-        return response.json();
-      }).then(function (json) {
-        var data = json.data;
-        _this.posts = data.data;
-        _this.currentPage = data.current_page;
-        _this.firtsPageUrl = data.first_page_url;
-        _this.lastPage = data.last_page;
-        _this.nextPageUrl = data.next_page_url;
-        _this.prevPageUrl = data.prev_page_url;
-        _this.isLoading = false;
-        _this.total = Math.ceil(data.total / data.per_page);
-        _this.path = data.path;
-      });
+        var url,
+            _args2 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                url = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : "/api/posts";
+                this.isLoading = true;
+
+                if (!(this.locationPermission && url == "/api/posts")) {
+                  _context2.next = 5;
+                  break;
+                }
+
+                navigator.geolocation.getCurrentPosition(function (location) {
+                  var lat = location.coords.latitude;
+                  var _long = location.coords.longitude;
+                  url = "/api/posts/".concat(lat, "/").concat(_long);
+
+                  _this2.loadData(url);
+
+                  return;
+                }, function (error) {
+                  _this2.locationPermission = false;
+
+                  _this2.loadData();
+
+                  return;
+                });
+                return _context2.abrupt("return");
+
+              case 5:
+                fetch(url).then(function (response) {
+                  return response.json();
+                }).then(function (json) {
+                  var data = json.data;
+                  _this2.posts = data.data;
+                  _this2.currentPage = data.current_page;
+                  _this2.firtsPageUrl = data.first_page_url;
+                  _this2.lastPage = data.last_page;
+                  _this2.nextPageUrl = data.next_page_url;
+                  _this2.prevPageUrl = data.prev_page_url;
+                  _this2.isLoading = false;
+                  _this2.total = Math.ceil(data.total / data.per_page);
+                  _this2.path = data.path;
+                });
+
+              case 6:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function loadData() {
+        return _loadData.apply(this, arguments);
+      }
+
+      return loadData;
+    }(),
+    allPosts: function allPosts() {
+      this.busqueda = "";
+      this.loadData();
+      this.isBusqueda = false;
+      this.isMyPosts = false;
+    },
+    myPosts: function myPosts() {
+      this.busqueda = "";
+      this.loadData("/api/posts/user/" + this.user_id);
+      this.isBusqueda = false;
+      this.isMyPosts = true;
     },
     deletePost: function deletePost(index) {
       this.posts.splice(index, 1);
+    },
+    buscar: function buscar() {
+      var _this3 = this;
+
+      this.isBusqueda = true;
+      this.busquedaAux = this.busqueda;
+
+      if (this.locationPermission) {
+        navigator.geolocation.getCurrentPosition(function (location) {
+          var lat = location.coords.latitude;
+          var _long2 = location.coords.longitude;
+          var url = "/api/posts/search/".concat(_this3.busqueda, "/").concat(lat, "/").concat(_long2);
+
+          _this3.loadData(url);
+
+          return;
+        }, function (error) {
+          _this3.locationPermission = false;
+          var url = "/api/posts/search/".concat(_this3.busqueda);
+
+          _this3.loadData(url);
+
+          return;
+        });
+      } else {
+        var url = "/api/posts/search/".concat(this.busqueda);
+        this.loadData(url);
+      }
     }
   }
 });
@@ -44092,7 +44431,7 @@ var render = function() {
       _c("div", { staticClass: "col-md-8", attrs: { id: "s-2" } }, [
         _c(
           "div",
-          { staticClass: "container", attrs: { id: "container-post" } },
+          { staticClass: "container ml-3", attrs: { id: "container-post" } },
           [
             _c("div", { staticClass: "row" }, [
               _vm._m(0),
@@ -44131,6 +44470,125 @@ var render = function() {
                 ],
                 1
               ),
+              _vm._v(" "),
+              _vm.user_id && !_vm.isBusqueda
+                ? _c("div", { staticClass: "col-12" }, [
+                    _c("nav", { staticClass: "nav" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "nav-link active",
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              return _vm.myPosts()
+                            }
+                          }
+                        },
+                        [
+                          _vm.isMyPosts
+                            ? _c("b", [_c("h4", [_vm._v("Mis publicaciones")])])
+                            : _c("span", [_vm._v("Mis publicaciones")])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "nav-link",
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              return _vm.allPosts()
+                            }
+                          }
+                        },
+                        [
+                          !_vm.isMyPosts
+                            ? _c("b", [
+                                _c("h4", [_vm._v("Todas las publicaciones")])
+                              ])
+                            : _c("span", [_vm._v("Todas las publicaciones")])
+                        ]
+                      )
+                    ])
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("div", { staticClass: "w-50" }, [
+                _c("div", { staticClass: "input-group" }, [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.busqueda,
+                        expression: "busqueda"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      "aria-label": "",
+                      placeholder: "Buscar publicación"
+                    },
+                    domProps: { value: _vm.busqueda },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.busqueda = $event.target.value
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "input-group-append" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success",
+                        on: {
+                          click: function($event) {
+                            return _vm.buscar()
+                          }
+                        }
+                      },
+                      [_vm._v("Buscar")]
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _vm.isBusqueda
+                ? _c("div", { staticClass: "col-12 mt-3" }, [
+                    _c("h3", [
+                      _vm._v(
+                        "Resultados de la busqueda '" +
+                          _vm._s(_vm.busquedaAux) +
+                          "'"
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-outline-danger",
+                        on: {
+                          click: function($event) {
+                            return _vm.allPosts()
+                          }
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "fas fa-times" }),
+                        _vm._v(" Deshacer busqueda\n            ")
+                      ]
+                    )
+                  ])
+                : _vm._e(),
               _vm._v(" "),
               _c("div", { staticClass: "col-md-12" }, [
                 !_vm.isLoading
@@ -44180,11 +44638,19 @@ var render = function() {
                             }),
                             0
                           )
-                        : _c("div", { staticClass: "text-center pt-5" }, [
-                            _c("h3", [
-                              _vm._v("Aún no se han hecho publicaciones")
-                            ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.posts.length == 0 && _vm.isLoading == false
+                        ? _c("div", { staticClass: "text-center pt-5" }, [
+                            !_vm.isMyPosts
+                              ? _c("h3", [
+                                  _vm._v("Aún no se han hecho publicaciones")
+                                ])
+                              : _c("h3", [
+                                  _vm._v("Aún no has hecho ninguna publicación")
+                                ])
                           ])
+                        : _vm._e()
                     ])
                   : _c("div", [_c("LoaderComponent")], 1)
               ])
@@ -44209,6 +44675,16 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-md-8 col-12" }, [
       _c("h1", { staticClass: "title-page" }, [_vm._v("Autos chocados")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("span", { staticClass: "input-group-text" }, [
+        _c("i", { staticClass: "fa fa-search" })
+      ])
     ])
   }
 ]
@@ -44957,7 +45433,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "container", attrs: { id: "container-post" } },
+    { staticClass: "container ml-2", attrs: { id: "container-post" } },
     [
       _c("div", { staticClass: "row" }, [
         _vm._m(0),
@@ -44993,57 +45469,184 @@ var render = function() {
           1
         ),
         _vm._v(" "),
+        _vm.user_id && !_vm.isBusqueda
+          ? _c("div", { staticClass: "col-12" }, [
+              _c("nav", { staticClass: "nav" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "nav-link active",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        return _vm.myPosts()
+                      }
+                    }
+                  },
+                  [
+                    _vm.isMyPosts
+                      ? _c("b", [_c("h4", [_vm._v("Mis publicaciones")])])
+                      : _c("span", [_vm._v("Mis publicaciones")])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "nav-link",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        return _vm.allPosts()
+                      }
+                    }
+                  },
+                  [
+                    !_vm.isMyPosts
+                      ? _c("b", [_c("h4", [_vm._v("Todas las publicaciones")])])
+                      : _c("span", [_vm._v("Todas las publicaciones")])
+                  ]
+                )
+              ])
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("div", { staticClass: "w-50" }, [
+          _c("div", { staticClass: "input-group" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.busqueda,
+                  expression: "busqueda"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: {
+                type: "text",
+                "aria-label": "",
+                placeholder: "Buscar publicación"
+              },
+              domProps: { value: _vm.busqueda },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.busqueda = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "input-group-append" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-success",
+                  on: {
+                    click: function($event) {
+                      return _vm.buscar()
+                    }
+                  }
+                },
+                [_vm._v("Buscar")]
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _vm.isBusqueda
+          ? _c("div", { staticClass: "col-12 mt-3" }, [
+              _c("h3", [
+                _vm._v(
+                  "Resultados de la busqueda '" + _vm._s(_vm.busquedaAux) + "'"
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-danger",
+                  on: {
+                    click: function($event) {
+                      return _vm.allPosts()
+                    }
+                  }
+                },
+                [
+                  _c("i", { staticClass: "fas fa-times" }),
+                  _vm._v(" Deshacer busqueda\n      ")
+                ]
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
         _c("div", { staticClass: "col-md-12" }, [
           !_vm.isLoading
-            ? _c(
-                "div",
-                { staticClass: "posts-container" },
-                [
-                  _c("br"),
-                  _vm._v(" "),
-                  _vm._l(_vm.posts, function(p, index) {
-                    return _c(
+            ? _c("div", { staticClass: "posts-container" }, [
+                _c("br"),
+                _vm._v(" "),
+                _vm.posts.length != 0
+                  ? _c(
                       "div",
-                      {
-                        key: p.id,
-                        staticStyle: { "background-color": "transparent" }
-                      },
-                      [
-                        index - 2 >= 0 &&
-                        (index - 2) % 2 == 0 &&
-                        (index - 2) / 2 < _vm.ads.length
-                          ? _c("img", {
-                              staticClass: "d-block d-md-none text-center mb-3",
+                      _vm._l(_vm.posts, function(p, index) {
+                        return _c(
+                          "div",
+                          {
+                            key: p.id,
+                            staticStyle: { "background-color": "transparent" }
+                          },
+                          [
+                            index - 2 >= 0 &&
+                            (index - 2) % 2 == 0 &&
+                            (index - 2) / 2 < _vm.ads.length
+                              ? _c("img", {
+                                  staticClass:
+                                    "d-block d-md-none text-center mb-3",
+                                  attrs: {
+                                    src: _vm.ads[(index - 2) / 2].url,
+                                    width: "100%"
+                                  }
+                                })
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c("PostComponent", {
                               attrs: {
-                                src: _vm.ads[(index - 2) / 2].url,
-                                width: "100%"
+                                content: p.content,
+                                date: p.created_at,
+                                user: p.user_id,
+                                img: p.img,
+                                id: p.id,
+                                username: p.username,
+                                post_user_id: p.user_id
+                              },
+                              on: {
+                                updateData: function($event) {
+                                  return _vm.deletePost(index)
+                                }
                               }
                             })
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _c("PostComponent", {
-                          attrs: {
-                            content: p.content,
-                            date: p.created_at,
-                            user: p.user_id,
-                            img: p.img,
-                            id: p.id,
-                            username: p.username,
-                            post_user_id: p.user_id
-                          },
-                          on: {
-                            updateData: function($event) {
-                              return _vm.deletePost(index)
-                            }
-                          }
-                        })
-                      ],
-                      1
+                          ],
+                          1
+                        )
+                      }),
+                      0
                     )
-                  })
-                ],
-                2
-              )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.posts.length == 0 && _vm.isLoading == false
+                  ? _c("div", { staticClass: "text-center pt-5" }, [
+                      !_vm.isMyPosts
+                        ? _c("h3", [
+                            _vm._v("Aún no se han hecho publicaciones")
+                          ])
+                        : _c("h3", [_vm._v("Aún no has ninguna publicación")])
+                    ])
+                  : _vm._e()
+              ])
             : _c("div", [_c("LoaderComponent")], 1)
         ])
       ])
@@ -45057,6 +45660,16 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-md-8 col-12" }, [
       _c("h1", { staticClass: "title-page" }, [_vm._v("Autopartes")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("span", { staticClass: "input-group-text" }, [
+        _c("i", { staticClass: "fa fa-search" })
+      ])
     ])
   }
 ]

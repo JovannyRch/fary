@@ -5,7 +5,7 @@
         <AdsComponent :ads="currentAds" />
       </div>
       <div class="col-md-8" id="s-2">
-        <div class="container" id="container-post">
+        <div class="container ml-3" id="container-post">
           <div class="row">
             <div class="col-md-8 col-12">
               <h1 class="title-page">Autos chocados</h1>
@@ -20,6 +20,50 @@
                 <i class="fa fa-plus"></i>
                 Crear una publicación
               </router-link>
+            </div>
+
+            <div class="col-12" v-if="user_id && !isBusqueda">
+              <nav class="nav">
+                <a @click="myPosts()" class="nav-link active" href="#">
+                  <b v-if="isMyPosts">
+                    <h4>Mis publicaciones</h4>
+                  </b>
+                  <span v-else>Mis publicaciones</span>
+                </a>
+                <a @click="allPosts()" class="nav-link" href="#">
+                  <b v-if="!isMyPosts">
+                    <h4>Todas las publicaciones</h4>
+                  </b>
+                  <span v-else>Todas las publicaciones</span>
+                </a>
+              </nav>
+            </div>
+
+            <div class="w-50">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="fa fa-search"></i>
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  v-model="busqueda"
+                  class="form-control"
+                  aria-label
+                  placeholder="Buscar publicación"
+                />
+                <div class="input-group-append">
+                  <button @click="buscar()" class="btn btn-success">Buscar</button>
+                </div>
+              </div>
+            </div>
+
+            <div v-if="isBusqueda" class="col-12 mt-3">
+              <h3>Resultados de la busqueda '{{busquedaAux}}'</h3>
+              <button @click="allPosts()" class="btn btn-outline-danger">
+                <i class="fas fa-times"></i> Deshacer busqueda
+              </button>
             </div>
 
             <div class="col-md-12">
@@ -44,8 +88,9 @@
                     />
                   </div>
                 </div>
-                <div v-else class="text-center pt-5">
-                  <h3>Aún no se han hecho publicaciones</h3>
+                <div v-if="posts.length == 0 && isLoading == false" class="text-center pt-5">
+                  <h3 v-if="!isMyPosts">Aún no se han hecho publicaciones</h3>
+                  <h3 v-else>Aún no has hecho ninguna publicación</h3>
                 </div>
               </div>
               <div v-else>
@@ -76,8 +121,20 @@ export default {
     AdsComponent,
     NegociosComponent
   },
-  mounted() {
-    this.loadData();
+  async mounted() {
+    this.isLoading = true;
+    let result = await navigator.permissions.query({ name: "geolocation" });
+
+    if (result.state === "granted" || result.state == "prompt") {
+      this.locationPermission = true;
+    } else {
+      this.locationPermission = false;
+    }
+    if (this.user_id && this.type == "normal") {
+      this.myPosts();
+    } else {
+      this.allPosts();
+    }
     this.getAds();
   },
   data() {
@@ -94,14 +151,47 @@ export default {
       path: "",
       ads: [],
       currentAds: [],
+      isMyPosts: true,
+      busqueda: "",
+      busquedaAux: "",
+      isBusqueda: false,
+      lat: null,
+      long: null,
+      locationPermission: false,
       user_id: document
         .querySelector('meta[name="user_id"]')
-        .getAttribute("content")
+        .getAttribute("content"),
+      type: document.querySelector('meta[name="type"]')
+        ? document.querySelector('meta[name="type"]').getAttribute("content")
+        : null
     };
   },
   methods: {
+    allPosts() {
+      this.busqueda = "";
+      this.loadData();
+      this.isBusqueda = false;
+      this.isMyPosts = false;
+    },
     loadData: function(url = `/api/cars`) {
       this.isLoading = true;
+      if (this.locationPermission && url == `/api/cars`) {
+        navigator.geolocation.getCurrentPosition(
+          location => {
+            let lat = location.coords.latitude;
+            let long = location.coords.longitude;
+            url = `/api/cars/${lat}/${long}`;
+            this.loadData(url);
+            return;
+          },
+          error => {
+            this.locationPermission = false;
+            this.loadData();
+            return;
+          }
+        );
+        return;
+      }
       fetch(url)
         .then(response => response.json())
         .then(json => {
@@ -116,6 +206,36 @@ export default {
           this.total = Math.ceil(data.total / data.per_page);
           this.path = data.path;
         });
+    },
+    myPosts() {
+      this.busqueda = "";
+      this.loadData("/api/cars/user/" + this.user_id);
+      this.isBusqueda = false;
+      this.isMyPosts = true;
+    },
+    buscar() {
+      this.isBusqueda = true;
+      this.busquedaAux = this.busqueda;
+      if (this.locationPermission) {
+        navigator.geolocation.getCurrentPosition(
+          location => {
+            let lat = location.coords.latitude;
+            let long = location.coords.longitude;
+            let url = `/api/cars/search/${this.busqueda}/${lat}/${long}`;
+            this.loadData(url);
+            return;
+          },
+          error => {
+            this.locationPermission = false;
+            let url = `/api/cars/search/${this.busqueda}`;
+            this.loadData(url);
+            return;
+          }
+        );
+      } else {
+        let url = `/api/cars/search/${this.busqueda}`;
+        this.loadData(url);
+      }
     },
     getAds() {
       this.isLoading = true;

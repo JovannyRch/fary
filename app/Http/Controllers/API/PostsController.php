@@ -10,13 +10,79 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
 class PostsController extends Controller
-{
-    public function index(){
+{   
+
+    public function index($lat = null,$long = null){
+        if($lat == null && $long == null){
+            $posts = Post::
+            join('users', 'users.id', '=', 'posts.user_id')
+            ->select('posts.content','posts.created_at','posts.user_id','posts.img','posts.id', 'users.name as username')
+            ->orderBy('created_at','desc')
+            ->paginate(50);
+            return response()->json(['data' => $posts], 200);
+        }
+        else{
+            $location = $this->queryLocation($lat,$long);
+            $posts = Post::
+            join('users', 'users.id', '=', 'posts.user_id')
+            ->select('posts.content','posts.created_at','posts.user_id','posts.img','posts.id',  'users.name as username', DB::raw($location))
+            ->orderBy('distance','desc')
+            ->orderBy('created_at','desc')
+            ->paginate(50);
+        }
+        return response()->json(['data' => $posts], 200);
+        
+    }  
+
+    public function queryLocation($lat, $long){
+        $lat = doubleval($lat);
+        $long = doubleval($long);
+        return " (
+            (
+                (
+                    acos(
+                        sin(( $lat * pi() / 180))
+                        *
+                        sin(( `latitud` * pi() / 180)) + cos(( $lat * pi() /180 ))
+                        *
+                        cos(( `latitud` * pi() / 180)) * cos((( $long - `longitud`) * pi()/180)))
+                ) * 180/pi()
+            ) * 60 * 1.1515 * 1.609344
+        ) as distance";
+    }
+
+    public function search($content, $lat = null, $long = null){
+        if($lat == null && $long == null){
+            $posts = Post::
+                join('users', 'users.id', '=', 'posts.user_id')
+                ->select('posts.content','posts.created_at','posts.user_id','posts.img','posts.id', 'users.name as username')
+                ->orderBy('created_at','desc')
+                ->where("posts.content","like","%$content%")
+                ->paginate(40);
+        }
+        else {
+            $location = $this->queryLocation($lat,$long);
+            $posts = Post::
+            join('users', 'users.id', '=', 'posts.user_id')
+            ->select('posts.content','posts.created_at','posts.user_id','posts.img','posts.id','users.name as username', DB::raw($location))
+            ->orderBy('distance','desc')
+            ->orderBy('created_at','desc')
+            ->where("posts.content","like","%$content%")
+           
+            ->paginate(40);
+        }
+        return response()->json(['data' => $posts], 200);
+        
+    }
+
+
+    public function myPosts($user_id){
         $posts = Post::
-        join('users', 'users.id', '=', 'posts.user_id')
-        ->select('posts.*', 'users.name as username')
-        ->orderBy('created_at','desc')
-        ->paginate(10);
+            join('users', 'users.id', '=', 'posts.user_id')
+            ->select('posts.content','posts.created_at','posts.user_id','posts.img','posts.id','users.name as username')
+            ->orderBy('created_at','desc')
+            ->where("posts.user_id","=",$user_id)
+            ->paginate(40);
         return response()->json(['data' => $posts], 200);
     }
 
@@ -24,7 +90,7 @@ class PostsController extends Controller
     public function show($id){
         $post = Post::where('posts.id', $id)
         ->join('users', 'users.id', '=', 'posts.user_id')
-        ->select('posts.*', 'users.name as username')->first();
+        ->select('posts.content','posts.created_at','posts.user_id','posts.img','posts.id','users.name as username')->first();
         //$post['comments'] = $this->comments($id);
         return response()->json(['data' => $post], 200);
     }
@@ -60,11 +126,11 @@ class PostsController extends Controller
                     (
                         (
                             acos(
-                                sin(( $LATITUDE * pi() / 180))
+                                sin(( $latitud * pi() / 180))
                                 *
-                                sin(( `latitud` * pi() / 180)) + cos(( $LATITUDE * pi() /180 ))
+                                sin(( `latitud` * pi() / 180)) + cos(( $latitud * pi() /180 ))
                                 *
-                                cos(( `latitud` * pi() / 180)) * cos((( $LONGITUDE - `longitud`) * pi()/180)))
+                                cos(( `latitud` * pi() / 180)) * cos((( $longitud - `longitud`) * pi()/180)))
                         ) * 180/pi()
                     ) * 60 * 1.1515 * 1.609344
                 )

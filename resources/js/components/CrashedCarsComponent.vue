@@ -88,7 +88,7 @@
                     />
                   </div>
                 </div>
-                <div v-if="posts.length == 0 && isLoading == false" class="text-center pt-5">
+                <div v-if="cars.length == 0 && isLoading == false" class="text-center pt-5">
                   <h3 v-if="!isMyPosts">Aún no se han hecho publicaciones</h3>
                   <h3 v-else>Aún no has hecho ninguna publicación</h3>
                 </div>

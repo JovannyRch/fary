@@ -76,7 +76,9 @@ export default {
         .querySelector('meta[name="user_id"]')
         .getAttribute("content"),
       selectedFile: null,
-      csrf: document.querySelector('meta[name="type"]').getAttribute("content")
+      csrf: document
+        .querySelector('meta[name="csrf-token"]')
+        .getAttribute("content")
     };
   },
   methods: {

@@ -68,17 +68,16 @@ export default {
 
 <style>
 .carousel-indicators .active {
-  background-color: #f3941a;
+  color: #3c7c64;
 }
 
 .carousel-indicators {
-  background-color: #d8a86949;
 }
 .carousel-control-prev-icon {
-  background-color: #f3941a;
+  background-color: #90b4a6;
 }
 
 .carousel-control-next-icon {
-  background-color: #f3941a;
+  background-color: #90b4a6;
 }
 </style>

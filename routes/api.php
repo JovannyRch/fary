@@ -33,11 +33,12 @@ Route::middleware('auth:API')->get('/user', function (Request $request) {
  //Comments
  Route::post('comments','API\CommentsController@store' ); 
  Route::delete('comments/{comment_id}','API\CommentsController@destroy' ); 
- Route::get('posts/{post_id}/comments', 'API\CommentsController@getComments');
+ Route::get('comments/post/{post_id}', 'API\CommentsController@getComments');
+ Route::get('comments/post/{post_id}/firts', 'API\CommentsController@getFirtsComments');
  
  
  //Cars
- Route::get('cars/','API\CarsController@index'); 
+ Route::get('cars','API\CarsController@index'); 
  Route::get('cars/user/{user_id}','API\CarsController@myPosts'); 
  Route::get('cars/{lat}/{long}','API\CarsController@index'); 
  Route::get('cars/search/{content}','API\CarsController@search'); 
@@ -48,9 +49,10 @@ Route::middleware('auth:API')->get('/user', function (Request $request) {
  
  
  //Comentarios de post de autos usados
- Route::post('car_comments','API\CommentCarPostsController@store' ); 
- Route::delete('car_comments/{comment_id}','API\CommentCarPostsController@destroy' ); 
- Route::get('cars/{car_id}/comments', 'API\CommentCarPostsController@getComments');
+ Route::post('car/comments','API\CommentCarPostsController@store' ); 
+ Route::delete('car/comments/{comment_id}','API\CommentCarPostsController@destroy' ); 
+ Route::get('car/{car_post_id}/comments', 'API\CommentCarPostsController@getComments');
+ Route::get('car/{car_post_id}/comments/firts', 'API\CommentCarPostsController@getFirtsComments');
  
  
  // Traer toda la publicidad de negocios

@@ -97,16 +97,12 @@ export default {
     };
   },
   methods: {
-    isValidateImg(img) {},
     deletePost() {
       fetch("/api/cars/" + this.id, {
         method: "delete"
       }).then(response => {
         if (response.status == 200) {
-          //Éxito al eliminar el post
-          alert("Eliminado correctamente");
         } else {
-          //Error al eliminar el post
         }
         $("#confirmDelete").modal("hide");
       });

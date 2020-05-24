@@ -28,8 +28,8 @@
       </small>
     </div>
     <div v-if="comments.length">
-      <div v-for="c in comments" :key="c.id">
-        <div class="row comment">
+      <div v-for="(c,index) in comments" :key="c.id">
+        <div class="row comment" v-if="(!showAll && index < 3) || (showAll)">
           <div class="col-12">
             <small>
               <router-link :to="'/user/'+c.user_id">
@@ -52,6 +52,12 @@
           </div>
         </div>
       </div>
+      <div v-if="!showAll && comments.length >= 4">
+        <button
+          class="btn btn-outline-info btn-small"
+          @click="loadComments()"
+        >Mostrar todos los comentarios</button>
+      </div>
     </div>
   </div>
 </template>
@@ -64,11 +70,12 @@ export default {
   },
   props: ["car_post_id"],
   created() {
-    this.loadComments();
+    this.loadFirtsComments();
   },
   data() {
     return {
       comments: [],
+      showAll: false,
       commentInput: "",
       user_id: document
         .querySelector('meta[name="user_id"]')
@@ -77,11 +84,21 @@ export default {
     };
   },
   methods: {
-    loadComments: function() {
-      fetch(`/api/cars/${this.car_post_id}/comments`)
+    loadFirtsComments: function() {
+      fetch(`/api/car/${this.car_post_id}/comments/firts`)
         .then(response => response.json())
         .then(json => {
           this.comments = json.data;
+        });
+    },
+    loadComments: function() {
+      this.showAll = true;
+      fetch(`/api/car/${this.car_post_id}/comments/`)
+        .then(response => response.json())
+        .then(json => {
+          if (json.data.length > 0) {
+            this.comments = json.data;
+          }
         });
     },
     sendComment() {
@@ -91,15 +108,16 @@ export default {
         car_post_id: this.car_post_id,
         user_id: this.user_id
       };
-      fetch("/api/car_comments", {
+      fetch("/api/car/comments", {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
           "Content-Type": "application/json"
         }
-      }).then(response => {
+      }).then(async response => {
         if (response.status == 200) {
-          this.loadComments();
+          let json = await response.json();
+          this.comments = [...[json.data], ...this.comments];
           this.commentInput = "";
         } else {
           alert("Ocurrió un erro al publicar el comentario");
@@ -107,12 +125,15 @@ export default {
       });
     },
     deleteComment(comment_id) {
-      fetch("/api/car_comments/" + comment_id, {
+      fetch("/api/car/comments/" + comment_id, {
         method: "DELETE"
       }).then(response => {
         if (response.status == 200) {
-          alert("Eliminado correctamente");
-          this.loadComments();
+          if (this.showAll) {
+            this.loadComments();
+          } else {
+            this.loadFirtsComments();
+          }
         } else {
           alert("Ocurrió un error al eliminar");
         }

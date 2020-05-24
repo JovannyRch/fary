@@ -11,11 +11,12 @@ use Illuminate\Support\Facades\File;
 
 class CarsController extends Controller
 {
+   
     public function index($lat = null, $long = null){
         if($lat == null && $long == null){
             $cars = Car::
             join('users', 'users.id', '=', 'cars.user_id')
-            ->select('cars.*', 'users.name as username')
+            ->select('cars.content','cars.user_id','cars.created_at','cars.id', 'users.name as username')
             ->orderBy('created_at','desc')
             ->paginate(40);
             foreach ($cars as &$car) {
@@ -25,7 +26,7 @@ class CarsController extends Controller
             $location = $this->queryLocation($lat,$long);
             $cars = Car::
             join('users', 'users.id', '=', 'cars.user_id')
-            ->select('cars.*', 'users.name as username',DB::raw($location))
+            ->select('cars.content','cars.user_id','cars.created_at','cars.id', 'users.name as username',DB::raw($location))
             ->orderBy('distance','desc')
             ->orderBy('created_at','desc')
             ->paginate(40);

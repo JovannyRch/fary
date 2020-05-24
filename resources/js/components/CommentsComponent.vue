@@ -31,8 +31,8 @@
       </small>
     </div>
     <div v-if="comments.length">
-      <div v-for="c in comments" :key="c.id">
-        <div class="row comment">
+      <div v-for="(c,index) in comments" :key="c.id">
+        <div class="row comment" v-if="(!showAll && index < 3) || (showAll)">
           <div class="col-12">
             <small>
               <router-link :to="'/user/'+c.user_id">
@@ -54,6 +54,12 @@
           </div>
         </div>
       </div>
+      <div v-if="!showAll && comments.length >= 4">
+        <button
+          class="btn btn-outline-info btn-small"
+          @click="loadComments()"
+        >Mostrar todos los comentarios</button>
+      </div>
     </div>
   </div>
 </template>
@@ -66,12 +72,13 @@ export default {
   },
   props: ["post_id", "owner_post"],
   created() {
-    this.loadComments();
+    this.loadFirtsComments();
   },
   data() {
     return {
       comments: [],
       commentInput: "",
+      showAll: false,
       user_id: document
         .querySelector('meta[name="user_id"]')
         .getAttribute("content"),
@@ -79,11 +86,21 @@ export default {
     };
   },
   methods: {
-    loadComments: function() {
-      fetch(`/api/posts/${this.post_id}/comments`)
+    loadFirtsComments: function() {
+      fetch(`/api/comments/post/${this.post_id}/firts`)
         .then(response => response.json())
         .then(json => {
           this.comments = json.data;
+        });
+    },
+    loadComments: function() {
+      this.showAll = true;
+      fetch(`/api/comments/post/${this.post_id}`)
+        .then(response => response.json())
+        .then(json => {
+          if (json.data.length > 0) {
+            this.comments = json.data;
+          }
         });
     },
     sendComment() {
@@ -99,9 +116,10 @@ export default {
         headers: {
           "Content-Type": "application/json"
         }
-      }).then(response => {
+      }).then(async response => {
         if (response.status == 200) {
-          this.loadComments();
+          let json = await response.json();
+          this.comments = [...[json.data], ...this.comments];
           this.commentInput = "";
         } else {
           alert("Ocurrió un erro al publicar el comentario");

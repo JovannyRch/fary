@@ -2051,16 +2051,11 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    isValidateImg: function isValidateImg(img) {},
     deletePost: function deletePost() {
       fetch("/api/cars/" + this.id, {
         method: "delete"
       }).then(function (response) {
-        if (response.status == 200) {
-          //Éxito al eliminar el post
-          alert("Eliminado correctamente");
-        } else {//Error al eliminar el post
-        }
+        if (response.status == 200) {} else {}
 
         $("#confirmDelete").modal("hide");
       });
@@ -2168,7 +2163,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       "long": null,
       user_id: document.querySelector('meta[name="user_id"]').getAttribute("content"),
       selectedFile: null,
-      csrf: document.querySelector('meta[name="type"]').getAttribute("content")
+      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute("content")
     };
   },
   methods: {
@@ -2270,7 +2265,33 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _utils_DateComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils/DateComponent.vue */ "./resources/js/components/utils/DateComponent.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utils_DateComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils/DateComponent.vue */ "./resources/js/components/utils/DateComponent.vue");
+
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2332,32 +2353,45 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    DateComponent: _utils_DateComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    DateComponent: _utils_DateComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   props: ["car_post_id"],
   created: function created() {
-    this.loadComments();
+    this.loadFirtsComments();
   },
   data: function data() {
     return {
       comments: [],
+      showAll: false,
       commentInput: "",
       user_id: document.querySelector('meta[name="user_id"]').getAttribute("content"),
       type: document.querySelector('meta[name="type"]').getAttribute("content")
     };
   },
   methods: {
-    loadComments: function loadComments() {
+    loadFirtsComments: function loadFirtsComments() {
       var _this = this;
 
-      fetch("/api/cars/".concat(this.car_post_id, "/comments")).then(function (response) {
+      fetch("/api/car/".concat(this.car_post_id, "/comments/firts")).then(function (response) {
         return response.json();
       }).then(function (json) {
         _this.comments = json.data;
       });
     },
-    sendComment: function sendComment() {
+    loadComments: function loadComments() {
       var _this2 = this;
+
+      this.showAll = true;
+      fetch("/api/car/".concat(this.car_post_id, "/comments/")).then(function (response) {
+        return response.json();
+      }).then(function (json) {
+        if (json.data.length > 0) {
+          _this2.comments = json.data;
+        }
+      });
+    },
+    sendComment: function sendComment() {
+      var _this3 = this;
 
       if (!this.commentInput) return;
       var data = {
@@ -2365,32 +2399,62 @@ __webpack_require__.r(__webpack_exports__);
         car_post_id: this.car_post_id,
         user_id: this.user_id
       };
-      fetch("/api/car_comments", {
+      fetch("/api/car/comments", {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
           "Content-Type": "application/json"
         }
-      }).then(function (response) {
-        if (response.status == 200) {
-          _this2.loadComments();
+      }).then( /*#__PURE__*/function () {
+        var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(response) {
+          var json;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  if (!(response.status == 200)) {
+                    _context.next = 8;
+                    break;
+                  }
 
-          _this2.commentInput = "";
-        } else {
-          alert("Ocurrió un erro al publicar el comentario");
-        }
-      });
+                  _context.next = 3;
+                  return response.json();
+
+                case 3:
+                  json = _context.sent;
+                  _this3.comments = [json.data].concat(_toConsumableArray(_this3.comments));
+                  _this3.commentInput = "";
+                  _context.next = 9;
+                  break;
+
+                case 8:
+                  alert("Ocurrió un erro al publicar el comentario");
+
+                case 9:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee);
+        }));
+
+        return function (_x) {
+          return _ref.apply(this, arguments);
+        };
+      }());
     },
     deleteComment: function deleteComment(comment_id) {
-      var _this3 = this;
+      var _this4 = this;
 
-      fetch("/api/car_comments/" + comment_id, {
+      fetch("/api/car/comments/" + comment_id, {
         method: "DELETE"
       }).then(function (response) {
         if (response.status == 200) {
-          alert("Eliminado correctamente");
-
-          _this3.loadComments();
+          if (_this4.showAll) {
+            _this4.loadComments();
+          } else {
+            _this4.loadFirtsComments();
+          }
         } else {
           alert("Ocurrió un error al eliminar");
         }
@@ -2410,7 +2474,33 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _utils_DateComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils/DateComponent.vue */ "./resources/js/components/utils/DateComponent.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utils_DateComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils/DateComponent.vue */ "./resources/js/components/utils/DateComponent.vue");
+
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2474,32 +2564,45 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    DateComponent: _utils_DateComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    DateComponent: _utils_DateComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   props: ["post_id", "owner_post"],
   created: function created() {
-    this.loadComments();
+    this.loadFirtsComments();
   },
   data: function data() {
     return {
       comments: [],
       commentInput: "",
+      showAll: false,
       user_id: document.querySelector('meta[name="user_id"]').getAttribute("content"),
       type: document.querySelector('meta[name="type"]').getAttribute("content")
     };
   },
   methods: {
-    loadComments: function loadComments() {
+    loadFirtsComments: function loadFirtsComments() {
       var _this = this;
 
-      fetch("/api/posts/".concat(this.post_id, "/comments")).then(function (response) {
+      fetch("/api/comments/post/".concat(this.post_id, "/firts")).then(function (response) {
         return response.json();
       }).then(function (json) {
         _this.comments = json.data;
       });
     },
-    sendComment: function sendComment() {
+    loadComments: function loadComments() {
       var _this2 = this;
+
+      this.showAll = true;
+      fetch("/api/comments/post/".concat(this.post_id)).then(function (response) {
+        return response.json();
+      }).then(function (json) {
+        if (json.data.length > 0) {
+          _this2.comments = json.data;
+        }
+      });
+    },
+    sendComment: function sendComment() {
+      var _this3 = this;
 
       if (!this.commentInput) return;
       var data = {
@@ -2513,24 +2616,52 @@ __webpack_require__.r(__webpack_exports__);
         headers: {
           "Content-Type": "application/json"
         }
-      }).then(function (response) {
-        if (response.status == 200) {
-          _this2.loadComments();
+      }).then( /*#__PURE__*/function () {
+        var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(response) {
+          var json;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  if (!(response.status == 200)) {
+                    _context.next = 8;
+                    break;
+                  }
 
-          _this2.commentInput = "";
-        } else {
-          alert("Ocurrió un erro al publicar el comentario");
-        }
-      });
+                  _context.next = 3;
+                  return response.json();
+
+                case 3:
+                  json = _context.sent;
+                  _this3.comments = [json.data].concat(_toConsumableArray(_this3.comments));
+                  _this3.commentInput = "";
+                  _context.next = 9;
+                  break;
+
+                case 8:
+                  alert("Ocurrió un erro al publicar el comentario");
+
+                case 9:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee);
+        }));
+
+        return function (_x) {
+          return _ref.apply(this, arguments);
+        };
+      }());
     },
     deleteComment: function deleteComment(comment_id) {
-      var _this3 = this;
+      var _this4 = this;
 
       fetch("/api/comments/" + comment_id, {
         method: "DELETE"
       }).then(function (response) {
         if (response.status == 200) {
-          _this3.loadComments();
+          _this4.loadComments();
         } else {
           alert("Ocurrió un error al eliminar");
         }
@@ -8868,7 +8999,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.carousel-indicators .active {\n  background-color: #f3941a;\n}\n.carousel-indicators {\n  background-color: #d8a86949;\n}\n.carousel-control-prev-icon {\n  background-color: #f3941a;\n}\n.carousel-control-next-icon {\n  background-color: #f3941a;\n}\n", ""]);
+exports.push([module.i, "\n.carousel-indicators .active {\n  color: #3c7c64;\n}\n.carousel-indicators {\n}\n.carousel-control-prev-icon {\n  background-color: #90b4a6;\n}\n.carousel-control-next-icon {\n  background-color: #90b4a6;\n}\n", ""]);
 
 // exports
 
@@ -44170,53 +44301,74 @@ var render = function() {
     _vm.comments.length
       ? _c(
           "div",
-          _vm._l(_vm.comments, function(c) {
-            return _c("div", { key: c.id }, [
-              _c("div", { staticClass: "row comment" }, [
-                _c("div", { staticClass: "col-12" }, [
-                  _c(
-                    "small",
-                    [
-                      _c(
-                        "router-link",
-                        { attrs: { to: "/user/" + c.user_id } },
-                        [_c("b", [_vm._v(_vm._s(c.username))])]
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "float-right pr-4" },
-                    [
-                      _c("DateComponent", { attrs: { date: c.date } }),
+          [
+            _vm._l(_vm.comments, function(c, index) {
+              return _c("div", { key: c.id }, [
+                (!_vm.showAll && index < 3) || _vm.showAll
+                  ? _c("div", { staticClass: "row comment" }, [
+                      _c("div", { staticClass: "col-12" }, [
+                        _c(
+                          "small",
+                          [
+                            _c(
+                              "router-link",
+                              { attrs: { to: "/user/" + c.user_id } },
+                              [_c("b", [_vm._v(_vm._s(c.username))])]
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "float-right pr-4" },
+                          [
+                            _c("DateComponent", { attrs: { date: c.date } }),
+                            _vm._v(" "),
+                            c.user_id == _vm.user_id
+                              ? _c("span", [
+                                  _c("i", {
+                                    staticClass: "fa fa-trash",
+                                    staticStyle: { zomm: "0.7" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.deleteComment(c.id)
+                                      }
+                                    }
+                                  })
+                                ])
+                              : _vm._e()
+                          ],
+                          1
+                        )
+                      ]),
                       _vm._v(" "),
-                      c.user_id == _vm.user_id
-                        ? _c("span", [
-                            _c("i", {
-                              staticClass: "fa fa-trash",
-                              staticStyle: { zomm: "0.7" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.deleteComment(c.id)
-                                }
-                              }
-                            })
-                          ])
-                        : _vm._e()
-                    ],
-                    1
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-12 pl-3" }, [
-                  _c("p", [_c("small", [_vm._v(_vm._s(c.content))])])
-                ])
+                      _c("div", { staticClass: "col-12 pl-3" }, [
+                        _c("p", [_c("small", [_vm._v(_vm._s(c.content))])])
+                      ])
+                    ])
+                  : _vm._e()
               ])
-            ])
-          }),
-          0
+            }),
+            _vm._v(" "),
+            !_vm.showAll && _vm.comments.length >= 4
+              ? _c("div", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-outline-info btn-small",
+                      on: {
+                        click: function($event) {
+                          return _vm.loadComments()
+                        }
+                      }
+                    },
+                    [_vm._v("Mostrar todos los comentarios")]
+                  )
+                ])
+              : _vm._e()
+          ],
+          2
         )
       : _vm._e()
   ])
@@ -44324,53 +44476,74 @@ var render = function() {
     _vm.comments.length
       ? _c(
           "div",
-          _vm._l(_vm.comments, function(c) {
-            return _c("div", { key: c.id }, [
-              _c("div", { staticClass: "row comment" }, [
-                _c("div", { staticClass: "col-12" }, [
-                  _c(
-                    "small",
-                    [
-                      _c(
-                        "router-link",
-                        { attrs: { to: "/user/" + c.user_id } },
-                        [_c("b", [_vm._v(_vm._s(c.username))])]
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "float-right pr-4" },
-                    [
-                      _c("DateComponent", { attrs: { date: c.date } }),
+          [
+            _vm._l(_vm.comments, function(c, index) {
+              return _c("div", { key: c.id }, [
+                (!_vm.showAll && index < 3) || _vm.showAll
+                  ? _c("div", { staticClass: "row comment" }, [
+                      _c("div", { staticClass: "col-12" }, [
+                        _c(
+                          "small",
+                          [
+                            _c(
+                              "router-link",
+                              { attrs: { to: "/user/" + c.user_id } },
+                              [_c("b", [_vm._v(_vm._s(c.username))])]
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "float-right pr-4" },
+                          [
+                            _c("DateComponent", { attrs: { date: c.date } }),
+                            _vm._v(" "),
+                            c.user_id == _vm.user_id
+                              ? _c("span", [
+                                  _c("i", {
+                                    staticClass: "fa fa-trash",
+                                    staticStyle: { zomm: "0.7" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.deleteComment(c.id)
+                                      }
+                                    }
+                                  })
+                                ])
+                              : _vm._e()
+                          ],
+                          1
+                        )
+                      ]),
                       _vm._v(" "),
-                      c.user_id == _vm.user_id
-                        ? _c("span", [
-                            _c("i", {
-                              staticClass: "fa fa-trash",
-                              staticStyle: { zomm: "0.7" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.deleteComment(c.id)
-                                }
-                              }
-                            })
-                          ])
-                        : _vm._e()
-                    ],
-                    1
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-12 pl-3" }, [
-                  _c("p", [_c("small", [_vm._v(_vm._s(c.content))])])
-                ])
+                      _c("div", { staticClass: "col-12 pl-3" }, [
+                        _c("p", [_c("small", [_vm._v(_vm._s(c.content))])])
+                      ])
+                    ])
+                  : _vm._e()
               ])
-            ])
-          }),
-          0
+            }),
+            _vm._v(" "),
+            !_vm.showAll && _vm.comments.length >= 4
+              ? _c("div", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-outline-info btn-small",
+                      on: {
+                        click: function($event) {
+                          return _vm.loadComments()
+                        }
+                      }
+                    },
+                    [_vm._v("Mostrar todos los comentarios")]
+                  )
+                ])
+              : _vm._e()
+          ],
+          2
         )
       : _vm._e()
   ])
@@ -44640,7 +44813,7 @@ var render = function() {
                           )
                         : _vm._e(),
                       _vm._v(" "),
-                      _vm.posts.length == 0 && _vm.isLoading == false
+                      _vm.cars.length == 0 && _vm.isLoading == false
                         ? _c("div", { staticClass: "text-center pt-5" }, [
                             !_vm.isMyPosts
                               ? _c("h3", [

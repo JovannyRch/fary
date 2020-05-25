@@ -21,7 +21,7 @@
     
     <div  id="app">
         @include('web.partials.nav-header-main')
-            <div class="container-fluid">
+            <div class="container">
                 @yield('content')
             </div>
        

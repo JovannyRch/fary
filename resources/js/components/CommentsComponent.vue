@@ -1,63 +1,65 @@
 <template>
-  <div>
-    <form
-      @submit.prevent="sendComment()"
-      v-if="user_id && (owner_post == user_id || type != 'normal')"
-    >
-      <div class="row ml-1">
-        <div class="col-11 col-md-11">
-          <div class="form-row text-center">
-            <div class="form-group col-11">
-              <input
-                type="text"
-                v-model="commentInput"
-                class="form-control"
-                placeholder="Escribe aquí tu comentario"
-                aria-describedby="helpId"
-              />
-            </div>
-            <div class="form-group col-1 col-md-1">
-              <button type="submit" name id class="btn btn-secondary text-white">
-                <i class="fa fa-paper-plane"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </form>
-    <div class="mb-1" v-if="comments.length">
-      <small style="color: grey">Comentarios</small>
-    </div>
+  <div style="padding-left: 3%; padding-right: 3%">
     <div v-if="comments.length">
       <div v-for="(c,index) in comments" :key="c.id">
-        <div class="row comment" v-if="(!showAll && index < 3) || (showAll)">
-          <div class="col-12">
-            <small>
-              <router-link :to="'/user/'+c.user_id">
-                <b>{{c.username}}</b>
-              </router-link>
-            </small>
+        <div class="col-12" style="font-size:0.75em" v-if="(!showAll && index < 3) || (showAll)">
+          <small>
+            <router-link :to="'/user/'+c.user_id">
+              <b>{{c.username}}</b>
+            </router-link>
+          </small>
+          <DateComponent :date="c.date"></DateComponent>
 
-            <div class="float-right pr-4">
-              <DateComponent :date="c.date"></DateComponent>
-              <span v-if="c.user_id == user_id">
-                <i class="fa fa-trash" style="zomm: 0.7" @click="deleteComment(c.id)"></i>
-              </span>
-            </div>
+          <div class="float-right pr-4 btn-sm">
+            <span v-if="c.user_id == user_id">
+              <i class="fa fa-trash" style="zomm: 0.7" @click="deleteComment(c.id,index)"></i>
+            </span>
           </div>
+        </div>
+        <div class="p-0 comment" v-if="(!showAll && index < 3) || (showAll)">
           <div class="col-12 pl-3">
-            <p>
-              <small>{{c.content}}</small>
-            </p>
+            <small>{{c.content}}</small>
           </div>
         </div>
       </div>
-      <div v-if="!showAll && comments.length >= 4">
+      <div v-if="!showAll && comments.length >= 4" class="ml-4">
         <button
-          class="btn btn-outline-info btn-small"
+          class="btn btn-outline-info btn-sm"
           @click="loadComments()"
         >Mostrar todos los comentarios</button>
       </div>
+    </div>
+    <div>
+      <form
+        @submit.prevent="sendComment()"
+        v-if="user_id && (owner_post == user_id || type != 'normal')"
+      >
+        <div class="row ml-1">
+          <div class="col-11 col-md-11">
+            <div class="form-row text-center">
+              <div class="form-group col-11">
+                <input
+                  type="text"
+                  v-model="commentInput"
+                  class="form-control redondo input-comment"
+                  placeholder="Escribe aquí tu comentario"
+                  aria-describedby="helpId"
+                />
+              </div>
+              <div class="form-group col-1 col-md-1">
+                <button
+                  v-if="commentInput"
+                  type="submit"
+                  name
+                  class="btn btn-success btn-sm redondo"
+                >
+                  <i class="fa fa-check"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </template>
@@ -117,19 +119,19 @@ export default {
       }).then(async response => {
         if (response.status == 200) {
           let json = await response.json();
-          this.comments = [...[json.data], ...this.comments];
+          this.loadComments();
           this.commentInput = "";
         } else {
           alert("Ocurrió un erro al publicar el comentario");
         }
       });
     },
-    deleteComment(comment_id) {
+    deleteComment(comment_id, index) {
       fetch("/api/comments/" + comment_id, {
         method: "DELETE"
       }).then(response => {
         if (response.status == 200) {
-          this.loadComments();
+          this.comments.splice(index, 1);
         } else {
           alert("Ocurrió un error al eliminar");
         }
@@ -140,21 +142,27 @@ export default {
 </script>
 
 <style>
-.separator {
-  height: 2px;
-  background-color: bisque;
-  width: 60%;
-  margin: 0 auto;
-}
-
 .comment {
-  background-color: rgb(248, 248, 248);
+  background-color: rgb(250, 250, 250);
+  border: 0.5px solid rgb(218, 218, 218);
   margin-bottom: 5px;
   padding-top: 0.5%;
+  padding-bottom: 0%;
   padding-left: 1.5%;
   padding-right: 1.5%;
-  border-radius: 10px;
+  border-radius: 20px;
   margin-right: 2px;
   margin-left: 2px;
+}
+
+.input-comment {
+  background-color: #f5f5f5;
+  color: rgb(124, 124, 124);
+  font-size: 0.8em;
+  background-image: url("../../../public/images/resources/comment.png");
+  background-position: 10px 10px;
+  background-size: 20px;
+  background-repeat: no-repeat;
+  padding-left: 40px;
 }
 </style>

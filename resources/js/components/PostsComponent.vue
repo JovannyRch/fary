@@ -1,74 +1,60 @@
 <template>
   <div class="container" id="container-post">
     <div class="row">
-      <div class="col-md-8 col-12">
-        <h1 class="title-page">Autopartes</h1>
-      </div>
-      <div class="col-md-4 col-12">
-        <a v-if="!user_id" class="btn btn-success text-white float-right" href="/posts/create">
-          <i class="fa fa-plus"></i>
-          Crear una publicación
-        </a>
-
-        <router-link v-else to="/posts/create" class="btn btn-success text-white float-right">
-          <i class="fa fa-plus"></i>
-          Crear una publicación
-        </router-link>
-      </div>
-
-      <div class="col-12" v-if="user_id && !isBusqueda">
-        <nav class="nav">
-          <a @click="myPosts()" class="nav-link active" href="#">
-            <b v-if="isMyPosts">
-              <h4>Mis publicaciones</h4>
-            </b>
-            <span v-else>Mis publicaciones</span>
-          </a>
-          <a @click="allPosts()" class="nav-link" href="#">
-            <b v-if="!isMyPosts">
-              <h4>Todas las publicaciones</h4>
-            </b>
-            <span v-else>Todas las publicaciones</span>
-          </a>
-        </nav>
-      </div>
-
-      <div>
+      <div class="col-8 offset-2 mt-0 pt-0 text-center">
         <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text">
-              <i class="fa fa-search"></i>
-            </span>
-          </div>
           <input
+            style="-webkit-border-radius: 50px;-moz-border-radius: 50px;border-radius: 50px;"
             type="text"
             v-model="busqueda"
             class="form-control"
             aria-label
             placeholder="Buscar publicación"
           />
-          <div class="input-group-append">
-            <button @click="buscar()" class="btn btn-success">Buscar</button>
+          <div class="input-group-append ml-2" v-show="busqueda">
+            <button
+              @click="buscar()"
+              class="btn btn-success"
+              style="-webkit-border-radius: 50px;-moz-border-radius: 50px;border-radius: 50px;"
+            >
+              <i class="fa fa-search"></i>
+            </button>
           </div>
         </div>
       </div>
 
+      <div class="col-12">
+        <h6 style="color:grey;">
+          Crear publicación
+          <button
+            type="button"
+            class="btn btn-light btn-sm"
+            data-toggle="tooltip"
+            data-placement="top"
+            title="Para una publicación de calidad escriba su pieza o refacción que busca, marca, submarca, si es nacional o extranjera y alguna descripción que complete la información"
+            style="-webkit-border-radius: 50px;-moz-border-radius: 50px;border-radius: 50px;"
+          >
+            <i class="fas fa-question"></i>
+          </button>
+        </h6>
+        <PostCraeteComponent></PostCraeteComponent>
+      </div>
+
       <div v-if="isBusqueda" class="col-12 mt-3">
         <h3>Resultados de la busqueda '{{busquedaAux}}'</h3>
-        <button @click="allPosts()" class="btn btn-outline-danger">
+        <button @click="allPosts()" class="btn btn-outline-danger btn-sm">
           <i class="fas fa-times"></i> Deshacer busqueda
         </button>
       </div>
 
-      <div class="col-md-12">
-        <div class="posts-container" v-if="!isLoading">
-          <br />
+      <div class="col-md-12 mt-4">
+        <h6 style="color:grey;">Publicaciones de autopartes</h6>
 
+        <div class="posts-container" v-if="!isLoading">
           <div v-if="posts.length != 0">
-            <div style="background-color: transparent" v-for="(p,index) in posts" :key="p.id">
+            <div style="background-color: transparent; " v-for="(p,index) in posts" :key="p.id">
               <img
                 :src="ads[(index-2)/2].url"
-                width="100%"
                 v-if=" (index -2) >= 0 &&(index-2)% 2==0 && (index-2)/2 < ads.length  "
                 class="d-block d-md-none text-center mb-3"
               />
@@ -80,6 +66,7 @@
                 :img="p.img"
                 :id="p.id"
                 :username="p.username"
+                :address="p.address"
                 :post_user_id="p.user_id"
                 @updateData="deletePost(index)"
               />
@@ -100,14 +87,19 @@
 <script>
 import PostComponent from "./PostComponent.vue";
 import LoaderComponent from "./utils/LoaderComponent.vue";
+import PostCraeteComponent from "./PostCreateComponent.vue";
 
 export default {
   props: ["ads"],
   components: {
     PostComponent,
-    LoaderComponent
+    LoaderComponent,
+    PostCraeteComponent
   },
   async mounted() {
+    $(function() {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
     let result = await navigator.permissions.query({ name: "geolocation" });
 
     if (result.state === "granted" || result.state == "prompt") {

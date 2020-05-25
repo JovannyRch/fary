@@ -1,13 +1,13 @@
 <template>
   <div class="mt-4 main">
     <div class="row">
-      <div class="col-md-2 d-none d-md-block" id="s-1"></div>
-      <div class="col-md-8 col-12" id="s-2">
+      <div class="col-md-2 d-none d-md-block">
+        <!--  <AdsComponent :ads="currentAds" /> -->
+      </div>
+      <div class="col-md-8 col-10 offset-1 offset-md-0 pt-0 pl-3 pr-3">
         <PostsComponent :ads="currentAds" />
       </div>
-      <div class="col-md-2 col-md-2 d-none d-md-block" id="s-3">
-        <NegociosComponent />
-      </div>
+      <div class="col-md-2 d-none d-md-block"></div>
     </div>
   </div>
 </template>

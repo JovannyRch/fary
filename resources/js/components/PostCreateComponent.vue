@@ -1,6 +1,5 @@
 <template>
-  <div class="container" id="form-container">
-    <h2 class="title-page">Crear un pedido</h2>
+  <div id="form-container">
     <form
       action="/posts/save"
       @submit.prevent="addLocation"
@@ -11,50 +10,30 @@
       <input type="hidden" name="_token" :value="csrf" />
       <div class="form-container">
         <div class="row">
-          <div class="col-12 col-md-4">
-            <div
-              class="alert alert-warning text-justify"
-            >Para un comentario de calidad escriba su pieza o refacción que busca, marca, submarca, si es nacional o extranjera y alguna descripción que complete la información</div>
-          </div>
-          <div class="col-md-8 col-12">
+          <div class="col-md-12 col-12">
             <div class="row">
-              <div :class="images.length? 'col-12 col-md-4 text-center':''">
-                <img style="max-height: 200px" class="img-fluid" :src="images[0]" />
+              <div :class="images.length? 'col-3 text-center':''">
+                <img style="max-height: 100px" class="img-fluid" :src="images[0]" />
               </div>
-              <div
-                :class="images.length?'col-md-8 col-12 form-group':'col-12 col-md-12 form-group'"
-              >
-                <label for="content">
-                  <b>Pieza o refacción</b>
-                </label>
-                <textarea
+              <div :class="images.length? 'col-9 form-group':'col-12 col-md-12 form-group'">
+                <input
+                  v-model="content"
+                  style="-webkit-border-radius: 50px;-moz-border-radius: 50px;border-radius: 50px;"
                   type="text"
                   name="content"
                   id="content"
                   class="form-control"
+                  autocomplete="off"
                   placeholder="Escribe aquí la pieza o refacción"
-                  cols="30"
-                  rows="3"
-                ></textarea>
-              </div>
-              <div v-show="!images.length" class="form-group col-12">
-                <label for="file">
-                  <b>Foto o imagen</b>
-                  <small id="fileHelpId" class="form-text text-muted">*Opcional</small>
-                </label>
-                <input
-                  type="file"
-                  class="form-control-file"
-                  name="file"
-                  id="file"
-                  placeholder="Subir archivo"
-                  aria-describedby="fileHelpId"
-                  @change="onFileChange"
                 />
               </div>
 
-              <div :class="images.length?'col-md-8 offset-md-4':'col-12'">
-                <button type="submit" class="btn btn-secondary text-white">Hacer publicación</button>
+              <div class="col-12" v-show="content">
+                <input id="input-file" @change="onFileChange" type="file" name="files[]" multiple />
+                <button type="submit" class="btn btn-sm btn-success float-right">Publicar</button>
+                <button id="btn-file" type="button" class="float-right btn btn-success btn-sm mr-2">
+                  <i class="fas fa-images"></i>
+                </button>
               </div>
             </div>
           </div>
@@ -79,6 +58,12 @@ export default {
         .getAttribute("content"),
       images: []
     };
+  },
+
+  mounted() {
+    $("#btn-file").on("click", function() {
+      $("#input-file").trigger("click");
+    });
   },
   methods: {
     onFileChange(e) {
@@ -131,7 +116,10 @@ export default {
 .form-container {
   background-color: white;
   border-radius: 5px;
-  padding: 50px;
+  padding-right: 40px;
+  padding-left: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.06),
     0 3px 8px rgba(0, 0, 0, 0.09);
 }
@@ -152,7 +140,9 @@ export default {
   padding-right: 3%;
 }
 
-#form-container {
-  min-height: 100vh;
+.fileinput-button {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
 }
 </style>

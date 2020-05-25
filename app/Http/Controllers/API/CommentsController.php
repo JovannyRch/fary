@@ -24,7 +24,7 @@ class CommentsController extends Controller
     public function getFirtsComments($post_id){
         $comments = Comment::where('comments.post_id',$post_id)
         ->join('users', 'users.id', '=', 'comments.user_id')
-        ->orderBy('comments.created_at','desc')
+        ->orderBy('comments.created_at','asc')
         ->select('comments.id','comments.created_at as date', 'comments.user_id','comments.content', 'users.name as username')
         ->limit(4)
         ->get();
@@ -35,7 +35,7 @@ class CommentsController extends Controller
     public function getComment($id){
         return Comment::where('comments.id',$id)
         ->join('users', 'users.id', '=', 'comments.user_id')
-        ->orderBy('comments.created_at','desc')
+        ->orderBy('comments.created_at','asc')
         ->select('comments.id','comments.created_at as date', 'comments.user_id','comments.content', 'users.name as username')
         ->first();
     }
@@ -44,7 +44,7 @@ class CommentsController extends Controller
         
         $comments = Comment::where('post_id',$post_id)
         ->join('users', 'users.id', '=', 'comments.user_id')
-        ->orderBy('comments.created_at','desc')
+        ->orderBy('comments.created_at','asc')
         ->select('comments.id','comments.created_at as date', 'comments.user_id','comments.content', 'users.name as username')
         ->get();
 

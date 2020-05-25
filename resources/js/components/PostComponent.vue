@@ -3,62 +3,33 @@
     <div class="post-data">
       <div class="row">
         <div v-if="img" class="col-12 col-md-4 p-2 text-center">
-          <img :src="img" height="180px" />
-
-          <div class="text-center">
-            <button
-              type="button"
-              class="btn btn-light btn-sm"
-              data-toggle="modal"
-              data-target="#show-img"
-              :data-img="img"
-              :data-post="content"
-            >
-              <i class="fa fa-eye"></i>
-            </button>
-          </div>
+          <img @click="showPost(content,img)" :src="img" height="180px" />
         </div>
 
         <div :class="img? 'col-12 col-md-8 pl-2': 'col-12 col-md-12 pl-2'">
           <div class="d-flex bd-highlight">
             <div class="p-2 w-100 bd-highlight">
               <div class="col-12">
-                <span class="post-user">
+                <span class="post-user text-secondary">
                   <router-link :to="'/users/'+user_id">
                     <small>
                       <b>{{username}}</b>
+                      <i>
+                        <small style="color:grey">{{address}}</small>
+                      </i>
                     </small>
                   </router-link>
                 </span>
                 <div class="float-right">
                   <DateComponent :date="date" />
                 </div>
-                <hr />
               </div>
-              <b class="text-secondary grid-1">{{content}}</b>
-            </div>
-            <div class="p-2 flex-shrink-1 bd-highlight">
-              <div class="dropdown show float-right grid-2" v-if="post_user_id == user_id">
-                <a
-                  class="btn btn-outline-light text-dark dropdown-toggle text-white"
-                  href="#"
-                  role="button"
-                  id="dropdownMenuLink"
-                  data-toggle="dropdown"
-                  aria-haspopup="false"
-                  aria-expanded="false"
-                >
-                  <i class="fas fa-ellipsis-h"></i>
-                </a>
-
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                  <a class="dropdown-item" data-toggle="modal" data-target="#confirmDelete">Eliminar</a>
-                </div>
-              </div>
+              <span class="grid-1" style="color:grey">{{content}}</span>
             </div>
           </div>
+          <hr />
         </div>
-        <div class="col-12 pl-2">
+        <div class="col-12 pl-2 pt-0">
           <CommentsComponent :owner_post="post_user_id" :post_id="id"></CommentsComponent>
         </div>
       </div>
@@ -100,17 +71,17 @@
       aria-labelledby="modelTitleId"
       aria-hidden="true"
     >
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Modal title</h5>
+            <h5 class="modal-title">{{content}}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
             <div class="w-100 text-center">
-              <img src alt width="100%" />
+              <img id="img-post" height="180px" />
             </div>
           </div>
           <div class="modal-footer">
@@ -131,14 +102,26 @@ export default {
     DateComponent,
     CommentsComponent
   },
-  props: ["content", "date", "user", "img", "id", "post_user_id", "username"],
+  props: [
+    "content",
+    "date",
+    "user",
+    "img",
+    "id",
+    "post_user_id",
+    "username",
+    "address"
+  ],
   data() {
     return {
       user_id: document
         .querySelector('meta[name="user_id"]')
-        .getAttribute("content")
+        .getAttribute("content"),
+      auxContent: null,
+      auxImg: null
     };
   },
+
   mounted() {
     $("#show-img").on("show.bs.modal", function(event) {
       var button = $(event.relatedTarget);
@@ -151,6 +134,10 @@ export default {
     });
   },
   methods: {
+    showPost() {
+      $("#img-post").attr("src", this.img);
+      $("#show-img").modal("show");
+    },
     isValidateImg(img) {},
     deletePost() {
       fetch("/api/posts/" + this.id, {
@@ -175,13 +162,16 @@ export default {
 }
 
 .separator {
+  margin: 0;
   height: 1px;
   border-radius: 10px;
   background-color: gainsboro;
 }
 
 .post {
-  padding: 3%;
+  padding-top: 0%;
+  padding-left: 2%;
+  padding-right: 2%;
   background-color: white;
   border-radius: 10px;
   margin-bottom: 3%;

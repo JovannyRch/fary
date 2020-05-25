@@ -138,31 +138,4 @@ export default {
 </script>
 
 <style>
-.form-container {
-  background-color: white;
-  border-radius: 5px;
-  padding: 50px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.06),
-    0 3px 8px rgba(0, 0, 0, 0.09);
-}
-.title-page {
-  font-weight: bold;
-  margin-bottom: 1%;
-  margin-top: 1.5%;
-}
-.col-12 {
-  padding: 0;
-}
-.col-md-12 {
-  padding: 0;
-}
-
-.col-md-4 {
-  padding: 0;
-  padding-right: 3%;
-}
-
-#form-container {
-  min-height: 100vh;
-}
 </style>

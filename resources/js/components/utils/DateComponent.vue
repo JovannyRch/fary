@@ -40,7 +40,7 @@ export default {
 
 <style>
 .date {
-  color: #d3d1d1;
+  color: #9e9e9e;
   font-weight: 600;
   font-size: 0.7em;
   margin-right: 10px;

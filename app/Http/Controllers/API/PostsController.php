@@ -16,7 +16,7 @@ class PostsController extends Controller
         if($lat == null && $long == null){
             $posts = Post::
             join('users', 'users.id', '=', 'posts.user_id')
-            ->select('posts.content','posts.created_at','posts.user_id','posts.img','posts.id', 'users.name as username')
+            ->select('posts.content','posts.created_at','posts.user_id','posts.img','posts.id', 'users.name as username','users.address')
             ->orderBy('created_at','desc')
             ->paginate(50);
             return response()->json(['data' => $posts], 200);
@@ -25,7 +25,7 @@ class PostsController extends Controller
             $location = $this->queryLocation($lat,$long);
             $posts = Post::
             join('users', 'users.id', '=', 'posts.user_id')
-            ->select('posts.content','posts.created_at','posts.user_id','posts.img','posts.id',  'users.name as username', DB::raw($location))
+            ->select('posts.content','posts.created_at','posts.user_id','posts.img','posts.id',  'users.name as username','users.address', DB::raw($location))
             ->orderBy('distance','desc')
             ->orderBy('created_at','desc')
             ->paginate(50);
@@ -55,7 +55,7 @@ class PostsController extends Controller
         if($lat == null && $long == null){
             $posts = Post::
                 join('users', 'users.id', '=', 'posts.user_id')
-                ->select('posts.content','posts.created_at','posts.user_id','posts.img','posts.id', 'users.name as username')
+                ->select('posts.content','posts.created_at','posts.user_id','posts.img','posts.id', 'users.name as username','users.address')
                 ->orderBy('created_at','desc')
                 ->where("posts.content","like","%$content%")
                 ->paginate(40);
@@ -64,7 +64,7 @@ class PostsController extends Controller
             $location = $this->queryLocation($lat,$long);
             $posts = Post::
             join('users', 'users.id', '=', 'posts.user_id')
-            ->select('posts.content','posts.created_at','posts.user_id','posts.img','posts.id','users.name as username', DB::raw($location))
+            ->select('posts.content','posts.created_at','posts.user_id','posts.img','posts.id','users.name as username','users.address', DB::raw($location))
             ->orderBy('distance','desc')
             ->orderBy('created_at','desc')
             ->where("posts.content","like","%$content%")
@@ -79,7 +79,7 @@ class PostsController extends Controller
     public function myPosts($user_id){
         $posts = Post::
             join('users', 'users.id', '=', 'posts.user_id')
-            ->select('posts.content','posts.created_at','posts.user_id','posts.img','posts.id','users.name as username')
+            ->select('posts.content','posts.created_at','posts.user_id','posts.img','posts.id','users.name as username','users.address')
             ->orderBy('created_at','desc')
             ->where("posts.user_id","=",$user_id)
             ->paginate(40);
@@ -90,7 +90,7 @@ class PostsController extends Controller
     public function show($id){
         $post = Post::where('posts.id', $id)
         ->join('users', 'users.id', '=', 'posts.user_id')
-        ->select('posts.content','posts.created_at','posts.user_id','posts.img','posts.id','users.name as username')->first();
+        ->select('posts.content','posts.created_at','posts.user_id','posts.img','posts.id','users.name as username','users.address')->first();
         //$post['comments'] = $this->comments($id);
         return response()->json(['data' => $post], 200);
     }

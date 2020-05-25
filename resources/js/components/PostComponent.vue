@@ -2,22 +2,6 @@
   <div class="post w-100">
     <div class="post-data">
       <div class="row">
-        <div class="col-12">
-          <div class="col-12 pl-2">
-            <span class="post-user">
-              <router-link :to="'/users/'+user_id">
-                <small>
-                  <b>{{username}}</b>
-                </small>
-              </router-link>
-            </span>
-            <div class="float-right">
-              <DateComponent :date="date" />
-            </div>
-          </div>
-
-          <hr />
-        </div>
         <div v-if="img" class="col-12 col-md-4 p-2 text-center">
           <img :src="img" height="180px" />
 
@@ -38,19 +22,34 @@
         <div :class="img? 'col-12 col-md-8 pl-2': 'col-12 col-md-12 pl-2'">
           <div class="d-flex bd-highlight">
             <div class="p-2 w-100 bd-highlight">
+              <div class="col-12">
+                <span class="post-user">
+                  <router-link :to="'/users/'+user_id">
+                    <small>
+                      <b>{{username}}</b>
+                    </small>
+                  </router-link>
+                </span>
+                <div class="float-right">
+                  <DateComponent :date="date" />
+                </div>
+                <hr />
+              </div>
               <b class="text-secondary grid-1">{{content}}</b>
             </div>
             <div class="p-2 flex-shrink-1 bd-highlight">
               <div class="dropdown show float-right grid-2" v-if="post_user_id == user_id">
                 <a
-                  class="btn btn-dark dropdown-toggle text-white"
+                  class="btn btn-outline-light text-dark dropdown-toggle text-white"
                   href="#"
                   role="button"
                   id="dropdownMenuLink"
                   data-toggle="dropdown"
                   aria-haspopup="false"
                   aria-expanded="false"
-                >Opciones</a>
+                >
+                  <i class="fas fa-ellipsis-h"></i>
+                </a>
 
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                   <a class="dropdown-item" data-toggle="modal" data-target="#confirmDelete">Eliminar</a>

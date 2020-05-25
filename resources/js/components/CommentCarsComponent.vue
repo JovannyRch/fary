@@ -23,9 +23,7 @@
       </div>
     </form>
     <div class="mt-1 mb-1" v-if="comments.length">
-      <small>
-        <b>Comentarios</b>
-      </small>
+      <small style="color: grey">Comentarios</small>
     </div>
     <div v-if="comments.length">
       <div v-for="(c,index) in comments" :key="c.id">
@@ -149,19 +147,5 @@ export default {
   background-color: bisque;
   width: 60%;
   margin: 0 auto;
-}
-
-.comment {
-  background-color: rgb(243, 243, 242);
-  margin-bottom: 15px;
-  padding-top: 1.5%;
-  padding-left: 1.5%;
-  padding-right: 1.5%;
-  border-radius: 10px;
-  margin-right: 7px;
-  margin-left: 2px;
-  -webkit-box-shadow: 6px 9px 18px -11px rgba(191, 191, 191, 1);
-  -moz-box-shadow: 6px 9px 18px -11px rgba(191, 191, 191, 1);
-  box-shadow: 6px 9px 18px -11px rgba(191, 191, 191, 1);
 }
 </style>

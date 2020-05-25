@@ -1,13 +1,13 @@
 <template>
-  <div class="mt-2">
+  <div>
     <form
       @submit.prevent="sendComment()"
       v-if="user_id && (owner_post == user_id || type != 'normal')"
     >
-      <div class="row ml-2">
+      <div class="row ml-1">
         <div class="col-11 col-md-11">
           <div class="form-row text-center">
-            <div class="form-group col-10">
+            <div class="form-group col-11">
               <input
                 type="text"
                 v-model="commentInput"
@@ -26,9 +26,7 @@
       </div>
     </form>
     <div class="mb-1" v-if="comments.length">
-      <small>
-        <b>Comentarios</b>
-      </small>
+      <small style="color: grey">Comentarios</small>
     </div>
     <div v-if="comments.length">
       <div v-for="(c,index) in comments" :key="c.id">
@@ -150,16 +148,13 @@ export default {
 }
 
 .comment {
-  background-color: rgb(243, 243, 242);
-  margin-bottom: 15px;
-  padding-top: 1.5%;
+  background-color: rgb(248, 248, 248);
+  margin-bottom: 5px;
+  padding-top: 0.5%;
   padding-left: 1.5%;
   padding-right: 1.5%;
   border-radius: 10px;
   margin-right: 2px;
   margin-left: 2px;
-  -webkit-box-shadow: 6px 9px 18px -11px rgba(191, 191, 191, 1);
-  -moz-box-shadow: 6px 9px 18px -11px rgba(191, 191, 191, 1);
-  box-shadow: 6px 9px 18px -11px rgba(191, 191, 191, 1);
 }
 </style>

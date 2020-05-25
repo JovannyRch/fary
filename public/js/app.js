@@ -2348,8 +2348,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2495,8 +2493,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-//
-//
 //
 //
 //
@@ -3024,8 +3020,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -3153,7 +3147,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_DateComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils/DateComponent.vue */ "./resources/js/components/utils/DateComponent.vue");
 /* harmony import */ var _CommentsComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CommentsComponent.vue */ "./resources/js/components/CommentsComponent.vue");
-//
 //
 //
 //
@@ -8847,7 +8840,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.separator {\n  height: 2px;\n  background-color: bisque;\n  width: 60%;\n  margin: 0 auto;\n}\n.comment {\n  background-color: rgb(243, 243, 242);\n  margin-bottom: 15px;\n  padding-top: 1.5%;\n  padding-left: 1.5%;\n  padding-right: 1.5%;\n  border-radius: 10px;\n  margin-right: 7px;\n  margin-left: 2px;\n  box-shadow: 6px 9px 18px -11px rgba(191, 191, 191, 1);\n}\n", ""]);
+exports.push([module.i, "\n.separator {\n  height: 2px;\n  background-color: bisque;\n  width: 60%;\n  margin: 0 auto;\n}\n", ""]);
 
 // exports
 
@@ -8866,7 +8859,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.separator {\n  height: 2px;\n  background-color: bisque;\n  width: 60%;\n  margin: 0 auto;\n}\n.comment {\n  background-color: rgb(243, 243, 242);\n  margin-bottom: 15px;\n  padding-top: 1.5%;\n  padding-left: 1.5%;\n  padding-right: 1.5%;\n  border-radius: 10px;\n  margin-right: 2px;\n  margin-left: 2px;\n  box-shadow: 6px 9px 18px -11px rgba(191, 191, 191, 1);\n}\n", ""]);
+exports.push([module.i, "\n.separator {\n  height: 2px;\n  background-color: bisque;\n  width: 60%;\n  margin: 0 auto;\n}\n.comment {\n  background-color: rgb(248, 248, 248);\n  margin-bottom: 5px;\n  padding-top: 0.5%;\n  padding-left: 1.5%;\n  padding-right: 1.5%;\n  border-radius: 10px;\n  margin-right: 2px;\n  margin-left: 2px;\n}\n", ""]);
 
 // exports
 
@@ -44295,7 +44288,11 @@ var render = function() {
       : _vm._e(),
     _vm._v(" "),
     _vm.comments.length
-      ? _c("div", { staticClass: "mt-1 mb-1" }, [_vm._m(1)])
+      ? _c("div", { staticClass: "mt-1 mb-1" }, [
+          _c("small", { staticStyle: { color: "grey" } }, [
+            _vm._v("Comentarios")
+          ])
+        ])
       : _vm._e(),
     _vm._v(" "),
     _vm.comments.length
@@ -44388,12 +44385,6 @@ var staticRenderFns = [
         [_c("i", { staticClass: "fa fa-paper-plane" })]
       )
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("small", [_c("b", [_vm._v("Comentarios")])])
   }
 ]
 render._withStripped = true
@@ -44417,7 +44408,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "mt-2" }, [
+  return _c("div", [
     _vm.user_id && (_vm.owner_post == _vm.user_id || _vm.type != "normal")
       ? _c(
           "form",
@@ -44430,10 +44421,10 @@ var render = function() {
             }
           },
           [
-            _c("div", { staticClass: "row ml-2" }, [
+            _c("div", { staticClass: "row ml-1" }, [
               _c("div", { staticClass: "col-11 col-md-11" }, [
                 _c("div", { staticClass: "form-row text-center" }, [
-                  _c("div", { staticClass: "form-group col-10" }, [
+                  _c("div", { staticClass: "form-group col-11" }, [
                     _c("input", {
                       directives: [
                         {
@@ -44470,7 +44461,11 @@ var render = function() {
       : _vm._e(),
     _vm._v(" "),
     _vm.comments.length
-      ? _c("div", { staticClass: "mb-1" }, [_vm._m(1)])
+      ? _c("div", { staticClass: "mb-1" }, [
+          _c("small", { staticStyle: { color: "grey" } }, [
+            _vm._v("Comentarios")
+          ])
+        ])
       : _vm._e(),
     _vm._v(" "),
     _vm.comments.length
@@ -44563,12 +44558,6 @@ var staticRenderFns = [
         [_c("i", { staticClass: "fa fa-paper-plane" })]
       )
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("small", [_c("b", [_vm._v("Comentarios")])])
   }
 ]
 render._withStripped = true
@@ -44688,7 +44677,7 @@ var render = function() {
                   ])
                 : _vm._e(),
               _vm._v(" "),
-              _c("div", { staticClass: "w-50" }, [
+              _c("div", [
                 _c("div", { staticClass: "input-group" }, [
                   _vm._m(1),
                   _vm._v(" "),
@@ -44884,12 +44873,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "mt-4 main" }, [
     _c("div", { staticClass: "row" }, [
-      _c(
-        "div",
-        { staticClass: "col-md-2 d-none d-md-block", attrs: { id: "s-1" } },
-        [_c("AdsComponent", { attrs: { ads: _vm.currentAds } })],
-        1
-      ),
+      _c("div", {
+        staticClass: "col-md-2 d-none d-md-block",
+        attrs: { id: "s-1" }
+      }),
       _vm._v(" "),
       _c(
         "div",
@@ -45027,30 +45014,6 @@ var render = function() {
   return _c("div", { staticClass: "post w-100" }, [
     _c("div", { staticClass: "post-data" }, [
       _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-12" }, [
-          _c("div", { staticClass: "col-12 pl-2" }, [
-            _c(
-              "span",
-              { staticClass: "post-user" },
-              [
-                _c("router-link", { attrs: { to: "/users/" + _vm.user_id } }, [
-                  _c("small", [_c("b", [_vm._v(_vm._s(_vm.username))])])
-                ])
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "float-right" },
-              [_c("DateComponent", { attrs: { date: _vm.date } })],
-              1
-            )
-          ]),
-          _vm._v(" "),
-          _c("hr")
-        ]),
-        _vm._v(" "),
         _vm.img
           ? _c("div", { staticClass: "col-12 col-md-4 p-2 text-center" }, [
               _c("img", { attrs: { src: _vm.img, height: "180px" } }),
@@ -45080,6 +45043,30 @@ var render = function() {
           [
             _c("div", { staticClass: "d-flex bd-highlight" }, [
               _c("div", { staticClass: "p-2 w-100 bd-highlight" }, [
+                _c("div", { staticClass: "col-12" }, [
+                  _c(
+                    "span",
+                    { staticClass: "post-user" },
+                    [
+                      _c(
+                        "router-link",
+                        { attrs: { to: "/users/" + _vm.user_id } },
+                        [_c("small", [_c("b", [_vm._v(_vm._s(_vm.username))])])]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "float-right" },
+                    [_c("DateComponent", { attrs: { date: _vm.date } })],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("hr")
+                ]),
+                _vm._v(" "),
                 _c("b", { staticClass: "text-secondary grid-1" }, [
                   _vm._v(_vm._s(_vm.content))
                 ])
@@ -45090,26 +45077,7 @@ var render = function() {
                   ? _c(
                       "div",
                       { staticClass: "dropdown show float-right grid-2" },
-                      [
-                        _c(
-                          "a",
-                          {
-                            staticClass:
-                              "btn btn-dark dropdown-toggle text-white",
-                            attrs: {
-                              href: "#",
-                              role: "button",
-                              id: "dropdownMenuLink",
-                              "data-toggle": "dropdown",
-                              "aria-haspopup": "false",
-                              "aria-expanded": "false"
-                            }
-                          },
-                          [_vm._v("Opciones")]
-                        ),
-                        _vm._v(" "),
-                        _vm._m(0)
-                      ]
+                      [_vm._m(0), _vm._v(" "), _vm._m(1)]
                     )
                   : _vm._e()
               ])
@@ -45151,7 +45119,7 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(1),
+              _vm._m(2),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _vm._v("¿Estás seguro de eliminar la publicación?")
@@ -45187,10 +45155,31 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _vm._m(2)
+    _vm._m(3)
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass:
+          "btn btn-outline-light text-dark dropdown-toggle text-white",
+        attrs: {
+          href: "#",
+          role: "button",
+          id: "dropdownMenuLink",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "false",
+          "aria-expanded": "false"
+        }
+      },
+      [_c("i", { staticClass: "fas fa-ellipsis-h" })]
+    )
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -45606,7 +45595,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "container ml-2", attrs: { id: "container-post" } },
+    { staticClass: "container", attrs: { id: "container-post" } },
     [
       _c("div", { staticClass: "row" }, [
         _vm._m(0),
@@ -45684,7 +45673,7 @@ var render = function() {
             ])
           : _vm._e(),
         _vm._v(" "),
-        _c("div", { staticClass: "w-50" }, [
+        _c("div", [
           _c("div", { staticClass: "input-group" }, [
             _vm._m(1),
             _vm._v(" "),

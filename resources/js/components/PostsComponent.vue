@@ -1,5 +1,5 @@
 <template>
-  <div class="container ml-2" id="container-post">
+  <div class="container" id="container-post">
     <div class="row">
       <div class="col-md-8 col-12">
         <h1 class="title-page">Autopartes</h1>
@@ -33,7 +33,7 @@
         </nav>
       </div>
 
-      <div class="w-50">
+      <div>
         <div class="input-group">
           <div class="input-group-prepend">
             <span class="input-group-text">

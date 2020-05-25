@@ -1,9 +1,7 @@
 <template>
   <div class="mt-4 main">
     <div class="row">
-      <div class="col-md-2 d-none d-md-block" id="s-1">
-        <AdsComponent :ads="currentAds" />
-      </div>
+      <div class="col-md-2 d-none d-md-block" id="s-1"></div>
       <div class="col-md-8 col-12" id="s-2">
         <PostsComponent :ads="currentAds" />
       </div>

@@ -2,15 +2,15 @@
   <div class="post w-100">
     <div class="post-data">
       <div class="row">
-        <div v-if="img" class="col-12 col-md-4 p-2 text-center">
-          <img @click="showPost(content,img)" :src="img" height="180px" />
+        <div v-if="img" class="col-12 col-md-4 p-2 pl-4 text-center">
+          <img @click="showPost(content,img)" :src="img" width="100%" />
         </div>
 
         <div :class="img? 'col-12 col-md-8 pl-2': 'col-12 col-md-12 pl-2'">
           <div class="d-flex bd-highlight">
             <div class="p-2 w-100 bd-highlight">
               <div class="col-12">
-                <span class="post-user text-secondary">
+                <span class="post-user text-secondary" v-if="showName">
                   <router-link :to="'/users/'+user_id">
                     <small>
                       <b>{{username}}</b>
@@ -24,13 +24,13 @@
                   <DateComponent :date="date" />
                 </div>
               </div>
-              <span class="grid-1" style="color:grey">{{content}}</span>
+              <span class="grid-1 content">{{content}}</span>
             </div>
           </div>
           <hr />
         </div>
         <div class="col-12 pl-2 pt-0">
-          <CommentsComponent :owner_post="post_user_id" :post_id="id"></CommentsComponent>
+          <CommentsComponent :showName="showName" :owner_post="post_user_id" :post_id="id"></CommentsComponent>
         </div>
       </div>
     </div>
@@ -81,7 +81,7 @@
           </div>
           <div class="modal-body">
             <div class="w-100 text-center">
-              <img id="img-post" height="180px" />
+              <img id="img-post" />
             </div>
           </div>
           <div class="modal-footer">
@@ -110,7 +110,8 @@ export default {
     "id",
     "post_user_id",
     "username",
-    "address"
+    "address",
+    "showName"
   ],
   data() {
     return {
@@ -166,6 +167,9 @@ export default {
   height: 1px;
   border-radius: 10px;
   background-color: gainsboro;
+}
+.content {
+  color: rgb(94, 94, 94);
 }
 
 .post {

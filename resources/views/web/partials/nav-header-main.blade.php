@@ -12,7 +12,8 @@
       </a>
     @endif
   @else
-    <a href="javascript:void(0);" > <i class="fa fa-user"></i> {{ Auth::user()->name }}</a>
+    <a href="/" > <i class="fa fa-wrench "></i> Autopartes</a>
+    <a href="/cars" > <i class="fas fa-car"></i> Autos chocados</a>
     <a  href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="float-right d-none d-md-block"> <i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
  
     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

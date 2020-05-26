@@ -5,26 +5,30 @@
         <div class="col-12" style="font-size:0.75em" v-if="(!showAll && index < 3) || (showAll)">
           <small>
             <router-link :to="'/user/'+c.user_id">
-              <b>{{c.username}}</b>
+              <b style="color: grey">{{c.username}}</b>
             </router-link>
           </small>
           <DateComponent :date="c.date"></DateComponent>
 
           <div class="float-right pr-4 btn-sm">
             <span v-if="c.user_id == user_id">
-              <i class="fa fa-trash" style="zomm: 0.7" @click="deleteComment(c.id,index)"></i>
+              <i
+                class="fa fa-trash"
+                style="zomm: 0.7;color: grey"
+                @click="deleteComment(c.id,index)"
+              ></i>
             </span>
           </div>
         </div>
         <div class="p-0 comment" v-if="(!showAll && index < 3) || (showAll)">
           <div class="col-12 pl-3">
-            <small>{{c.content}}</small>
+            <small style="color: grey">{{c.content}}</small>
           </div>
         </div>
       </div>
-      <div v-if="!showAll && comments.length >= 4" class="ml-4">
+      <div v-if="!showAll && comments.length >= 4" class>
         <button
-          class="btn btn-outline-info btn-sm"
+          class="btn btn-outline-success btn-sm redondo"
           @click="loadComments()"
         >Mostrar todos los comentarios</button>
       </div>
@@ -70,7 +74,7 @@ export default {
   components: {
     DateComponent
   },
-  props: ["post_id", "owner_post"],
+  props: ["post_id", "owner_post", "showName"],
   created() {
     this.loadFirtsComments();
   },
@@ -153,6 +157,7 @@ export default {
   border-radius: 20px;
   margin-right: 2px;
   margin-left: 2px;
+  width: 90%;
 }
 
 .input-comment {

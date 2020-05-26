@@ -1,7 +1,7 @@
 <template>
   <div class="container" id="container-post">
     <div class="row">
-      <div class="col-8 offset-2 mt-0 pt-0 text-center">
+      <div class="col-8 offset-2 mt-0 pt-0 text-center" v-if="type == owner">
         <div class="input-group">
           <input
             style="-webkit-border-radius: 50px;-moz-border-radius: 50px;border-radius: 50px;"
@@ -23,7 +23,7 @@
         </div>
       </div>
 
-      <div class="col-12">
+      <div class="col-12" v-if="!isBusqueda">
         <h6 style="color:grey;">
           Crear publicación
           <button
@@ -48,7 +48,8 @@
       </div>
 
       <div class="col-md-12 mt-4">
-        <h6 style="color:grey;">Publicaciones de autopartes</h6>
+        <h4 style="color:grey;" v-if="type == 'normal' && isMyPosts">Mis Publicaciones de Autopartes</h4>
+        <h4 v-else>Publicaciones de autopartes</h4>
 
         <div class="posts-container" v-if="!isLoading">
           <div v-if="posts.length != 0">
@@ -68,13 +69,14 @@
                 :username="p.username"
                 :address="p.address"
                 :post_user_id="p.user_id"
+                :showName="showName"
                 @updateData="deletePost(index)"
               />
             </div>
           </div>
           <div v-if="posts.length == 0 && isLoading == false" class="text-center pt-5">
             <h3 v-if="!isMyPosts">Aún no se han hecho publicaciones</h3>
-            <h3 v-else>Aún no has ninguna publicación</h3>
+            <h3 v-if="isMyPosts">Aún no has ninguna publicación</h3>
           </div>
         </div>
         <div v-else>
@@ -100,6 +102,7 @@ export default {
     $(function() {
       $('[data-toggle="tooltip"]').tooltip();
     });
+    this.showName = !(this.type == "normal" && this.isMyPosts);
     let result = await navigator.permissions.query({ name: "geolocation" });
 
     if (result.state === "granted" || result.state == "prompt") {
@@ -130,6 +133,7 @@ export default {
       busquedaAux: "",
       isBusqueda: false,
       locationPermission: false,
+      showName: false,
       user_id: document
         .querySelector('meta[name="user_id"]')
         .getAttribute("content"),

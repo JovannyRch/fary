@@ -16,7 +16,7 @@ class CarsController extends Controller
         if($lat == null && $long == null){
             $cars = Car::
             join('users', 'users.id', '=', 'cars.user_id')
-            ->select('cars.content','cars.user_id','cars.created_at','cars.id', 'users.name as username')
+            ->select('cars.content','cars.user_id','cars.created_at','cars.id', 'users.name as username','users.address')
             ->orderBy('created_at','desc')
             ->paginate(40);
             foreach ($cars as &$car) {
@@ -26,7 +26,7 @@ class CarsController extends Controller
             $location = $this->queryLocation($lat,$long);
             $cars = Car::
             join('users', 'users.id', '=', 'cars.user_id')
-            ->select('cars.content','cars.user_id','cars.created_at','cars.id', 'users.name as username',DB::raw($location))
+            ->select('cars.content','cars.user_id','cars.created_at','cars.id', 'users.name as username','users.address',DB::raw($location))
             ->orderBy('distance','desc')
             ->orderBy('created_at','desc')
             ->paginate(40);
@@ -58,7 +58,7 @@ class CarsController extends Controller
         if($lat == null && $long == null){
             $cars = Car::
             join('users', 'users.id', '=', 'cars.user_id')
-            ->select('cars.*', 'users.name as username')
+            ->select('cars.*', 'users.name as username','users.address')
             ->orderBy('created_at','desc')
             ->where("cars.content","like","%$content%")
             ->paginate(40);
@@ -69,7 +69,7 @@ class CarsController extends Controller
             $location = $this->queryLocation($lat,$long);
             $cars = Car::
             join('users', 'users.id', '=', 'cars.user_id')
-            ->select('cars.*', 'users.name as username', DB::raw($location) )
+            ->select('cars.*', 'users.name as username','users.address', DB::raw($location) )
             ->orderBy('distance','desc')
             ->orderBy('created_at','desc')
             ->where("cars.content","like","%$content%")
@@ -87,7 +87,7 @@ class CarsController extends Controller
         
         $cars = Car::
         join('users', 'users.id', '=', 'cars.user_id')
-        ->select('cars.*', 'users.name as username')
+        ->select('cars.*', 'users.name as username','users.address')
         ->orderBy('created_at','desc')
         ->where("cars.user_id","=",$user_id)
         ->paginate(40);

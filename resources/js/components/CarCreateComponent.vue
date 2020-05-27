@@ -1,6 +1,5 @@
 <template>
-  <div class="container" id="form-container">
-    <h2 class="title-page">Crear una publicación de auto chocado</h2>
+  <div id="form-container">
     <form
       @submit.prevent="addLocation"
       id="form-create"
@@ -8,46 +7,49 @@
       method="post"
       enctype="multipart/form-data"
     >
+      <input type="hidden" name="_token" :value="csrf" />
+      <input type="hidden" name="user_id" :value="user_id" />
       <div class="form-container">
         <div class="row">
-          <div class="col-12 col-md-4">
-            <div
-              class="alert alert-warning text-justify"
-            >Realiza tu anuncio detallando la marca, submarca, modelo, si es vehículo nacional o extranjero, factura original o refacturado y especifica la situación en la que se encuentre.</div>
-          </div>
-          <div class="col-md-8 col-12">
-            <input type="hidden" name="_token" :value="csrf" />
-            <input type="hidden" name="user_id" :value="user_id" />
-
-            <div class="col-12 form-group">
-              <label for="content">
-                <b>Contenido</b>
-              </label>
-              <input
-                type="text"
-                name="content"
-                id="content"
-                class="form-control"
-                required
-                placeholder="Escribe aquí la información sobre el auto"
-              />
-            </div>
-            <b>Fotos o imágenes</b>
-            <small id="helpId" class="text-muted ml-2">* Máximo 6 archivos</small>
-
-            <div v-show="!images.length" class="col-12">
-              <br />
-              <input required type="file" name="imgs[]" multiple @change="onFileChange" />
-            </div>
-            <div v-show="images.length">
-              <div class="row">
-                <div v-for="(img,index) in images" :key="index" :class="'col-4 p-3 col-md-'+calc">
-                  <img style="max-height: 300px" class="img-fluid" :src="img" />
-                </div>
+          <div class="col-md-12 col-12">
+            <div class="row">
+              <div class="col-12 form-group">
+                <input
+                  v-model="content"
+                  style="-webkit-border-radius: 50px;-moz-border-radius: 50px;border-radius: 50px;"
+                  type="text"
+                  name="content"
+                  id="content"
+                  class="form-control"
+                  autocomplete="off"
+                  placeholder="Escribe aquí la información sobre el auto "
+                />
               </div>
-            </div>
-            <div class="col-12 mt-2">
-              <button type="submit" class="btn btn-secondary text-white">Hacer publicación</button>
+              <div class="col-12">
+                <img
+                  style="width: 80px"
+                  class="mr-2"
+                  width="50px"
+                  v-for="(img,index) in images"
+                  :src="img"
+                  :key="index"
+                />
+              </div>
+
+              <div class="col-12" v-show="content">
+                <input
+                  id="input-file"
+                  accept="image/*"
+                  @change="onFileChange"
+                  type="file"
+                  name="imgs[]"
+                  multiple
+                />
+                <button type="submit" class="btn btn-sm btn-success float-right">Publicar</button>
+                <button id="btn-file" type="button" class="float-right btn btn-success btn-sm mr-2">
+                  <i class="fas fa-images"></i>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -59,6 +61,11 @@
 <script>
 export default {
   created() {},
+  mounted() {
+    $("#btn-file").on("click", function() {
+      $("#input-file").trigger("click");
+    });
+  },
   data() {
     return {
       content: "",
@@ -72,6 +79,7 @@ export default {
       imgs: [1],
       lat: null,
       long: null,
+
       user_id: document
         .querySelector('meta[name="user_id"]')
         .getAttribute("content"),
@@ -80,6 +88,13 @@ export default {
         .querySelector('meta[name="csrf-token"]')
         .getAttribute("content")
     };
+  },
+  watch: {
+    content: function(val) {
+      if (!this.user_id) {
+        document.location.href = "/cars/create";
+      }
+    }
   },
   methods: {
     onFileChange(e) {
@@ -106,16 +121,26 @@ export default {
       this.images.splice(index, 1);
     },
     async addLocation() {
-      let result = await navigator.permissions.query({ name: "geolocation" });
-      if (result.state === "granted" || result.state == "prompt") {
-        navigator.geolocation.getCurrentPosition(location => {
-          let lat = location.coords.latitude;
-          let long = location.coords.longitude;
-          this.insertLocation(lat, long);
-          $("#form-create").submit();
+      if (!this.images.length) {
+        Vue.notify({
+          group: "foo",
+          title: "Aviso",
+          text: "Debe enviar al menos una foto del auto",
+          type: "warn"
         });
+        return;
       } else {
-        $("#form-create").submit();
+        let result = await navigator.permissions.query({ name: "geolocation" });
+        if (result.state === "granted" || result.state == "prompt") {
+          navigator.geolocation.getCurrentPosition(location => {
+            let lat = location.coords.latitude;
+            let long = location.coords.longitude;
+            this.insertLocation(lat, long);
+            $("#form-create").submit();
+          });
+        } else {
+          $("#form-create").submit();
+        }
       }
     },
     insertLocation(lat, long) {
@@ -130,7 +155,7 @@ export default {
   computed: {
     calc() {
       let val = Math.floor(12 / this.images.length);
-      console.log(val);
+
       return val;
     }
   }

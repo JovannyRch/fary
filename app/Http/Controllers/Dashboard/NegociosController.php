@@ -77,6 +77,8 @@ class NegociosController extends Controller
         $negocio->phone = $request->phone;
         $negocio->email = $request->email;
         $negocio->owner_id = $request->owner_id;
+        $negocio->latitud = $request->latitud;
+        $negocio->longitud   = $request->longitud ;
         $negocio->save();
         return back()->with('msg','Negocio guardado con éxito.');
     }

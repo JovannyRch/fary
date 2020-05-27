@@ -55,4 +55,3 @@ Route::get('/zona-publicitaria', 'WebController@index')->name('zona');
 Route::get('/zona-publicitaria/{id}', 'WebController@index')->name('zona-show');
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');

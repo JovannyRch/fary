@@ -1,16 +1,15 @@
 <template>
   <div class="post w-100">
+    <notifications group="foo" />
     <div class="post-data">
       <div class="row">
-        <div v-if="img" class="col-12 col-md-4 p-2 pl-4 text-center">
-          <img @click="showPost(content,img)" :src="img" width="100%" />
-        </div>
-
-        <div :class="img? 'col-12 col-md-8 pl-2': 'col-12 col-md-12 pl-2'">
+        <div
+          :class="img || imgs? 'col-12 col-md-8 pl-2 d-block d-md-none': 'col-12 col-md-12 pl-2 d-block d-md-none'"
+        >
           <div class="d-flex bd-highlight">
             <div class="p-2 w-100 bd-highlight">
               <div class="col-12">
-                <span class="post-user text-secondary" v-if="showName">
+                <span class="post-user" v-if="showName">
                   <router-link :to="'/users/'+user_id">
                     <small>
                       <b>{{username}}</b>
@@ -24,13 +23,47 @@
                   <DateComponent :date="date" />
                 </div>
               </div>
-              <span class="grid-1 content">{{content}}</span>
+              <span class="grid-1 content text-secondary">{{content}}</span>
+            </div>
+          </div>
+          <hr />
+        </div>
+        <div v-if="img || imgs" class="col-12 col-md-4 p-2 pl-4 text-center">
+          <ImgCarouselComponent :title="content" :imgs="imgs" :img="img" :id="id" />
+        </div>
+        <div
+          :class="img || imgs? 'col-12 col-md-8 pl-2 d-none d-md-block': 'col-12 col-md-12 pl-2 d-none d-md-block'"
+        >
+          <div class="d-flex bd-highlight">
+            <div class="p-2 w-100 bd-highlight">
+              <div class="col-12">
+                <span class="post-user" v-if="showName">
+                  <router-link :to="'/users/'+user_id">
+                    <small>
+                      <b>{{username}}</b>
+                      <i>
+                        <small style="color:grey">{{address}}</small>
+                      </i>
+                    </small>
+                  </router-link>
+                </span>
+                <div class="float-right">
+                  <DateComponent :date="date" />
+                </div>
+              </div>
+              <span class="grid-1 content text-secondary">{{content}}</span>
             </div>
           </div>
           <hr />
         </div>
         <div class="col-12 pl-2 pt-0">
-          <CommentsComponent :showName="showName" :owner_post="post_user_id" :post_id="id"></CommentsComponent>
+          <CommentsComponent
+            :canComment="canComment"
+            :showName="showName"
+            :owner_post="post_user_id"
+            :post_id="id"
+            :typePosts="typePosts"
+          ></CommentsComponent>
         </div>
       </div>
     </div>
@@ -96,11 +129,13 @@
 <script>
 import DateComponent from "./utils/DateComponent.vue";
 import CommentsComponent from "./CommentsComponent.vue";
+import ImgCarouselComponent from "./utils/ImgCarouselComponent.vue";
 
 export default {
   components: {
     DateComponent,
-    CommentsComponent
+    CommentsComponent,
+    ImgCarouselComponent
   },
   props: [
     "content",
@@ -111,18 +146,39 @@ export default {
     "post_user_id",
     "username",
     "address",
-    "showName"
+    "showName",
+    "imgs",
+    "typePosts"
   ],
   data() {
     return {
       user_id: document
         .querySelector('meta[name="user_id"]')
         .getAttribute("content"),
+      type: document.querySelector('meta[name="type"]')
+        ? document.querySelector('meta[name="type"]').getAttribute("content")
+        : null,
       auxContent: null,
-      auxImg: null
+      auxImg: null,
+      canComment: false,
+      dialog: false
     };
   },
-
+  created() {
+    if (this.user_id) {
+      if (this.type == "owner") {
+        this.canComment = true;
+      } else {
+        if (this.typePosts == "posts") {
+          this.canComment = this.user_id == this.post_user_id;
+        } else {
+          this.canComment = true;
+        }
+      }
+    } else {
+      this.canComment = false;
+    }
+  },
   mounted() {
     $("#show-img").on("show.bs.modal", function(event) {
       var button = $(event.relatedTarget);
@@ -147,6 +203,12 @@ export default {
         if (response.status == 200) {
           //Éxito al eliminar el post
           this.$emit("updateData", "");
+          Vue.notify({
+            group: "foo",
+            title: "Aviso",
+            text: "Se ha eliminado la publicación con éxito",
+            type: "success"
+          });
         } else {
           //Error al eliminar el post
         }

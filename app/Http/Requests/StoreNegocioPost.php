@@ -30,7 +30,9 @@ class StoreNegocioPost extends FormRequest
             'address' => 'required',
             'email' => 'required|email',
             'tipos' => 'required',
-            'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4048'
+            'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4048',
+            'latitud' => 'nullable',
+            'longitud' => 'nullable'
         ];
     }
 

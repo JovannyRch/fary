@@ -1,11 +1,12 @@
 <template>
   <div style="padding-left: 3%; padding-right: 3%">
+    <notifications group="foo" />
     <div v-if="comments.length">
       <div v-for="(c,index) in comments" :key="c.id">
         <div class="col-12" style="font-size:0.75em" v-if="(!showAll && index < 3) || (showAll)">
           <small>
             <router-link :to="'/user/'+c.user_id">
-              <b style="color: grey">{{c.username}}</b>
+              <b>{{c.username}}</b>
             </router-link>
           </small>
           <DateComponent :date="c.date"></DateComponent>
@@ -34,10 +35,7 @@
       </div>
     </div>
     <div>
-      <form
-        @submit.prevent="sendComment()"
-        v-if="user_id && (owner_post == user_id || type != 'normal')"
-      >
+      <form @submit.prevent="sendComment()" v-if="canComment">
         <div class="row ml-1">
           <div class="col-11 col-md-11">
             <div class="form-row text-center">
@@ -74,7 +72,7 @@ export default {
   components: {
     DateComponent
   },
-  props: ["post_id", "owner_post", "showName"],
+  props: ["post_id", "owner_post", "showName", "canComment", "typePosts"],
   created() {
     this.loadFirtsComments();
   },
@@ -83,15 +81,18 @@ export default {
       comments: [],
       commentInput: "",
       showAll: false,
-      user_id: document
-        .querySelector('meta[name="user_id"]')
-        .getAttribute("content"),
-      type: document.querySelector('meta[name="type"]').getAttribute("content")
+      defaultUrl: "",
+      user_id: document.querySelector('meta[name="user_id"]')
+        ? document.querySelector('meta[name="user_id"]').getAttribute("content")
+        : null,
+      type: document.querySelector('meta[name="type"]')
+        ? document.querySelector('meta[name="type"]').getAttribute("content")
+        : null
     };
   },
   methods: {
     loadFirtsComments: function() {
-      fetch(`/api/comments/post/${this.post_id}/firts`)
+      fetch(`/api/comments/${this.typePosts}/${this.post_id}/firts`)
         .then(response => response.json())
         .then(json => {
           this.comments = json.data;
@@ -99,7 +100,7 @@ export default {
     },
     loadComments: function() {
       this.showAll = true;
-      fetch(`/api/comments/post/${this.post_id}`)
+      fetch(`/api/comments/${this.typePosts}/${this.post_id}`)
         .then(response => response.json())
         .then(json => {
           if (json.data.length > 0) {
@@ -114,7 +115,7 @@ export default {
         post_id: this.post_id,
         user_id: this.user_id
       };
-      fetch("/api/comments", {
+      fetch(`/api/comments/${this.typePosts}`, {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -126,18 +127,34 @@ export default {
           this.loadComments();
           this.commentInput = "";
         } else {
-          alert("Ocurrió un erro al publicar el comentario");
+          Vue.notify({
+            group: "foo",
+            title: "Error",
+            text: "Ocurrió un error al publicar el comentario",
+            type: "error"
+          });
         }
       });
     },
     deleteComment(comment_id, index) {
-      fetch("/api/comments/" + comment_id, {
+      fetch(`/api/comments/${this.typePosts}/ ` + comment_id, {
         method: "DELETE"
       }).then(response => {
         if (response.status == 200) {
           this.comments.splice(index, 1);
+          Vue.notify({
+            group: "foo",
+            title: "Aviso",
+            text: "Comentario eliminado correctamente",
+            type: "success"
+          });
         } else {
-          alert("Ocurrió un error al eliminar");
+          Vue.notify({
+            group: "foo",
+            title: "Error",
+            text: "Ocurrió un error al eliminar el comentario",
+            type: "error"
+          });
         }
       });
     }

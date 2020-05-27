@@ -1,7 +1,15 @@
 window.Vue = require("vue");
 import VueRouter from "vue-router";
-import Vuetify from "vuetify";
-Vue.use(Vuetify);
+
+// Librerias
+import imageViewer from 'image-viewer-vue'
+import Notifications from 'vue-notification'
+
+Vue.use(Notifications)
+
+Vue.use(imageViewer)
+
+
 import PostsComponent from '../components/PostsComponent.vue'
 import HomeComponent from '../components/HomeComponent.vue'
 import PostCreateComponent from '../components/PostCreateComponent.vue';

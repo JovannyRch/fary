@@ -16,7 +16,9 @@ class StoreNegocioPut extends FormRequest
             'address' => 'required',
             'email' => 'required|email',
             'tipos' => 'required',
-            'img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:4048'
+            'img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:4048',
+            'latitud' => 'nullable',
+            'longitud' => 'nullable'
         ];
     }
 
@@ -29,7 +31,8 @@ class StoreNegocioPut extends FormRequest
             'password' => 'contraseña',
             'owner_id' => "dueño del negocio",
             'tipos' => "tipo de negocio",
-            'img' => "Imagen del negocio"
+            'img' => "Imagen del negocio",
+            
         ];
     }
 

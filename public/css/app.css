@@ -16918,7 +16918,7 @@ readers do not read off random characters that represent icons */
 }
 
 .loader {
-  width: 75vw;
+  width: 45vw;
   margin: 0 auto;
 }
 

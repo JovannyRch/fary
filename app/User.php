@@ -37,4 +37,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function negocio()
+    {
+        return $this->hasOne('App\Negocio', 'owner_id', 'id');
+    }
 }

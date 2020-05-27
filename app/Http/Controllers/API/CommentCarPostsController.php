@@ -13,18 +13,18 @@ class CommentCarPostsController extends Controller
     public function store(Request $request){
         $comment = new CommentCarPost();
        
-        if($request->content && $request->car_post_id && $request->user_id){
+        if($request->content && $request->post_id && $request->user_id){
             $comment->content = $request->content;
             $comment->user_id = $request->user_id;
-            $comment->car_post_id = $request->car_post_id;
+            $comment->car_post_id = $request->post_id;
             $comment->save();
             return response()->json(['data' => $this->getComment($comment->id), 'msg' => 'Guardado con exito'], 200);
         }
         return response()->json(['data' => null, 'msg' => "Contenido inválido"], 400);
     }
 
-    public function getFirtsComments($car_post_id){
-        $comments = CommentCarPost::where('car_post_id',$car_post_id)
+    public function getFirtsComments($post_id){
+        $comments = CommentCarPost::where('car_post_id',$post_id)
         ->join('users', 'users.id', '=', 'comments_car_posts.user_id')
         ->orderBy('comments_car_posts.created_at','desc')
         ->select('comments_car_posts.id','comments_car_posts.created_at as date', 'comments_car_posts.user_id','comments_car_posts.content', 'users.name as username')
@@ -42,10 +42,10 @@ class CommentCarPostsController extends Controller
         ->first();
     }
 
-    public function getComments($car_post_id){
+    public function getComments($post_id){
         
-        $length = CommentCarPost::where('car_post_id',$car_post_id)->count();
-        $comments = CommentCarPost::where('car_post_id',$car_post_id)
+        $length = CommentCarPost::where('car_post_id',$post_id)->count();
+        $comments = CommentCarPost::where('car_post_id',$post_id)
         ->join('users', 'users.id', '=', 'comments_car_posts.user_id')
         ->orderBy('comments_car_posts.created_at','desc')
         ->select('comments_car_posts.id','comments_car_posts.created_at as date', 'comments_car_posts.user_id','comments_car_posts.content', 'users.name as username')

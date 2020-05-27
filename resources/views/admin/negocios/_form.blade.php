@@ -120,6 +120,41 @@
             </small>
         @enderror
       </div>
+
+      <div class="form-group">
+        <label for="name"><b>Latitud</b></label>
+        <input
+            type="text"
+            class="form-control"
+            name="latitud"
+            id="latitud"
+            placeholder="Latitud del negocio"
+            value="{{old('latitud',$negocio->latitud)}}"
+        />
+        @error('latitud')
+            <small class="text-danger">
+                {{$message}}
+            </small>
+        @enderror
+    </div>
+    <div class="form-group">
+        <label for="name"><b>Longitud</b></label>
+        <input
+            type="text"
+            class="form-control"
+            name="longitud"
+            id="longitud"
+            placeholder="Longitud del negocio"
+            value="{{old('longitud',$negocio->longitud)}}"
+        />
+        @error('longitud')
+            <small class="text-danger">
+                {{$message}}
+            </small>
+        @enderror
+    </div>
+
+      
       <div class="form-group">
         <label for=""><b>Tipo de negocio</b></label>
         <br>

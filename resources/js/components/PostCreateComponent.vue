@@ -65,6 +65,13 @@ export default {
       $("#input-file").trigger("click");
     });
   },
+  watch: {
+    content: function(val) {
+      if (!this.user_id) {
+        document.location.href = "/posts/create";
+      }
+    }
+  },
   methods: {
     onFileChange(e) {
       var files = e.target.files || e.dataTransfer.files;

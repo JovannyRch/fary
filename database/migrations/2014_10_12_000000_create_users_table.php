@@ -34,3 +34,22 @@ class CreateUsersTable extends Migration
         Schema::dropIfExists('users');
     }
 }
+
+
+/*
+
+ create or replace table notifications_cars(
+                    id bigint(20) unsigned primary key auto_increment not null,
+                    user_id bigint(20) unsigned not null,
+     				post_id bigint(20) unsigned not null,
+     				comment_id bigint(20) unsigned not null,
+     				to_user_id bigint(20) unsigned not null, 
+                    created_at timestamp,
+                    updated_at timestamp,
+                    foreign key(user_id) references users(id) ON DELETE CASCADE,
+     				foreign key(post_id) references posts(id) ON DELETE CASCADE,
+     				foreign key(comment_id) references comments_car_posts(id) ON DELETE CASCADE,
+     				foreign key(to_user_id) references users(id) ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+*/

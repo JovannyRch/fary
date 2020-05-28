@@ -8,22 +8,25 @@
         >
           <div class="d-flex bd-highlight">
             <div class="p-2 w-100 bd-highlight">
+              <span class="grid-1 content text-secondary">{{content}}</span>
               <div class="col-12">
                 <span class="post-user" v-if="showName">
+                  <span style="color:grey">
+                    <small>Publicado por:</small>
+                  </span>
                   <router-link :to="'/users/'+user_id">
-                    <small>
-                      <b>{{username}}</b>
-                      <i>
-                        <small style="color:grey">{{address}}</small>
-                      </i>
-                    </small>
+                    <small>{{username}}</small>
                   </router-link>
                 </span>
-                <div class="float-right">
+                <!-- <div>
+                  <i>
+                    <small style="color:grey">{{address}}</small>
+                  </i>
+                </div>-->
+                <div>
                   <DateComponent :date="date" />
                 </div>
               </div>
-              <span class="grid-1 content text-secondary">{{content}}</span>
             </div>
           </div>
           <hr />
@@ -36,22 +39,25 @@
         >
           <div class="d-flex bd-highlight">
             <div class="p-2 w-100 bd-highlight">
+              <span class="grid-1 content text-secondary">{{content}}</span>
               <div class="col-12">
                 <span class="post-user" v-if="showName">
+                  <span style="color:grey">
+                    <small>Publicado por:</small>
+                  </span>
                   <router-link :to="'/users/'+user_id">
-                    <small>
-                      <b>{{username}}</b>
-                      <i>
-                        <small style="color:grey">{{address}}</small>
-                      </i>
-                    </small>
+                    <small>{{username}}</small>
                   </router-link>
                 </span>
-                <div class="float-right">
+                <!-- <div>
+                  <i>
+                    <small style="color:grey">{{address}}</small>
+                  </i>
+                </div>-->
+                <div>
                   <DateComponent :date="date" />
                 </div>
               </div>
-              <span class="grid-1 content text-secondary">{{content}}</span>
             </div>
           </div>
           <hr />
@@ -63,6 +69,7 @@
             :owner_post="post_user_id"
             :post_id="id"
             :typePosts="typePosts"
+            :showAll="allComments"
           ></CommentsComponent>
         </div>
       </div>
@@ -148,7 +155,8 @@ export default {
     "address",
     "showName",
     "imgs",
-    "typePosts"
+    "typePosts",
+    "allComments"
   ],
   data() {
     return {

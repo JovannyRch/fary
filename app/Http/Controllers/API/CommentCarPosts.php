@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Car;
 use App\CommentCarPost;
+use App\NotificationCars;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class CommentCarPosts extends Controller
@@ -16,10 +19,13 @@ class CommentCarPosts extends Controller
             $comment->user_id = $request->user_id;
             $comment->car_post_id = $request->car_post_id;
             $comment->save();
+            //$this->saveNotification($comment->user_id,$comment->post_id,$comment->id);
             return response()->json(['data' => $comment->id, 'msg' => 'Guardado con exito'], 200);
         }
         return response()->json(['data' => null, 'msg' => "Contenido inválido"], 400);
     }
+
+    
 
     public function getComments($car_post_id){
         

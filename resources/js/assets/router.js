@@ -14,6 +14,7 @@ import PostsComponent from '../components/PostsComponent.vue'
 import HomeComponent from '../components/HomeComponent.vue'
 import PostCreateComponent from '../components/PostCreateComponent.vue';
 import PostShowComponent from '../components/PostShowComponent.vue';
+import PostCarShowComponent from '../components/PostCarShowComponent.vue';
 import CrashedCardComponent from '../components/CrashedCarsComponent.vue'
 import CarCreateComponent from '../components/CarCreateComponent.vue';
 
@@ -33,6 +34,7 @@ const router = new VueRouter({
         { path: "/posts/create", component: PostCreateComponent, name: "post-create" },
         { path: "/post/:id", component: PostShowComponent, name: "post-show" },
         { path: "/cars", component: CrashedCardComponent, name: "cars" },
+        { path: "/car/:id", component: PostCarShowComponent, name: "car-show" },
         { path: "/cars/create", component: CarCreateComponent, name: "cars-create" },
         { path: "/mision", component: MisionComponent, name: "mision" },
         { path: "/aviso-privacidad", component: PrivacyComponent, name: "aviso-privacidad" },

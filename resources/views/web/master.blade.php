@@ -13,9 +13,13 @@
     @if (Auth::user())
         <meta name="user_id" content="{{ Auth::user()->id?Auth::user()->id:""}}">
         <meta name="type" content="{{ Auth::user()->rol?Auth::user()->rol:"" }}">
+        <meta name="username" content="{{ Auth::user()->name?Auth::user()->name:"" }}">
+        <meta name="negocio" content="{{ Auth::user()->negocio?Auth::user()->negocio:"" }}">
     @else
         <meta name="user_id" content="">
         <meta name="type" content="">
+        <meta name="username" content="">
+        <meta name="negocio" content="">
     @endif
   
 </head>

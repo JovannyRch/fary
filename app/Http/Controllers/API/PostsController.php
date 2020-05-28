@@ -18,7 +18,7 @@ class PostsController extends Controller
             join('users', 'users.id', '=', 'posts.user_id')
             ->select('posts.content','posts.created_at','posts.user_id','posts.img','posts.id', 'users.name as username','users.address')
             ->orderBy('created_at','desc')
-            ->paginate(50);
+            ->paginate(100);
             return response()->json(['data' => $posts], 200);
         }
         else{
@@ -28,7 +28,7 @@ class PostsController extends Controller
             ->select('posts.content','posts.created_at','posts.user_id','posts.img','posts.id',  'users.name as username','users.address', DB::raw($location))
             ->orderBy('distance','desc')
             ->orderBy('created_at','desc')
-            ->paginate(50);
+            ->paginate(100);
         }
         return response()->json(['data' => $posts], 200);
         
@@ -58,7 +58,7 @@ class PostsController extends Controller
                 ->select('posts.content','posts.created_at','posts.user_id','posts.img','posts.id', 'users.name as username','users.address')
                 ->orderBy('created_at','desc')
                 ->where("posts.content","like","%$content%")
-                ->paginate(40);
+                ->paginate(100);
         }
         else {
             $location = $this->queryLocation($lat,$long);
@@ -69,7 +69,7 @@ class PostsController extends Controller
             ->orderBy('created_at','desc')
             ->where("posts.content","like","%$content%")
            
-            ->paginate(40);
+            ->paginate(100);
         }
         return response()->json(['data' => $posts], 200);
         
@@ -82,7 +82,7 @@ class PostsController extends Controller
             ->select('posts.content','posts.created_at','posts.user_id','posts.img','posts.id','users.name as username','users.address')
             ->orderBy('created_at','desc')
             ->where("posts.user_id","=",$user_id)
-            ->paginate(40);
+            ->paginate(100);
         return response()->json(['data' => $posts], 200);
     }
 

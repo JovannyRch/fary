@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Car;
 use App\CommentCarPost;
+use App\NotificationCars;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class CommentCarPostsController extends Controller
@@ -18,10 +21,44 @@ class CommentCarPostsController extends Controller
             $comment->user_id = $request->user_id;
             $comment->car_post_id = $request->post_id;
             $comment->save();
+            $this->saveNotification($comment->user_id,$comment->car_post_id,$comment->id);
             return response()->json(['data' => $this->getComment($comment->id), 'msg' => 'Guardado con exito'], 200);
         }
         return response()->json(['data' => null, 'msg' => "Contenido inválido"], 400);
     }
+
+    public function saveNotification($user_id,$post_id,$comment_id){
+        $post_user_id = Car::select("user_id")->where("id",$post_id)->first()['user_id'];
+       
+        if($post_user_id != $user_id){
+            $notification = new NotificationCars();
+            DB::delete("DELETE FROM notifications_cars where post_id = $post_id and user_id = $user_id");
+            $notification->user_id = $user_id;
+            $notification->post_id = $post_id;
+            $notification->comment_id = $comment_id;
+            $notification->to_user_id = $post_user_id;
+            
+            $notification->save();
+        }
+        else {
+            //Notification type 1
+            $users = DB::select("select DISTINCT user_id from notifications where id = $post_id and type = 0");
+            DB::delete("DELETE FROM notifications where post_id = $post_id and user_id = $user_id and type = 1");
+            foreach ($users as $user) {
+                $to_user_id = $user['user_id'];
+                $notification = new Notification();
+                $notification->user_id = $user_id;
+                $notification->post_id = $post_id;
+                $notification->comment_id = $comment_id;
+                $notification->to_user_id = $to_user_id;
+                $notification->type = 1;
+                $notification->save();
+            }
+        
+        }
+    }
+
+  
 
     public function getFirtsComments($post_id){
         $comments = CommentCarPost::where('car_post_id',$post_id)

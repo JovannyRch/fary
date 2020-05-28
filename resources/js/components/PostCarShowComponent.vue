@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <input type="button" value="Go Back From Whence You Came!" onclick="history.back(-1)" />
     <div class="row">
       <div class="col-md-2 d-none d-md-block">
         <!--  <AdsComponent :ads="currentAds" /> -->
@@ -55,7 +54,7 @@ export default {
         username: null,
         address: null
       },
-      typePosts: "posts",
+      typePosts: "cars",
       comments: []
     };
   },
@@ -65,7 +64,7 @@ export default {
   methods: {
     getData() {
       this.loading = true;
-      fetch("/api/posts/" + this.id)
+      fetch("/api/cars/" + this.id)
         .then(response => response.json())
         .then(json => {
           let data = json.data;

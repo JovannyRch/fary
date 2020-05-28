@@ -3,14 +3,10 @@
     <notifications group="foo" />
     <div class="row">
       <div class="col-md-2 d-none d-md-block">
-        <!--  <AdsComponent :ads="currentAds" /> -->
+        <AdsComponent :ads="currentAds" />
       </div>
       <div class="col-md-8 col-10 offset-1 offset-md-0 pt-0 pl-3 pr-3">
-        <PostsComponent
-          @setLocation="setLocation(lat,long)"
-          :ads="currentAds"
-          :typePosts="'posts'"
-        />
+        <PostsComponent @setLocation="setLocation" :ads="currentAds" :typePosts="'posts'" />
       </div>
       <div class="col-md-2 d-none d-md-block"></div>
     </div>
@@ -43,8 +39,8 @@ export default {
   },
   methods: {
     setLocation(lat, long) {
-      if (lat != null && long != null) {
-      } else {
+      console.log("Seteando location");
+      if (lat && long) {
         this.latitud = lat;
         this.longitud = long;
         this.url = "/api/ads/" + lat + "/" + long;
@@ -58,7 +54,7 @@ export default {
         .then(response => response.json())
         .then(json => {
           this.ads = json.data;
-
+          console.log(json);
           if (this.ads.length >= 3) {
             this.canUpdate = true;
             for (let i = 0; i <= 3; i++) {

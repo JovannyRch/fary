@@ -1,7 +1,9 @@
 <template>
   <div class="container" id="container-post">
     <notifications group="foo" />
+
     <div class="row">
+      <HeaderComponent v-if="user_id" />
       <div class="col-12 alert alert-success p-3" v-if="!user_id">
         <b>BIENVENIDOS A RED DE AUTOPARTES FARY</b>
         <br />
@@ -11,7 +13,7 @@
         </p>
         <p>Active su ubicacion para gozar de nuestros servicios.</p>
       </div>
-      <div class="col-8 offset-2 mt-0 pt-0 text-center" v-if="type == 'owner' && user_id">
+      <div class="col-12 mt-0 pt-0 mt-4 text-center mb-3" v-if="type == 'owner' && user_id">
         <div class="input-group">
           <input
             style="-webkit-border-radius: 50px;-moz-border-radius: 50px;border-radius: 50px;"
@@ -21,7 +23,7 @@
             aria-label
             placeholder="Buscar publicación"
           />
-          <div class="input-group-append ml-2" v-show="busqueda">
+          <div class="input-group-append ml-2">
             <button
               @click="buscar()"
               class="btn btn-success"
@@ -33,7 +35,7 @@
         </div>
       </div>
 
-      <div class="col-12" v-if="!isBusqueda">
+      <div class="col-12" v-if="!isBusqueda && (type ==='owner' && typePosts=='cars')">
         <h4>
           Crear Publicación
           <button
@@ -56,7 +58,7 @@
       </div>
 
       <div v-if="isBusqueda" class="col-12 mt-3">
-        <h3>Resultados de la busqueda '{{busquedaAux}}'</h3>
+        <h4>Resultados de la busqueda '{{busquedaAux}}'</h4>
         <button @click="allPosts()" class="btn btn-outline-danger btn-sm">
           <i class="fas fa-times"></i> Deshacer busqueda
         </button>
@@ -102,6 +104,7 @@
                 :address="p.address"
                 :post_user_id="p.user_id"
                 :showName="showName"
+                :allComments="false"
                 :typePosts="typePosts"
                 @updateData="deletePost(index)"
               />
@@ -124,6 +127,7 @@ import PostComponent from "./PostComponent.vue";
 import LoaderComponent from "./utils/LoaderComponent.vue";
 import PostCraeteComponent from "./PostCreateComponent.vue";
 import CarCreateComponent from "./CarCreateComponent";
+import HeaderComponent from "./utils/HeaderComponent";
 
 export default {
   props: ["ads", "typePosts"],
@@ -131,9 +135,13 @@ export default {
     PostComponent,
     LoaderComponent,
     PostCraeteComponent,
-    CarCreateComponent
+    CarCreateComponent,
+    HeaderComponent
   },
   async created() {
+    if (this.negocio) {
+      this.negocio = JSON.parse(this.negocio);
+    }
     $(function() {
       $('[data-toggle="tooltip"]').tooltip();
     });
@@ -187,12 +195,21 @@ export default {
       locationPermission: false,
       showName: false,
       isSetLocation: false,
+
       msgForm: "",
       user_id: document.querySelector('meta[name="user_id"]')
         ? document.querySelector('meta[name="user_id"]').getAttribute("content")
         : null,
       type: document.querySelector('meta[name="type"]')
         ? document.querySelector('meta[name="type"]').getAttribute("content")
+        : null,
+      username: document.querySelector('meta[name="username"]')
+        ? document
+            .querySelector('meta[name="username"]')
+            .getAttribute("content")
+        : null,
+      negocio: document.querySelector('meta[name="negocio"]')
+        ? document.querySelector('meta[name="negocio"]').getAttribute("content")
         : null
     };
   },
@@ -264,6 +281,16 @@ export default {
       this.posts.splice(index, 1);
     },
     buscar() {
+      if (!this.busqueda) {
+        Vue.notify({
+          group: "foo",
+          title: "Aviso",
+          text: "El campo de búsqueda no puede estar vacío",
+          type: "warn"
+        });
+
+        return;
+      }
       this.isBusqueda = true;
       this.busquedaAux = this.busqueda;
       if (this.locationPermission) {
@@ -310,5 +337,21 @@ export default {
 
 .ad {
   background-color: transparent;
+}
+
+.parent {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.div1 {
+  grid-area: 1 / 1 / 2 / 2;
+  width: 10px;
+}
+.div2 {
+  grid-area: 1 / 2 / 2 / 3;
 }
 </style>

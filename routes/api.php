@@ -40,6 +40,7 @@ Route::middleware('auth:API')->get('/user', function (Request $request) {
  //Cars
 
  Route::post('cars/','API\CarsController@store'); 
+ Route::get('cars/{id}','API\CarsController@show'); 
  Route::delete('cars/{id}','API\CarsController@destroy'); 
  Route::get('cars','API\CarsController@index'); 
  Route::get('cars/user/{user_id}','API\CarsController@myPosts'); 
@@ -61,3 +62,9 @@ Route::middleware('auth:API')->get('/user', function (Request $request) {
  Route::get('ads/{latitud}/{longitud}','API\AdsController@index' ); 
  Route::get('tipos','API\TiposController@index' ); 
  Route::get('tipos/{id}','API\TiposController@negocios' ); 
+
+ //Notificaciones
+
+ Route::get('notifications/{user_id}','API\NotificationsController@getNotifications');
+ Route::put('notifications/cars/{id}','API\NotificationsController@verNotificacionCars');
+ Route::put('notifications/posts/{id}','API\NotificationsController@verNotificacionPosts');

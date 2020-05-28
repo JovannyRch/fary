@@ -4,11 +4,7 @@
     <div v-if="comments.length">
       <div v-for="(c,index) in comments" :key="c.id">
         <div class="col-12" style="font-size:0.75em" v-if="(!showAll && index < 3) || (showAll)">
-          <small>
-            <router-link :to="'/user/'+c.user_id">
-              <b>{{c.username}}</b>
-            </router-link>
-          </small>
+          <router-link :to="'/user/'+c.user_id">{{c.username}}</router-link>
           <DateComponent :date="c.date"></DateComponent>
 
           <div class="float-right pr-4 btn-sm">
@@ -23,7 +19,7 @@
         </div>
         <div class="p-0 comment" v-if="(!showAll && index < 3) || (showAll)">
           <div class="col-12 pl-3">
-            <small style="color: grey">{{c.content}}</small>
+            <small>{{c.content}}</small>
           </div>
         </div>
       </div>
@@ -44,7 +40,7 @@
                   type="text"
                   v-model="commentInput"
                   class="form-control redondo input-comment"
-                  placeholder="Escribe aquí tu comentario"
+                  placeholder="Comenta aquí"
                   aria-describedby="helpId"
                 />
               </div>
@@ -72,7 +68,14 @@ export default {
   components: {
     DateComponent
   },
-  props: ["post_id", "owner_post", "showName", "canComment", "typePosts"],
+  props: [
+    "post_id",
+    "owner_post",
+    "showName",
+    "canComment",
+    "typePosts",
+    "showAll"
+  ],
   created() {
     this.loadFirtsComments();
   },
@@ -80,7 +83,7 @@ export default {
     return {
       comments: [],
       commentInput: "",
-      showAll: false,
+
       defaultUrl: "",
       user_id: document.querySelector('meta[name="user_id"]')
         ? document.querySelector('meta[name="user_id"]').getAttribute("content")
@@ -166,12 +169,13 @@ export default {
 .comment {
   background-color: rgb(250, 250, 250);
   border: 0.5px solid rgb(218, 218, 218);
+  color: rgb(85, 85, 85);
   margin-bottom: 5px;
   padding-top: 0.5%;
   padding-bottom: 0%;
   padding-left: 1.5%;
   padding-right: 1.5%;
-  border-radius: 20px;
+  border-radius: 2px;
   margin-right: 2px;
   margin-left: 2px;
   width: 90%;

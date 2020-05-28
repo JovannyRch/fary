@@ -18,7 +18,7 @@ class CarsController extends Controller
             join('users', 'users.id', '=', 'cars.user_id')
             ->select('cars.content','cars.user_id','cars.created_at','cars.id', 'users.name as username','users.address')
             ->orderBy('created_at','desc')
-            ->paginate(40);
+            ->paginate(100);
             foreach ($cars as &$car) {
                 $car['imgs'] = DB::select('select url from imgs_cars where car_id = ?', [$car->id]);
             }
@@ -29,13 +29,22 @@ class CarsController extends Controller
             ->select('cars.content','cars.user_id','cars.created_at','cars.id', 'users.name as username','users.address',DB::raw($location))
             ->orderBy('distance','desc')
             ->orderBy('created_at','desc')
-            ->paginate(40);
+            ->paginate(100);
             foreach ($cars as &$car) {
                 $car['imgs'] = DB::select('select url from imgs_cars where car_id = ?', [$car->id]);
             }
         }
         return response()->json(['data' => $cars], 200);
     }
+
+    public function show($id){
+        $post = Car::where('cars.id', $id)
+        ->join('users', 'users.id', '=', 'cars.user_id')
+        ->select('cars.content','cars.user_id','cars.created_at','cars.id', 'users.name as username','users.address')->first();
+        //$post['comments'] = $this->comments($id);
+        return response()->json(['data' => $post], 200);
+    }
+
 
     public function queryLocation($lat, $long){
         $lat = doubleval($lat);
@@ -61,7 +70,7 @@ class CarsController extends Controller
             ->select('cars.*', 'users.name as username','users.address')
             ->orderBy('created_at','desc')
             ->where("cars.content","like","%$content%")
-            ->paginate(40);
+            ->paginate(100);
             foreach ($cars as &$car) {
                 $car['imgs'] = DB::select('select url from imgs_cars where car_id = ?', [$car->id]);
             }
@@ -73,7 +82,7 @@ class CarsController extends Controller
             ->orderBy('distance','desc')
             ->orderBy('created_at','desc')
             ->where("cars.content","like","%$content%")
-            ->paginate(40);
+            ->paginate(100);
             foreach ($cars as &$car) {
                 $car['imgs'] = DB::select('select url from imgs_cars where car_id = ?', [$car->id]);
             }

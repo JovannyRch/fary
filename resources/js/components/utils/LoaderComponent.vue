@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="text-center w-100 mt-5 pt-5">
     <div class="loader">
       <svg class="car" width="102" height="40" xmlns="http://www.w3.org/2000/svg">
         <g

@@ -8,7 +8,11 @@
         >
           <div class="d-flex bd-highlight">
             <div class="p-2 w-100 bd-highlight">
-              <span class="grid-1 content text-secondary">{{content}}</span>
+              <span class="grid-1 content text-secondary">
+                <i v-if="typePosts == 'posts'" class="fa fa-wrench"></i>
+                <i v-else class="fas fa-car-side"></i>
+                {{content}}
+              </span>
               <div class="col-12">
                 <span class="post-user" v-if="showName">
                   <span style="color:grey">
@@ -39,7 +43,11 @@
         >
           <div class="d-flex bd-highlight">
             <div class="p-2 w-100 bd-highlight">
-              <span class="grid-1 content text-secondary">{{content}}</span>
+              <span class="grid-1 content text-secondary">
+                <i v-if="typePosts == 'posts'" class="fa fa-wrench"></i>
+                <i v-else class="fas fa-car-side"></i>
+                {{content}}
+              </span>
               <div class="col-12">
                 <span class="post-user" v-if="showName">
                   <span style="color:grey">

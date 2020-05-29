@@ -2251,7 +2251,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   props: ["post_id", "owner_post", "showName", "canComment", "typePosts", "showAll"],
   created: function created() {
-    this.loadFirtsComments();
+    if (this.showAll) {
+      this.loadComments();
+    } else {
+      this.loadFirtsComments();
+    }
   },
   data: function data() {
     return {
@@ -2654,6 +2658,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -2713,6 +2720,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_DateComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils/DateComponent.vue */ "./resources/js/components/utils/DateComponent.vue");
 /* harmony import */ var _CommentsComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CommentsComponent.vue */ "./resources/js/components/CommentsComponent.vue");
 /* harmony import */ var _utils_ImgCarouselComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/ImgCarouselComponent.vue */ "./resources/js/components/utils/ImgCarouselComponent.vue");
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3110,6 +3125,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PostComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PostComponent.vue */ "./resources/js/components/PostComponent.vue");
 /* harmony import */ var _utils_LoaderComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils/LoaderComponent.vue */ "./resources/js/components/utils/LoaderComponent.vue");
 /* harmony import */ var _utils_HeaderComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/HeaderComponent.vue */ "./resources/js/components/utils/HeaderComponent.vue");
+//
+//
+//
 //
 //
 //
@@ -48477,6 +48495,18 @@ var render = function() {
         [
           _c("HeaderComponent", { staticClass: "mb-3" }),
           _vm._v(" "),
+          _c(
+            "router-link",
+            {
+              staticClass: "btn btn-outline-secondary mb-3",
+              attrs: { to: "/" }
+            },
+            [
+              _c("i", { staticClass: "fas fa-arrow-left" }),
+              _vm._v(" Regresar\n      ")
+            ]
+          ),
+          _vm._v(" "),
           !_vm.loading
             ? _c("PostComponent", {
                 attrs: {
@@ -48550,7 +48580,14 @@ var render = function() {
               _c("div", { staticClass: "d-flex bd-highlight" }, [
                 _c("div", { staticClass: "p-2 w-100 bd-highlight" }, [
                   _c("span", { staticClass: "grid-1 content text-secondary" }, [
-                    _vm._v(_vm._s(_vm.content))
+                    _vm.typePosts == "posts"
+                      ? _c("i", { staticClass: "fa fa-wrench" })
+                      : _c("i", { staticClass: "fas fa-car-side" }),
+                    _vm._v(
+                      "\n              " +
+                        _vm._s(_vm.content) +
+                        "\n            "
+                    )
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-12" }, [
@@ -48614,7 +48651,14 @@ var render = function() {
               _c("div", { staticClass: "d-flex bd-highlight" }, [
                 _c("div", { staticClass: "p-2 w-100 bd-highlight" }, [
                   _c("span", { staticClass: "grid-1 content text-secondary" }, [
-                    _vm._v(_vm._s(_vm.content))
+                    _vm.typePosts == "posts"
+                      ? _c("i", { staticClass: "fa fa-wrench" })
+                      : _c("i", { staticClass: "fas fa-car-side" }),
+                    _vm._v(
+                      "\n              " +
+                        _vm._s(_vm.content) +
+                        "\n            "
+                    )
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-12" }, [
@@ -49034,54 +49078,67 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("input", {
-      attrs: {
-        type: "button",
-        value: "Go Back From Whence You Came!",
-        onclick: "history.back(-1)"
-      }
-    }),
-    _vm._v(" "),
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-2 d-none d-md-block" }),
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _c("router-link", { attrs: { to: "/posts" } }, [_vm._v("Regresar")]),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-md-8 col-10 offset-1 offset-md-0 pt-0 pl-3 pr-3" },
-        [
-          _c("HeaderComponent", { staticClass: "mb-3" }),
-          _vm._v(" "),
-          !_vm.loading
-            ? _c("PostComponent", {
-                attrs: {
-                  content: _vm.post.content,
-                  date: _vm.post.created_at,
-                  user: _vm.post.user_id,
-                  img: _vm.post.img,
-                  imgs: _vm.post.imgs,
-                  id: _vm.post.id,
-                  username: _vm.post.username,
-                  address: _vm.post.address,
-                  post_user_id: _vm.post.user_id,
-                  showName: true,
-                  allComments: true,
-                  typePosts: _vm.typePosts
-                }
-              })
-            : _c(
-                "div",
-                { staticClass: "w-100 text-center mt-5 pt-5" },
-                [_c("LoaderComponent")],
-                1
-              )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-2 d-none d-md-block" })
-    ])
-  ])
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-2 d-none d-md-block" }),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "col-md-8 col-10 offset-1 offset-md-0 pt-0 pl-3 pr-3"
+          },
+          [
+            _c("HeaderComponent", { staticClass: "mb-3" }),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              {
+                staticClass: "btn btn-outline-secondary mb-3",
+                attrs: { to: "/cars" }
+              },
+              [
+                _c("i", { staticClass: "fas fa-arrow-left" }),
+                _vm._v(" Regresar\n      ")
+              ]
+            ),
+            _vm._v(" "),
+            !_vm.loading
+              ? _c("PostComponent", {
+                  attrs: {
+                    content: _vm.post.content,
+                    date: _vm.post.created_at,
+                    user: _vm.post.user_id,
+                    img: _vm.post.img,
+                    imgs: _vm.post.imgs,
+                    id: _vm.post.id,
+                    username: _vm.post.username,
+                    address: _vm.post.address,
+                    post_user_id: _vm.post.user_id,
+                    showName: true,
+                    allComments: true,
+                    typePosts: _vm.typePosts
+                  }
+                })
+              : _c(
+                  "div",
+                  { staticClass: "w-100 text-center mt-5 pt-5" },
+                  [_c("LoaderComponent")],
+                  1
+                )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-2 d-none d-md-block" })
+      ])
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -49915,7 +49972,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "text-center w-100 mt-5 pt-5" }, [
     _c("div", { staticClass: "loader" }, [
       _c(
         "svg",

@@ -77,7 +77,11 @@ export default {
     "showAll"
   ],
   created() {
-    this.loadFirtsComments();
+    if (this.showAll) {
+      this.loadComments();
+    } else {
+      this.loadFirtsComments();
+    }
   },
   data() {
     return {

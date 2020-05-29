@@ -63,7 +63,7 @@ class CommentCarPostsController extends Controller
     public function getFirtsComments($post_id){
         $comments = CommentCarPost::where('car_post_id',$post_id)
         ->join('users', 'users.id', '=', 'comments_car_posts.user_id')
-        ->orderBy('comments_car_posts.created_at','desc')
+        ->orderBy('comments_car_posts.created_at','asc')
         ->select('comments_car_posts.id','comments_car_posts.created_at as date', 'comments_car_posts.user_id','comments_car_posts.content', 'users.name as username')
         ->limit(4)
         ->get();
@@ -74,7 +74,7 @@ class CommentCarPostsController extends Controller
     public function getComment($id){
         return CommentCarPost::where('comments_car_posts.id',$id)
         ->join('users', 'users.id', '=', 'comments_car_posts.user_id')
-        ->orderBy('comments_car_posts.created_at','desc')
+        ->orderBy('comments_car_posts.created_at','asc')
         ->select('comments_car_posts.id','comments_car_posts.created_at as date', 'comments_car_posts.user_id','comments_car_posts.content', 'users.name as username')
         ->first();
     }
@@ -84,7 +84,7 @@ class CommentCarPostsController extends Controller
         $length = CommentCarPost::where('car_post_id',$post_id)->count();
         $comments = CommentCarPost::where('car_post_id',$post_id)
         ->join('users', 'users.id', '=', 'comments_car_posts.user_id')
-        ->orderBy('comments_car_posts.created_at','desc')
+        ->orderBy('comments_car_posts.created_at','asc')
         ->select('comments_car_posts.id','comments_car_posts.created_at as date', 'comments_car_posts.user_id','comments_car_posts.content', 'users.name as username')
       
         ->get();

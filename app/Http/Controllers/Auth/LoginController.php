@@ -44,7 +44,7 @@ class LoginController extends Controller
             case 'admin':
                 return '/dashboard';
             case 'owner':
-                return'/owner';
+                return'/';
             default:
                 return '/';
         }

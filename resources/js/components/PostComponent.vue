@@ -65,6 +65,11 @@
                 <div>
                   <DateComponent :date="date" />
                 </div>
+                <div class="dropdown show float-right grid-2" v-if="post_user_id == user_id">
+                  <a data-toggle="modal" data-target="#confirmDelete" style="color:grey">
+                    <small>Eliminar publicación</small>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -196,6 +201,7 @@ export default {
     }
   },
   mounted() {
+    $(".dropdown-toggle").dropdown();
     $("#show-img").on("show.bs.modal", function(event) {
       var button = $(event.relatedTarget);
       var img = button.data("img");

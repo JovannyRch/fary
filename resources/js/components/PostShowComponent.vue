@@ -1,13 +1,12 @@
 <template>
   <div class="container">
-    <router-link to="/posts">Regresar</router-link>
     <div class="row">
       <div class="col-md-2 d-none d-md-block">
         <!--  <AdsComponent :ads="currentAds" /> -->
       </div>
       <div class="col-md-8 col-10 offset-1 offset-md-0 pt-0 pl-3 pr-3">
-        <HeaderComponent class="mb-3" />
-        <router-link to="/cars" class="btn btn-outline-secondary mb-3">
+        <HeaderComponent class="mb-3" v-if="user_id" />
+        <router-link to="/" class="btn btn-outline-secondary mb-3">
           <i class="fas fa-arrow-left"></i> Regresar
         </router-link>
         <div v-if="!loading">
@@ -64,7 +63,10 @@ export default {
       },
       typePosts: "posts",
       comments: [],
-      error: false
+      error: false,
+      user_id: document.querySelector('meta[name="user_id"]')
+        ? document.querySelector('meta[name="user_id"]').getAttribute("content")
+        : null
     };
   },
   created: function() {
@@ -76,14 +78,8 @@ export default {
       fetch("/api/posts/" + this.id)
         .then(response => response.json())
         .then(json => {
-          console.log(json);
-          if (json.status == 200) {
-            let data = json.data;
-            this.post = data;
-          } else {
-            this.error = true;
-            alert("error");
-          }
+          let data = json.data;
+          this.post = data;
           this.loading = false;
         });
     }

@@ -35,7 +35,7 @@
         </div>
       </div>
 
-      <div class="col-12" v-if="!isBusqueda && (type ==='owner' && typePosts=='cars')">
+      <div class="col-12 mt-4" v-if="!isBusqueda">
         <h4>
           Crear Publicación
           <button
@@ -215,7 +215,6 @@ export default {
   },
   methods: {
     loadData: async function(url = null, isBusqueda = false) {
-      console.log("cargando todas las notificaciones");
       if (url == null) {
         url = this.defaultUrl;
       }
@@ -240,7 +239,6 @@ export default {
           }
         );
       }
-      console.log("Ahora si");
       fetch(url)
         .then(response => response.json())
         .then(json => {
@@ -258,8 +256,9 @@ export default {
           if (isBusqueda) {
             Vue.notify({
               group: "foo",
-              title: "Busqueda completada",
-              text: "success"
+              title: "Éxito",
+              text: "Busqueda completada",
+              type: "success"
             });
           }
         });

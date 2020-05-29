@@ -17,7 +17,7 @@
             </span>
           </div>
         </div>
-        <div class="p-0 comment" v-if="(!showAll && index < 3) || (showAll)">
+        <div class="p-0 comment pl-3" v-if="(!showAll && index < 3) || (showAll)">
           <div class="col-12 pl-3">
             <small>{{c.content}}</small>
           </div>

@@ -1963,7 +1963,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
@@ -2030,13 +2038,20 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {},
   mounted: function mounted() {
+    var _this = this;
+
     $("#btn-file").on("click", function () {
       $("#input-file").trigger("click");
+    });
+    $("#input-file").change(function () {
+      _this.files = [].concat(_toConsumableArray(_this.files), _toConsumableArray($("#input-file")[0].files));
+      $("#input-file")[0].files = _this.FileListItem(_this.files);
     });
   },
   data: function data() {
     return {
       content: "",
+      files: [],
       images: [],
       piece: "",
       model: "",
@@ -2060,6 +2075,21 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     }
   },
   methods: {
+    FileListItem: function FileListItem(a) {
+      a = [].slice.call(Array.isArray(a) ? a : arguments);
+
+      for (var c, b = c = a.length, d = !0; b-- && d;) {
+        d = a[b] instanceof File;
+      }
+
+      if (!d) throw new TypeError("expected argument to FileList is File or array of File objects");
+
+      for (b = new ClipboardEvent("").clipboardData || new DataTransfer(); c--;) {
+        b.items.add(a[c]);
+      }
+
+      return b.files;
+    },
     onFileChange: function onFileChange(e) {
       var files = e.target.files || e.dataTransfer.files;
       if (!files.length) return;
@@ -2096,7 +2126,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       this.images.splice(index, 1);
     },
     addLocation: function addLocation() {
-      var _this = this;
+      var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var result;
@@ -2104,7 +2134,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (_this.images.length) {
+                if (_this2.images.length) {
                   _context.next = 5;
                   break;
                 }
@@ -2131,7 +2161,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
                     var lat = location.coords.latitude;
                     var _long = location.coords.longitude;
 
-                    _this.insertLocation(lat, _long);
+                    _this2.insertLocation(lat, _long);
 
                     $("#form-create").submit();
                   });
@@ -2405,6 +2435,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -2500,6 +2532,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -2519,7 +2553,8 @@ __webpack_require__.r(__webpack_exports__);
       url: "/api/ads"
     };
   },
-  mounted: function mounted() {//this.getAds();
+  mounted: function mounted() {
+    this.getAds();
   },
   methods: {
     setLocation: function setLocation(lat, _long) {
@@ -2580,6 +2615,329 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2684,7 +3042,8 @@ __webpack_require__.r(__webpack_exports__);
         address: null
       },
       typePosts: "cars",
-      comments: []
+      comments: [],
+      user_id: document.querySelector('meta[name="user_id"]') ? document.querySelector('meta[name="user_id"]').getAttribute("content") : null
     };
   },
   created: function created() {
@@ -2720,6 +3079,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_DateComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils/DateComponent.vue */ "./resources/js/components/utils/DateComponent.vue");
 /* harmony import */ var _CommentsComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CommentsComponent.vue */ "./resources/js/components/CommentsComponent.vue");
 /* harmony import */ var _utils_ImgCarouselComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/ImgCarouselComponent.vue */ "./resources/js/components/utils/ImgCarouselComponent.vue");
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2899,6 +3263,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
+    $(".dropdown-toggle").dropdown();
     $("#show-img").on("show.bs.modal", function (event) {
       var button = $(event.relatedTarget);
       var img = button.data("img");
@@ -3165,7 +3530,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -3190,7 +3554,8 @@ __webpack_require__.r(__webpack_exports__);
       },
       typePosts: "posts",
       comments: [],
-      error: false
+      error: false,
+      user_id: document.querySelector('meta[name="user_id"]') ? document.querySelector('meta[name="user_id"]').getAttribute("content") : null
     };
   },
   created: function created() {
@@ -3204,16 +3569,8 @@ __webpack_require__.r(__webpack_exports__);
       fetch("/api/posts/" + this.id).then(function (response) {
         return response.json();
       }).then(function (json) {
-        console.log(json);
-
-        if (json.status == 200) {
-          var data = json.data;
-          _this.post = data;
-        } else {
-          _this.error = true;
-          alert("error");
-        }
-
+        var data = json.data;
+        _this.post = data;
         _this.loading = false;
       });
     }
@@ -3479,7 +3836,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 url = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : null;
                 isBusqueda = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : false;
-                console.log("cargando todas las notificaciones");
 
                 if (url == null) {
                   url = this.defaultUrl;
@@ -3488,11 +3844,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.isLoading = true;
 
                 if (!(this.locationPermission && url == this.defaultUrl)) {
-                  _context2.next = 8;
+                  _context2.next = 7;
                   break;
                 }
 
-                _context2.next = 8;
+                _context2.next = 7;
                 return navigator.geolocation.getCurrentPosition(function (location) {
                   var lat = location.coords.latitude;
                   var _long = location.coords.longitude;
@@ -3516,8 +3872,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   return;
                 });
 
-              case 8:
-                console.log("Ahora si");
+              case 7:
                 fetch(url).then(function (response) {
                   return response.json();
                 }).then(function (json) {
@@ -3535,13 +3890,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   if (isBusqueda) {
                     Vue.notify({
                       group: "foo",
-                      title: "Busqueda completada",
-                      text: "success"
+                      title: "Éxito",
+                      text: "Busqueda completada",
+                      type: "success"
                     });
                   }
                 });
 
-              case 10:
+              case 8:
               case "end":
                 return _context2.stop();
             }
@@ -3637,6 +3993,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AdsComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../AdsComponent.vue */ "./resources/js/components/AdsComponent.vue");
+/* harmony import */ var _NegociosComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../NegociosComponent.vue */ "./resources/js/components/NegociosComponent.vue");
 //
 //
 //
@@ -3652,7 +4010,101 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    AdsComponent: _AdsComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    NegociosComponent: _NegociosComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      ads: [],
+      currentAds: [],
+      isLoading: false,
+      latitud: null,
+      longitud: null,
+      url: "/api/ads"
+    };
+  },
+  mounted: function mounted() {
+    this.getAds();
+  },
+  methods: {
+    setLocation: function setLocation(lat, _long) {
+      console.log("Seteando location");
+
+      if (lat && _long) {
+        this.latitud = lat;
+        this.longitud = _long;
+        this.url = "/api/ads/" + lat + "/" + _long;
+      }
+
+      this.getAds();
+    },
+    getAds: function getAds() {
+      var _this = this;
+
+      this.isLoading = true;
+      fetch(this.url).then(function (response) {
+        return response.json();
+      }).then(function (json) {
+        _this.ads = json.data;
+        console.log(json);
+
+        if (_this.ads.length >= 3) {
+          _this.canUpdate = true;
+
+          for (var i = 0; i <= 3; i++) {
+            _this.currentAds.push(_this.ads.pop());
+          }
+        } else {
+          while (_this.ads.length > 0) {
+            _this.currentAds.push(_this.ads.pop());
+          }
+        }
+
+        _this.isLoading = false;
+      });
+    },
+    getRandom: function getRandom() {
+      return this.ads[Math.floor(Math.random() * this.ads.length)];
+    },
+    shuffle: function shuffle(array) {
+      array.sort(function () {
+        return Math.random() - 0.5;
+      });
+    }
+  }
+});
 
 /***/ }),
 
@@ -3680,9 +4132,118 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AdsComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../AdsComponent.vue */ "./resources/js/components/AdsComponent.vue");
+/* harmony import */ var _NegociosComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../NegociosComponent.vue */ "./resources/js/components/NegociosComponent.vue");
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    AdsComponent: _AdsComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    NegociosComponent: _NegociosComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      ads: [],
+      currentAds: [],
+      isLoading: false,
+      latitud: null,
+      longitud: null,
+      url: "/api/ads"
+    };
+  },
+  mounted: function mounted() {
+    this.getAds();
+  },
+  methods: {
+    setLocation: function setLocation(lat, _long) {
+      console.log("Seteando location");
+
+      if (lat && _long) {
+        this.latitud = lat;
+        this.longitud = _long;
+        this.url = "/api/ads/" + lat + "/" + _long;
+      }
+
+      this.getAds();
+    },
+    getAds: function getAds() {
+      var _this = this;
+
+      this.isLoading = true;
+      fetch(this.url).then(function (response) {
+        return response.json();
+      }).then(function (json) {
+        _this.ads = json.data;
+        console.log(json);
+
+        if (_this.ads.length >= 3) {
+          _this.canUpdate = true;
+
+          for (var i = 0; i <= 3; i++) {
+            _this.currentAds.push(_this.ads.pop());
+          }
+        } else {
+          while (_this.ads.length > 0) {
+            _this.currentAds.push(_this.ads.pop());
+          }
+        }
+
+        _this.isLoading = false;
+      });
+    },
+    getRandom: function getRandom() {
+      return this.ads[Math.floor(Math.random() * this.ads.length)];
+    },
+    shuffle: function shuffle(array) {
+      array.sort(function () {
+        return Math.random() - 0.5;
+      });
+    }
+  }
+});
 
 /***/ }),
 
@@ -4114,6 +4675,26 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -8888,7 +9469,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.box {\n  float: right;\n  position: relative;\n  z-index: 10;\n}\n.notifications {\n  width: 60px;\n  height: 60px;\n  background: #fff;\n  border-radius: 30px;\n  box-sizing: border-box;\n  text-align: center;\n  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);\n}\n.notifications .fas {\n  color: #cecece;\n  line-height: 60px;\n  font-size: 30px;\n}\n.notifications .num {\n  position: absolute;\n  top: 0px;\n  right: -5px;\n  width: 25px;\n  height: 25px;\n  border-radius: 50%;\n  background: #c70518;\n  color: #fff;\n  line-height: 25px;\n  font-family: sans-serif;\n  text-align: center;\n}\n.notifications:hover {\n  width: 300px;\n  height: 60px;\n  text-align: left;\n  padding: 0 15px;\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n@media (max-width: 600px) {\n.notifications:hover {\n    width: 100%;\n    height: 60px;\n    text-align: left;\n    padding: 0 15px;\n    border-bottom-left-radius: 0;\n    border-bottom-right-radius: 0;\n}\n}\n.notifications:hover .num {\n  position: relative;\n  background: transparent;\n  -moz-columns: #fff;\n       columns: #fff;\n  font-size: 24px;\n  top: -4px;\n}\n.notifications:hover .num:after {\n  content: \"Notificaciones\";\n  color: #717171;\n}\n.notifications:hover ul {\n  display: block;\n}\n.list {\n  position: absolute;\n  background: #fff;\n  left: 0;\n  top: 60px;\n  margin: 0;\n  padding: 20px;\n  width: 100%;\n  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);\n  box-sizing: border-box;\n  display: none;\n\n  border-bottom-left-radius: 30px;\n  border-bottom-right-radius: 30px;\n}\n.list li {\n  list-style: none;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n  padding: 8px 0;\n  display: flex;\n  text-overflow: ellipsis;\n}\n.list li:last-child {\n  border-bottom: none;\n}\n.list li .icon {\n  width: 24px;\n  height: 24px;\n  border-radius: 50%;\n  text-align: center;\n  line-height: 24px;\n  margin-right: 15px;\n}\n.list li .icon .fas {\n  color: #97222e;\n  font-size: 24px;\n  line-height: 24px;\n}\n.list li .icon .fa {\n  color: #97222e;\n  font-size: 24px;\n  line-height: 24px;\n}\n.user {\n  color: #97222e;\n}\n.list li .text {\n  position: relative;\n  font-family: sans-serif;\n  top: 3px;\n  cursor: pointer;\n}\n.list li:hover .text {\n  font-weight: bold;\n  color: #97222e;\n}\n", ""]);
+exports.push([module.i, "\n.box {\n  float: right;\n  position: relative;\n  z-index: 10;\n}\n.notifications {\n  width: 60px;\n  height: 60px;\n  background: #fff;\n  border-radius: 30px;\n  box-sizing: border-box;\n  text-align: center;\n  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);\n}\n.notifications .fas {\n  color: #cecece;\n  line-height: 60px;\n  font-size: 30px;\n}\n.notifications .num {\n  position: absolute;\n  top: 0px;\n  right: -5px;\n  width: 25px;\n  height: 25px;\n  border-radius: 50%;\n  background: #c70518;\n  color: #fff;\n  line-height: 25px;\n  font-family: sans-serif;\n  text-align: center;\n}\n.notifications:hover {\n  width: 300px;\n  height: 60px;\n  text-align: left;\n  padding: 0 15px;\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n@media (max-width: 600px) {\n.notifications:hover {\n    width: 100%;\n    height: 60px;\n    text-align: left;\n    padding: 0 15px;\n    border-bottom-left-radius: 0;\n    border-bottom-right-radius: 0;\n}\n}\n.notifications:hover .num {\n  position: relative;\n  background: transparent;\n  -moz-columns: #fff;\n       columns: #fff;\n  font-size: 24px;\n  top: -4px;\n}\n.notifications:hover .num:after {\n  content: \"Notificaciones\";\n  color: #717171;\n}\n.notifications:hover ul {\n  display: block;\n}\n.list {\n  position: absolute;\n  background: #fff;\n  left: 0;\n  top: 60px;\n  margin: 0;\n  padding: 20px;\n  width: 100%;\n  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);\n  box-sizing: border-box;\n  display: none;\n\n  border-bottom-left-radius: 30px;\n  border-bottom-right-radius: 30px;\n}\n.list li {\n  list-style: none;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n  padding: 8px 0;\n  display: flex;\n  text-overflow: ellipsis;\n}\n.list li:last-child {\n  border-bottom: none;\n}\n.list li .icon {\n  width: 24px;\n  height: 24px;\n  border-radius: 50%;\n  text-align: center;\n  line-height: 24px;\n  margin-right: 15px;\n}\n.list li .icon .fas {\n  color: #97222e;\n  font-size: 24px;\n  line-height: 24px;\n}\n.list li .icon .fa {\n  color: #97222e;\n  font-size: 24px;\n  line-height: 24px;\n}\n.user {\n  color: #97222e;\n}\n.list li .text {\n  position: relative;\n  font-family: sans-serif;\n  top: 3px;\n  cursor: pointer;\n}\n.list li:hover .text {\n  font-weight: bold;\n  color: #97222e;\n}\n.list li:hover .noread {\n  background-color: rgb(169, 44, 44);\n}\n", ""]);
 
 // exports
 
@@ -48196,7 +48777,7 @@ var render = function() {
                     : _vm._e(),
                   _vm._v(" "),
                   (!_vm.showAll && index < 3) || _vm.showAll
-                    ? _c("div", { staticClass: "p-0 comment" }, [
+                    ? _c("div", { staticClass: "p-0 comment pl-3" }, [
                         _c("div", { staticClass: "col-12 pl-3" }, [
                           _c("small", [_vm._v(_vm._s(c.content))])
                         ])
@@ -48344,7 +48925,12 @@ var render = function() {
           1
         ),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-2 d-none d-md-block" })
+        _c(
+          "div",
+          { staticClass: "col-md-2 d-none d-md-block" },
+          [_c("NegociosComponent")],
+          1
+        )
       ])
     ],
     1
@@ -48400,7 +48986,12 @@ var render = function() {
           1
         ),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-2 d-none d-md-block" })
+        _c(
+          "div",
+          { staticClass: "col-md-2 d-none d-md-block" },
+          [_c("NegociosComponent")],
+          1
+        )
       ])
     ],
     1
@@ -48433,17 +49024,11 @@ var render = function() {
       _c(
         "li",
         { staticClass: "list-group-item" },
-        [_c("router-link", { attrs: { to: "/vision" } }, [_vm._v("Visión")])],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "li",
-        { staticClass: "list-group-item" },
         [
-          _c("router-link", { attrs: { to: "/mision" } }, [_vm._v("Misión")]),
-          _vm._v(" "),
-          _c("span", { staticClass: "badge badge-dark float-right" })
+          _c("router-link", { attrs: { to: "/vision" } }, [
+            _c("i", { staticClass: "fas fa-eye" }),
+            _vm._v(" Visión\n      ")
+          ])
         ],
         1
       ),
@@ -48452,8 +49037,9 @@ var render = function() {
         "li",
         { staticClass: "list-group-item" },
         [
-          _c("router-link", { attrs: { to: "/aviso-privacidad" } }, [
-            _vm._v("Aviso de privacidad")
+          _c("router-link", { attrs: { to: "/mision" } }, [
+            _c("i", { staticClass: "fas fa-bookmark" }),
+            _vm._v(" Misión\n      ")
           ]),
           _vm._v(" "),
           _c("span", { staticClass: "badge badge-dark float-right" })
@@ -48461,20 +49047,424 @@ var render = function() {
         1
       ),
       _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
       _c(
         "li",
         { staticClass: "list-group-item" },
         [
-          _c("router-link", { attrs: { to: "/ayuda" } }, [_vm._v("Ayuda")]),
+          _c("router-link", { attrs: { to: "/ayuda" } }, [
+            _c("i", { staticClass: "fas fa-question" }),
+            _vm._v(" Ayuda\n      ")
+          ]),
           _vm._v(" "),
           _c("span", { staticClass: "badge badge-dark float-right" })
         ],
         1
       )
-    ])
+    ]),
+    _vm._v(" "),
+    _vm._m(1)
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "list-group-item" }, [
+      _c(
+        "a",
+        { attrs: { "data-toggle": "modal", "data-target": "#user-register" } },
+        [
+          _c("i", { staticClass: "fas fa-shield-alt" }),
+          _vm._v(" Aviso de privacidad\n      ")
+        ]
+      ),
+      _vm._v(" "),
+      _c("span", { staticClass: "badge badge-dark float-right" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "user-register",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "title-register",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-scrollable",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c("h5", { staticClass: "modal-title" }, [
+                  _c("b", [_vm._v("Aviso de Privacidad")])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "close",
+                    attrs: {
+                      type: "button",
+                      "data-dismiss": "modal",
+                      "aria-label": "Close"
+                    }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("×")
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body text-justify" }, [
+                _c("p", [
+                  _vm._v(
+                    "\n            Con fundamento en el artículo 17 de la Ley Federal de Protección de\n            Datos Personales en Posesión de los Particulares se da a conocer el\n            aviso de privacidad relativo a la forma y términos en que serán\n            tratados los datos personales recabados, consultable en la siguiente\n            liga:\n            "
+                  ),
+                  _c("i", [
+                    _c(
+                      "a",
+                      { attrs: { href: "http://www.faryreddeautopartes.com" } },
+                      [_vm._v("www.faryreddeautopartes.com")]
+                    )
+                  ]),
+                  _vm._v(" .\n          ")
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "\n            De conformidad con lo establecido en la Ley Federal de Protección de\n            Datos Personales en Posesión de los Particulares, y demás normas\n            relativas y aplicables se extiende el presente aviso de privacidad,\n            con el fin de ser utilizados para la administración, control\n            interno, contacto con el propietario de éstos y demás acciones que\n            sean necesarias para la publicación de negocios, marcas, giros\n            comerciales y/o establecimientos integrados en el portal de internet\n            "
+                  ),
+                  _c(
+                    "a",
+                    { attrs: { href: "http://www.faryreddeautopartes.com" } },
+                    [_vm._v("www.faryreddeautopartes.com")]
+                  ),
+                  _vm._v(
+                    " , para que los usuarios de dicha\n            página puedan\n            obtener los servicios, productos y bienes que sean publicados; mismo\n            aviso que puede ser consultado en nuestra sección de (aviso de\n            privacidad),reiterando que solo se establecerá la comunicación entre\n            el encargado de la recolección de sus datos personales y del\n            propietario de los datos personales, y donde se establecen las bases\n            y procedimientos en caso de rectificación, cancelación u oposición\n            al uso de sus datos personales.\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("h5", { staticClass: "text-center" }, [
+                  _c("b", [_vm._v("AVISO DE PRIVACIDAD.")])
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "\n            Políticas de Privacidad\n            El portal de Internet www.faryreddeautopartes.com, en su apartado de\n            aviso\n            de privacidad, es responsable del uso y protección de datos\n            personales, y al respecto le informamos lo siguiente:\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _c("b", [
+                    _vm._v(
+                      "I.- ¿QUÉ DATOS PERSONALES UTILIZAREMOS PARA ESTOS FINES?"
+                    )
+                  ]),
+                  _vm._v(
+                    "\n            Para llevar a cabo las finalidades descritas en el presente aviso de\n            privacidad, utilizaremos los siguientes datos personales:\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "container m-0 p-0 pl-4" }, [
+                  _c("ul", [
+                    _c("li", [_vm._v("Nombre")]),
+                    _vm._v(" "),
+                    _c("li", [_vm._v("Número telefónico de contacto")]),
+                    _vm._v(" "),
+                    _c("li", [_vm._v("Nombre del establcimiento")]),
+                    _vm._v(" "),
+                    _c("li", [_vm._v("Domicilio")]),
+                    _vm._v(" "),
+                    _c("li", [_vm._v("Tipo de giro comercial")]),
+                    _vm._v(" "),
+                    _c("li", [_vm._v("Correo electrónico")])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _c("b", [
+                    _vm._v("II.- ¿PARA QUÉ UTILIZAREMOS SUS DATOS PERSONALES?")
+                  ]),
+                  _vm._v(
+                    "\n            Los datos personales que usted proporcione en este registro de\n            acceso son datos meramente identificativos necesarios para el\n            control de negocios, marcas, giros comerciales, bienes, servicios\n            y/o establecimientos publicados en el portal de internet\n            www.faryreddeautopartes.com en el que se promocionara los referidos.\n            Si usted\n            no desea proporcionarlos, nos reservamos el derecho de negarle el\n            servicio de publicación en el portal de internet. Los datos\n            mencionados se mantendrán bajo resguardo en el portal de internet\n            por el término de un año y solo podrán ser públicos si autoridad\n            competente lo requiere, y no existirá otro medio de publicación,\n            siempre teniendo el entendido de que los datos proporcionados solo\n            se conocerán al momento del registro; al término de la vigencia de\n            un año se procederá a la actualización de los datos requeridos y/o\n            en cualquier momento que sea solicitado por ser inexactos o\n            incompletos si así lo observare el titular de los datos personales,\n            mediante previa consulta y solicitud del dueño de negocios, marcas,\n            giros comerciales y/o establecimientos, así como de los datos\n            personales publicados en el portal de internet\n            www.faryreddeautopartes.com.\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "\n            En caso de que no desee que sus datos personales sean tratados para\n            el registro y control de información de los negocios, marcas, giros\n            comerciales y/o establecimientos publicados en el portal de internet\n            "
+                  ),
+                  _c(
+                    "a",
+                    { attrs: { href: "http://www.faryreddeautopartes.com" } },
+                    [_vm._v("www.faryreddeautopartes.com")]
+                  ),
+                  _vm._v(
+                    " sobre alguna o todas las\n            finalidades adicionales,\n            desde este momento usted nos puede comunicar lo anterior al correo\n            "
+                  ),
+                  _c(
+                    "a",
+                    { attrs: { href: "http://www.faryreddeautopartes.com" } },
+                    [_vm._v("www.faryreddeautopartes.com")]
+                  ),
+                  _vm._v(
+                    " indicándonos en el cuerpo del\n            correo su\n            nombre completo, su causa, motivo, razón o circunstancia y el dato\n            que desea que sea tratado y para qué finalidad secundaria.\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "\n            Los datos proporcionados serán utilizados para la administración,\n            control interno, contacto con el propietario de éstos y demás\n            acciones que sean necesarias, y solo se establecerá la comunicación\n            entre el encargado de la recolección de sus datos personales y del\n            propietario de dichos datos, siendo única y exclusivamente la\n            utilización de datos de registro, nombre y domicilio del negocio,\n            marca, giro comercial y/o establecimiento de cada propietario y que\n            solo estos datos serán publicados en el portal de internet\n            "
+                  ),
+                  _c(
+                    "a",
+                    { attrs: { href: "http://www.faryreddeautopartes.com" } },
+                    [_vm._v("www.faryreddeautopartes.com")]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "\n            La negativa para el uso de sus datos personales para estas\n            finalidades no podrá ser un motivo para que le neguemos los\n            servicios y productos que solicita o contrata con nosotros.\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "\n            En caso de sufrir vulneraciones de seguridad ocurridas en cualquier\n            fase del tratamiento, resguardo o cualquier momento que así lo\n            estime pertinente el encargado del aseguramiento de los datos\n            personales, que afecten de forma significativa los derechos\n            patrimoniales o morales de los titulares, serán informadas de forma\n            inmediata por el responsable al titular, a fin de que este último\n            pueda tomar las medidas correspondientes a la defensa de sus\n            derechos.\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _c("b", [
+                    _vm._v(
+                      "\n              III.- ¿CÓMO PUEDE ACCEDER, RECTIFICAR, CANCELAR U OPONERSE AL\n              USO DE\n              SUS DATOS PERSONALES?\n            "
+                    )
+                  ]),
+                  _vm._v(
+                    "\n            Usted tiene derecho a conocer qué datos personales tenemos de usted,\n            para qué los utilizamos y las condiciones del uso que les damos; así\n            como también es su derecho solicitar la corrección de su información\n            personal en caso de que esté desactualizada, sea inexacta o\n            incompleta, sufra alguna actualización por su parte y que tenga la\n            necesidad de ser actualizada.\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "\n            También es su derecho que eliminemos de nuestros registros o bases\n            de datos los datos personales cuando considere que dicha información\n            no se está usando adecuadamente y por último, también puede oponerse\n            al uso de sus datos personales para fines específicos.\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "\n            Para el ejercicio de cualquiera de los derechos contenidos en la Ley\n            Federal de Protección de Datos Personales en Posesión de los\n            Particulares usted deberá presentar la solicitud respectiva mediante\n            correo electrónico dirigido al correo\n            "
+                  ),
+                  _c(
+                    "a",
+                    { attrs: { href: "http://www.faryreddeautopartes.com" } },
+                    [_vm._v("www.faryreddeautopartes.com")]
+                  ),
+                  _vm._v(
+                    ",\n            mismo que deberá contener la siguiente información:\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("ul", { staticClass: "p-0 m-0 pl-4" }, [
+                  _c("li", [
+                    _vm._v("Nombre del titular de los datos personales;")
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _vm._v(
+                      "\n              Identificación oficial con fotografía que lo acredite como el\n              titular\n              de los datos personales;\n            "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _vm._v(
+                      "Correo electrónico al cual quiere recibir la respuesta;"
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _vm._v(
+                      "\n              Los datos personales sobre los que se pretende ejercer alguno\n              de\n              los\n              derechos contenidos en la Ley Federal de Protección de Datos\n              Personales\n              en Posesión de los Particulares;\n            "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _vm._v(
+                      "\n              Descripción del motivo por el que se pretenda realizar una\n              acción\n              respecto de sus datos personales.\n            "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _vm._v(
+                      "\n              En caso de ser necesario documento o documentos que facilite la\n              localización de los datos personales.\n            "
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "\n            De conformidad con la legislación aplicable, la respuesta a la\n            solicitud no podrá ser superior a los 20 días hábiles contados a\n            partir del día hábil siguiente a aquel en que se haya recibido la\n            solicitud.\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "\n            Los datos de contacto de la persona que está a cargo de dar trámite\n            a las solicitudes de derechos contenidos en la ley son los\n            siguientes:\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("ul", { staticClass: "m-0 p-0 pl-4" }, [
+                  _c("li", [_vm._v("autofary@gmail.com")])
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _c("b", [
+                    _vm._v(
+                      "\n              IV.- USTED PUEDE REVOCAR SU CONSENTIMIENTO PARA EL USO DE DATOS\n              PERSONALES.\n            "
+                    )
+                  ]),
+                  _vm._v(
+                    "\n            Usted puede revocar el consentimiento que, en su caso, nos haya\n            otorgado para el tratamiento de sus datos personales. Sin embargo,\n            es importante que tenga en cuenta que no en todos los casos podremos\n            atender su solicitud o concluir el uso de forma inmediata, ya que es\n            posible que por alguna obligación legal requiramos seguir tratando\n            sus datos personales. Asimismo, usted deberá considerar que para\n            ciertos fines, la revocación de su consentimiento implicará que no\n            le podamos seguir prestando el servicio de publicación que nos\n            solicitó, o la conclusión de su relación con nosotros.\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "\n            Para revocar su consentimiento deberá presentar una solicitud en los\n            mismos términos que en el apartado III del presente aviso de\n            privacidad (¿CÓMO PUEDE ACCEDER, RECTIFICAR, CANCELAR U OPONERSE AL\n            USO DE SUS DATOS PERSONALES?) de este aviso de privacidad.\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _c("b", [
+                    _vm._v(
+                      "\n              V.- ¿CÓMO PUEDE LIMITAR EL USO O DIVULGACIÓN DE SU INFORMACIÓN\n              PERSONAL?\n            "
+                    )
+                  ]),
+                  _vm._v(
+                    "\n            Con el objeto de que usted pueda limitar el uso y divulgación de su\n            información personal, le ofrecemos el mecanismo señalado en el\n            apartado III del presente aviso de privacidad (¿CÓMO PUEDE ACCEDER,\n            RECTIFICAR, CANCELAR U OPONERSE AL USO DE SUS DATOS PERSONALES?) de\n            este aviso de privacidad.\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "\n            Asimismo, en caso de que usted no desee recibir publicidad de nuestra\n            parte, usted se podrá inscribir al Registro Público para Evitar\n            Publicidad. Para mayor información se puede consultar el portal\n            electrónico siguiente:\n            "
+                  ),
+                  _c("a", { attrs: { href: "http://repep.profeco.gob.mx/" } }, [
+                    _vm._v("http://repep.profeco.gob.mx/")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _c("b", [
+                    _vm._v(
+                      "\n              VI.- EL USO DE TECNOLOGÍAS DE RASTREO EN NUESTRO PORTAL DE\n              INTERNET.\n            "
+                    )
+                  ]),
+                  _vm._v(
+                    "\n            Le informamos que en nuestra página de Internet utilizamos cookies,\n            web beacons u otras tecnologías, a través de las cuales es posible\n            monitorear su comportamiento como usuario de Internet, así como\n            brindarle un mejor servicio y experiencia al navegar nuestra página.\n            Los datos personales que recabamos a través de estas tecnologías son\n            los siguientes:\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("ul", { staticClass: "p-0 m-0 pl-4" }, [
+                  _c("li", [
+                    _vm._v(
+                      "\n              Información sobre la dirección IP/nombre de dominio del\n              visitante;\n            "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _vm._v("Sitios web que hagan referencia a su sitio;")
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _vm._v(
+                      "Comportamiento y tiempo de estadía en el sitio web;"
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [_vm._v("Páginas navegadas;")]),
+                  _vm._v(" "),
+                  _c("li", [_vm._v("Herramientas utilizadas;")]),
+                  _vm._v(" "),
+                  _c("li", [_vm._v("Código postal;")]),
+                  _vm._v(" "),
+                  _c("li", [_vm._v("Tipo de navegador; y,")]),
+                  _vm._v(" "),
+                  _c("li", [_vm._v("Sistema operativo.")])
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "\n            Estas tecnologías se pueden deshabilitar en las opciones de\n            configuración del navegador que se use, normalmente en el botón de\n            ayuda que se encuentra en la barra de herramientas de la mayoría de\n            los navegadores. Adicionalmente, le sugerimos consultar las\n            instrucciones del navegador que esté usando.\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _c("b", [
+                    _vm._v(
+                      "\n              VII.- ¿CÓMO PUEDE CONOCER LOS CAMBIOS EN ESTE AVISO DE\n              PRIVACIDAD?\n            "
+                    )
+                  ]),
+                  _vm._v(
+                    "\n            El presente aviso de privacidad puede sufrir modificaciones, cambios\n            o actualizaciones derivados de nuevos requerimientos legales, de\n            nuestras propias necesidades, de cambios en nuestro modelo de\n            negocio o por cualquier otra causa.\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "\n            Nos comprometemos a mantenerlo informado sobre los cambios que pueda\n            sufrir el presente aviso de privacidad, a través del portal de\n            Internet\n            "
+                  ),
+                  _c(
+                    "a",
+                    { attrs: { href: "http://www.faryreddeautopartes.com" } },
+                    [_vm._v("www.faryreddeautopartes.com")]
+                  ),
+                  _vm._v(".\n          ")
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "\n            La última modificación de este aviso de privacidad es la de fecha\n            29 de Mayo del 2020.\n          "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("Aceptar")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -48504,7 +49494,9 @@ var render = function() {
         "div",
         { staticClass: "col-md-8 col-10 offset-1 offset-md-0 pt-0 pl-3 pr-3" },
         [
-          _c("HeaderComponent", { staticClass: "mb-3" }),
+          _vm.user_id
+            ? _c("HeaderComponent", { staticClass: "mb-3" })
+            : _vm._e(),
           _vm._v(" "),
           _c(
             "router-link",
@@ -48518,7 +49510,7 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          !_vm.loading
+          !_vm.loading && _vm.post.content != null
             ? _c("PostComponent", {
                 attrs: {
                   content: _vm.post.content,
@@ -48694,7 +49686,15 @@ var render = function() {
                       "div",
                       [_c("DateComponent", { attrs: { date: _vm.date } })],
                       1
-                    )
+                    ),
+                    _vm._v(" "),
+                    _vm.post_user_id == _vm.user_id
+                      ? _c(
+                          "div",
+                          { staticClass: "dropdown show float-right grid-2" },
+                          [_vm._m(2)]
+                        )
+                      : _vm._e()
                   ])
                 ])
               ]),
@@ -48744,7 +49744,7 @@ var render = function() {
             },
             [
               _c("div", { staticClass: "modal-content" }, [
-                _vm._m(2),
+                _vm._m(3),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
                   _vm._v("¿Estás seguro de eliminar la publicación?")
@@ -48806,12 +49806,12 @@ var render = function() {
                     _vm._v(_vm._s(_vm.content))
                   ]),
                   _vm._v(" "),
-                  _vm._m(3)
+                  _vm._m(4)
                 ]),
                 _vm._v(" "),
-                _vm._m(4),
+                _vm._m(5),
                 _vm._v(" "),
-                _vm._m(5)
+                _vm._m(6)
               ])
             ]
           )
@@ -48837,6 +49837,19 @@ var staticRenderFns = [
     return _c("span", { staticStyle: { color: "grey" } }, [
       _c("small", [_vm._v("Publicado por:")])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticStyle: { color: "grey" },
+        attrs: { "data-toggle": "modal", "data-target": "#confirmDelete" }
+      },
+      [_c("small", [_vm._v("Eliminar publicación")])]
+    )
   },
   function() {
     var _vm = this
@@ -49089,77 +50102,70 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container" },
-    [
-      _c("router-link", { attrs: { to: "/posts" } }, [_vm._v("Regresar")]),
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-2 d-none d-md-block" }),
       _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-2 d-none d-md-block" }),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "col-md-8 col-10 offset-1 offset-md-0 pt-0 pl-3 pr-3"
-          },
-          [
-            _c("HeaderComponent", { staticClass: "mb-3" }),
-            _vm._v(" "),
-            _c(
-              "router-link",
-              {
-                staticClass: "btn btn-outline-secondary mb-3",
-                attrs: { to: "/cars" }
-              },
-              [
-                _c("i", { staticClass: "fas fa-arrow-left" }),
-                _vm._v(" Regresar\n      ")
-              ]
-            ),
-            _vm._v(" "),
-            !_vm.loading
-              ? _c("div", [
-                  !_vm.error
-                    ? _c(
-                        "div",
-                        [
-                          _c("PostComponent", {
-                            attrs: {
-                              content: _vm.post.content,
-                              date: _vm.post.created_at,
-                              user: _vm.post.user_id,
-                              img: _vm.post.img,
-                              imgs: _vm.post.imgs,
-                              id: _vm.post.id,
-                              username: _vm.post.username,
-                              address: _vm.post.address,
-                              post_user_id: _vm.post.user_id,
-                              showName: true,
-                              allComments: true,
-                              typePosts: _vm.typePosts
-                            }
-                          })
-                        ],
-                        1
-                      )
-                    : _c("div", [_vm._v("Ocurrió un error")])
-                ])
-              : _c(
-                  "div",
-                  { staticClass: "w-100 text-center mt-5 pt-5" },
-                  [_c("LoaderComponent")],
-                  1
-                )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-2 d-none d-md-block" })
-      ])
-    ],
-    1
-  )
+      _c(
+        "div",
+        { staticClass: "col-md-8 col-10 offset-1 offset-md-0 pt-0 pl-3 pr-3" },
+        [
+          _vm.user_id
+            ? _c("HeaderComponent", { staticClass: "mb-3" })
+            : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "router-link",
+            {
+              staticClass: "btn btn-outline-secondary mb-3",
+              attrs: { to: "/" }
+            },
+            [
+              _c("i", { staticClass: "fas fa-arrow-left" }),
+              _vm._v(" Regresar\n      ")
+            ]
+          ),
+          _vm._v(" "),
+          !_vm.loading
+            ? _c("div", [
+                !_vm.error
+                  ? _c(
+                      "div",
+                      [
+                        _c("PostComponent", {
+                          attrs: {
+                            content: _vm.post.content,
+                            date: _vm.post.created_at,
+                            user: _vm.post.user_id,
+                            img: _vm.post.img,
+                            imgs: _vm.post.imgs,
+                            id: _vm.post.id,
+                            username: _vm.post.username,
+                            address: _vm.post.address,
+                            post_user_id: _vm.post.user_id,
+                            showName: true,
+                            allComments: true,
+                            typePosts: _vm.typePosts
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  : _c("div", [_vm._v("Ocurrió un error")])
+              ])
+            : _c(
+                "div",
+                { staticClass: "w-100 text-center mt-5 pt-5" },
+                [_c("LoaderComponent")],
+                1
+              )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-2 d-none d-md-block" })
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -49276,8 +50282,8 @@ var render = function() {
               )
             : _vm._e(),
           _vm._v(" "),
-          !_vm.isBusqueda && _vm.type === "owner" && _vm.typePosts == "cars"
-            ? _c("div", { staticClass: "col-12" }, [
+          !_vm.isBusqueda
+            ? _c("div", { staticClass: "col-12 mt-4" }, [
                 _c("h4", [
                   _vm._v("\n        Crear Publicación\n        "),
                   _c(
@@ -49484,25 +50490,91 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    { staticClass: "mt-4 main" },
+    [
+      _c("notifications", { attrs: { group: "foo" } }),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "div",
+          { staticClass: "col-md-2 d-none d-md-block" },
+          [_c("AdsComponent", { attrs: { ads: _vm.currentAds } })],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "col-md-8 col-10 offset-1 offset-md-0 pt-0 pl-3 pr-3"
+          },
+          [
+            _c("div", { staticClass: "text-center" }, [
+              _c("div", { staticClass: "text-left" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-outline-secondary mb-3",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        return _vm.$router.go(-1)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", { staticClass: "fas fa-arrow-left" }),
+                    _vm._v(" Regresar\n          ")
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _vm._m(0)
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-md-2 d-none d-md-block" },
+          [_c("NegociosComponent")],
+          1
+        )
+      ])
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "text-center m-5" }, [
-      _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header bg-dark text-white" }, [
-          _c("h2", [_vm._v("Misión")])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "text-center" }, [
-            _c("p", [
-              _vm._v(
-                "Inovando para conectar clientes y negocios, de una manera rapida, eficaz y segura, en la compra de refacciones de uso"
-              )
+    return _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card-header" }, [
+        _c("h2", [
+          _c("i", { staticClass: "fas fa-bookmark" }),
+          _vm._v(" Misión\n            ")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "text-justify" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-3 col-12 text-center" }, [
+              _c("img", {
+                staticClass: "card-img-top w-75",
+                attrs: { src: "/images/logo.jpg", alt: "" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-9 col-12 p-4" }, [
+              _c("h5", [
+                _vm._v(
+                  "Inovando para conectar clientes y negocios, de una manera rapida, eficaz y segura, en la compra de refacciones de uso."
+                )
+              ])
             ])
           ])
         ])
@@ -49555,9 +50627,98 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c(
+    "div",
+    { staticClass: "mt-4 main" },
+    [
+      _c("notifications", { attrs: { group: "foo" } }),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "div",
+          { staticClass: "col-md-2 d-none d-md-block" },
+          [_c("AdsComponent", { attrs: { ads: _vm.currentAds } })],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "col-md-8 col-10 offset-1 offset-md-0 pt-0 pl-3 pr-3"
+          },
+          [
+            _c("div", { staticClass: "text-center" }, [
+              _c("div", { staticClass: "text-left" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-outline-secondary mb-3",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        return _vm.$router.go(-1)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", { staticClass: "fas fa-arrow-left" }),
+                    _vm._v(" Regresar\n          ")
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _vm._m(0)
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-md-2 d-none d-md-block" },
+          [_c("NegociosComponent")],
+          1
+        )
+      ])
+    ],
+    1
+  )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card-header" }, [
+        _c("h2", [
+          _c("i", { staticClass: "fas fa-eye" }),
+          _vm._v(" Visión\n            ")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "text-justify" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-3 col-12 text-center" }, [
+              _c("img", {
+                staticClass: "card-img-top w-75",
+                attrs: { src: "/images/logo.jpg", alt: "" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-9 col-12 p-4" }, [
+              _c("h5", [
+                _vm._v(
+                  "Inovando para conectar clientes y negocios, de una manera rapida, eficaz y segura, en la compra de refacciones de uso."
+                )
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -50095,101 +51256,131 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      directives: [
-        {
-          name: "show",
-          rawName: "v-show",
-          value: _vm.cars.length || _vm.posts.length,
-          expression: "cars.length || posts.length"
-        }
-      ]
-    },
-    [
-      _c("div", { staticClass: "box" }, [
-        _c("div", { staticClass: "notifications" }, [
-          _c("i", { staticClass: "fas fa-bell" }),
-          _vm._v(" "),
-          _c("span", { staticClass: "num" }, [_vm._v(_vm._s(_vm.size))]),
-          _vm._v(" "),
-          _c(
-            "ul",
-            { staticClass: "list" },
-            [
-              _vm._l(_vm.posts, function(p) {
-                return _c(
-                  "li",
-                  {
-                    key: p.id,
-                    on: {
-                      click: function($event) {
-                        return _vm.updateNotification(p, "posts")
-                      }
-                    }
-                  },
-                  [
-                    _c("router-link", { attrs: { to: "/post/" + p.post_id } }, [
-                      _c("span", { staticClass: "icon" }, [
-                        _c("i", { staticClass: "fa fa-wrench" })
-                      ]),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "text" }, [
-                        _c("span", { staticClass: "user" }, [
-                          _vm._v(_vm._s(p.user))
-                        ]),
-                        _vm._v(":\n              "),
-                        _c("i", { staticStyle: { "font-size": "1.0" } }, [
-                          _vm._v(_vm._s(p.comment))
-                        ])
-                      ])
-                    ])
-                  ],
-                  1
-                )
-              }),
-              _vm._v(" "),
-              _vm._l(_vm.cars, function(c) {
-                return _c(
-                  "li",
-                  {
-                    key: c.id + "c",
-                    on: {
-                      click: function($event) {
-                        return _vm.updateNotification(c, "cars")
-                      }
-                    }
-                  },
-                  [
-                    _c("router-link", { attrs: { to: "/car/" + c.post_id } }, [
-                      _c("span", { staticClass: "icon" }, [
-                        _vm._v('console.log("Aqui ando");')
-                      ]),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "text" }, [
-                        _c("span", { staticClass: "user" }, [
-                          _vm._v(_vm._s(c.user))
-                        ]),
-                        _vm._v(":\n              "),
-                        _c("i", { staticStyle: { "font-size": "1.0" } }, [
-                          _vm._v(_vm._s(c.comment))
-                        ])
-                      ])
-                    ])
-                  ],
-                  1
-                )
-              })
+  return _c("div", [
+    _c("div", { staticClass: "box" }, [
+      _c("div", { staticClass: "notifications" }, [
+        _c("i", { staticClass: "fas fa-bell" }),
+        _vm._v(" "),
+        _c("span", { staticClass: "num" }, [_vm._v(_vm._s(_vm.size))]),
+        _vm._v(" "),
+        _c(
+          "ul",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.posts.length || _vm.cars.length,
+                expression: "posts.length || cars.length"
+              }
             ],
-            2
-          )
-        ])
+            staticClass: "list"
+          },
+          [
+            _vm._l(_vm.posts, function(p) {
+              return _c(
+                "li",
+                {
+                  key: p.id,
+                  style:
+                    p.visto == 0 ? "background-color: rgba(0,0,0,.1);" : "",
+                  on: {
+                    click: function($event) {
+                      return _vm.updateNotification(p, "posts")
+                    }
+                  }
+                },
+                [
+                  _c("router-link", { attrs: { to: "/post/" + p.post_id } }, [
+                    _c("span", { staticClass: "icon" }, [
+                      _c("i", { staticClass: "fa fa-wrench" })
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "text" }, [
+                      _c("span", { staticClass: "user" }, [
+                        _vm._v(_vm._s(p.user))
+                      ]),
+                      _vm._v(":\n              "),
+                      _c("i", { staticStyle: { "font-size": "1.0" } }, [
+                        _vm._v(_vm._s(p.comment))
+                      ])
+                    ])
+                  ])
+                ],
+                1
+              )
+            }),
+            _vm._v(" "),
+            _vm._l(_vm.cars, function(c) {
+              return _c(
+                "li",
+                {
+                  key: c.id + "c",
+                  style:
+                    c.visto == 0 ? "background-color: rgba(0,0,0,.1);" : "",
+                  on: {
+                    click: function($event) {
+                      return _vm.updateNotification(c, "cars")
+                    }
+                  }
+                },
+                [
+                  _c("router-link", { attrs: { to: "/car/" + c.post_id } }, [
+                    _c("span", { staticClass: "icon" }, [
+                      _c("i", { staticClass: "fa fa-wrench" })
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "text" }, [
+                      _c("span", { staticClass: "user" }, [
+                        _vm._v(_vm._s(c.user))
+                      ]),
+                      _vm._v(":\n              "),
+                      _c("i", { staticStyle: { "font-size": "1.0" } }, [
+                        _vm._v(_vm._s(c.comment))
+                      ])
+                    ])
+                  ])
+                ],
+                1
+              )
+            })
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _c(
+          "ul",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: !_vm.posts.length && !_vm.cars.length,
+                expression: "!posts.length && !cars.length"
+              }
+            ],
+            staticClass: "list"
+          },
+          [_vm._m(0)]
+        )
       ])
-    ]
-  )
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("span", { staticClass: "icon" }, [
+        _c("i", { staticClass: "fas fa-bell-slash" })
+      ]),
+      _vm._v(" "),
+      _c("span", { staticClass: "text" }, [_vm._v("No hay notificaciones")])
+    ])
+  }
+]
 render._withStripped = true
 
 

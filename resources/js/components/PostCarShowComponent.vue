@@ -5,12 +5,12 @@
         <!--  <AdsComponent :ads="currentAds" /> -->
       </div>
       <div class="col-md-8 col-10 offset-1 offset-md-0 pt-0 pl-3 pr-3">
-        <HeaderComponent class="mb-3" />
+        <HeaderComponent class="mb-3" v-if="user_id" />
         <router-link to="/" class="btn btn-outline-secondary mb-3">
           <i class="fas fa-arrow-left"></i> Regresar
         </router-link>
         <PostComponent
-          v-if="!loading"
+          v-if="!loading && post.content != null"
           :content="post.content"
           :date="post.created_at"
           :user="post.user_id"
@@ -58,7 +58,10 @@ export default {
         address: null
       },
       typePosts: "cars",
-      comments: []
+      comments: [],
+      user_id: document.querySelector('meta[name="user_id"]')
+        ? document.querySelector('meta[name="user_id"]').getAttribute("content")
+        : null
     };
   },
   created: function() {

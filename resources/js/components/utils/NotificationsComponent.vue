@@ -1,11 +1,16 @@
 <template>
-  <div v-show="cars.length || posts.length">
+  <div>
     <div class="box">
       <div class="notifications">
         <i class="fas fa-bell"></i>
         <span class="num">{{size}}</span>
-        <ul class="list">
-          <li @click="updateNotification(p,'posts')" v-for="p in posts" :key="p.id">
+        <ul class="list" v-show="posts.length || cars.length">
+          <li
+            @click="updateNotification(p,'posts')"
+            :style="p.visto == 0? 'background-color: rgba(0,0,0,.1);':''"
+            v-for="p in posts"
+            :key="p.id"
+          >
             <router-link :to="'/post/'+p.post_id">
               <span class="icon">
                 <i class="fa fa-wrench"></i>
@@ -16,14 +21,29 @@
               </span>
             </router-link>
           </li>
-          <li @click="updateNotification(c,'cars')" v-for="c in cars" :key="c.id+'c'">
+          <li
+            :style="c.visto == 0? 'background-color: rgba(0,0,0,.1);':''"
+            @click="updateNotification(c,'cars')"
+            v-for="c in cars"
+            :key="c.id+'c'"
+          >
             <router-link :to="'/car/'+c.post_id">
-              <span class="icon">console.log("Aqui ando");</span>
+              <span class="icon">
+                <i class="fa fa-wrench"></i>
+              </span>
               <span class="text">
                 <span class="user">{{c.user}}</span>:
                 <i style="font-size: 1.0">{{c.comment}}</i>
               </span>
             </router-link>
+          </li>
+        </ul>
+        <ul class="list" v-show="!posts.length && !cars.length">
+          <li>
+            <span class="icon">
+              <i class="fas fa-bell-slash"></i>
+            </span>
+            <span class="text">No hay notificaciones</span>
           </li>
         </ul>
       </div>
@@ -206,5 +226,9 @@ export default {
 .list li:hover .text {
   font-weight: bold;
   color: #97222e;
+}
+
+.list li:hover .noread {
+  background-color: rgb(169, 44, 44);
 }
 </style>

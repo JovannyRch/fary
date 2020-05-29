@@ -6,7 +6,7 @@
     
     <div class="row justify-content-center">
         @if (session('message'))
-           <div class="col-8 text-center">
+           <div class="col-8 p-0 text-center">
             <div class="alert alert-success ">
                 <b>{{session('message')}}</b>
             </div>
@@ -22,7 +22,7 @@
                     </div> --}}
                    <div class="row ">
 
-                       <div class="col-8 col-md-5 offset-2 offset-md-0">
+                       <div class="col-8 p-0 col-md-5 offset-2 offset-md-0">
                            <img class="w-100" src="/images/logo.jpg" alt="" srcset="">
                        </div>
                        <div class="col-12 col-md-7">
@@ -33,9 +33,9 @@
                             @csrf
     
                             <div class="form-group">
-                                <label for="email" class="col-md-8 offset-md-2 col-form-label "><b>{{ __('Correo electrónico') }}</b></label>
+                                <label for="email" class="col-md-8 p-0 offset-md-2 col-form-label "><b>{{ __('Correo electrónico') }}</b></label>
     
-                                <div class="col-md-8 offset-md-2">
+                                <div class="col-md-8 p-0 offset-md-2">
                                     <input id="email" type="email" placeholder="Escribe tu correo" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
     
                                     @error('email')
@@ -48,9 +48,9 @@
                          
 
                             <div class="form-group ">
-                                <label for="password" class="col-md-8 offset-md-2 col-form-label "><b>{{ __('Contraseña') }}</b></label>
+                                <label for="password" class="col-md-8 p-0 offset-md-2 col-form-label "><b>{{ __('Contraseña') }}</b></label>
     
-                                <div class="col-md-8 offset-md-2">
+                                <div class="col-md-8 p-0 offset-md-2">
                                     <input id="password" placeholder="Escribe tu contraseña" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
     
                                     @error('password')
@@ -64,7 +64,7 @@
                             
                             <div class="form-group row mb-0  text-center" >
                                 
-                                <div class="col-md-8 offset-md-2">
+                                <div class="col-md-8 p-0 offset-md-2">
                                     <button type="submit" class="btn btn-success text-white">
                                         {{ __('Ingresar') }}
                                     </button>
@@ -76,6 +76,10 @@
                                     @endif --}}
                                 </div>
                             </div>
+
+                          
+                            
+                          
 
                             <div class="text-center text-success">
                                 ¿Aún no te has registrado? <br>
@@ -90,4 +94,6 @@
         </div>
     </div>
 </div>
+
+
 @endsection

@@ -65,10 +65,15 @@ export default {
     $("#btn-file").on("click", function() {
       $("#input-file").trigger("click");
     });
+    $("#input-file").change(() => {
+      this.files = [...this.files, ...$("#input-file")[0].files];
+      $("#input-file")[0].files = this.FileListItem(this.files);
+    });
   },
   data() {
     return {
       content: "",
+      files: [],
       images: [],
       piece: "",
       model: "",
@@ -97,6 +102,22 @@ export default {
     }
   },
   methods: {
+    FileListItem(a) {
+      a = [].slice.call(Array.isArray(a) ? a : arguments);
+      for (var c, b = (c = a.length), d = !0; b-- && d; )
+        d = a[b] instanceof File;
+      if (!d)
+        throw new TypeError(
+          "expected argument to FileList is File or array of File objects"
+        );
+      for (
+        b = new ClipboardEvent("").clipboardData || new DataTransfer();
+        c--;
+
+      )
+        b.items.add(a[c]);
+      return b.files;
+    },
     onFileChange(e) {
       var files = e.target.files || e.dataTransfer.files;
       if (!files.length) return;

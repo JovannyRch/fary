@@ -25,7 +25,7 @@
       </div>
       <div v-if="!showAll && comments.length >= 4" class>
         <button
-          class="btn btn-outline-success btn-sm redondo"
+          class="btn btn-outline-success btn-sm redondo mb-2"
           @click="loadComments()"
         >Mostrar todos los comentarios</button>
       </div>

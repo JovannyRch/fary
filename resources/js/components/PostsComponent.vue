@@ -138,7 +138,7 @@ export default {
     CarCreateComponent,
     HeaderComponent
   },
-  async created() {
+  async mounted() {
     if (this.negocio) {
       this.negocio = JSON.parse(this.negocio);
     }
@@ -215,6 +215,7 @@ export default {
   },
   methods: {
     loadData: async function(url = null, isBusqueda = false) {
+      console.log("cargando todas las notificaciones");
       if (url == null) {
         url = this.defaultUrl;
       }
@@ -238,8 +239,8 @@ export default {
             return;
           }
         );
-        return;
       }
+      console.log("Ahora si");
       fetch(url)
         .then(response => response.json())
         .then(json => {

@@ -3162,6 +3162,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -3185,7 +3189,8 @@ __webpack_require__.r(__webpack_exports__);
         address: null
       },
       typePosts: "posts",
-      comments: []
+      comments: [],
+      error: false
     };
   },
   created: function created() {
@@ -3199,8 +3204,16 @@ __webpack_require__.r(__webpack_exports__);
       fetch("/api/posts/" + this.id).then(function (response) {
         return response.json();
       }).then(function (json) {
-        var data = json.data;
-        _this.post = data;
+        console.log(json);
+
+        if (json.status == 200) {
+          var data = json.data;
+          _this.post = data;
+        } else {
+          _this.error = true;
+          alert("error");
+        }
+
         _this.loading = false;
       });
     }
@@ -3369,7 +3382,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     CarCreateComponent: _CarCreateComponent__WEBPACK_IMPORTED_MODULE_4__["default"],
     HeaderComponent: _utils_HeaderComponent__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
-  created: function created() {
+  mounted: function mounted() {
     var _this = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -3466,6 +3479,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 url = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : null;
                 isBusqueda = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : false;
+                console.log("cargando todas las notificaciones");
 
                 if (url == null) {
                   url = this.defaultUrl;
@@ -3478,7 +3492,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   break;
                 }
 
-                _context2.next = 7;
+                _context2.next = 8;
                 return navigator.geolocation.getCurrentPosition(function (location) {
                   var lat = location.coords.latitude;
                   var _long = location.coords.longitude;
@@ -3502,10 +3516,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   return;
                 });
 
-              case 7:
-                return _context2.abrupt("return");
-
               case 8:
+                console.log("Ahora si");
                 fetch(url).then(function (response) {
                   return response.json();
                 }).then(function (json) {
@@ -3529,7 +3541,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }
                 });
 
-              case 9:
+              case 10:
               case "end":
                 return _context2.stop();
             }
@@ -4102,8 +4114,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
 //
 //
 //
@@ -8878,7 +8888,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.box {\n  float: right;\n  position: relative;\n  z-index: 10;\n}\n.notifications {\n  width: 60px;\n  height: 60px;\n  background: #fff;\n  border-radius: 30px;\n  box-sizing: border-box;\n  text-align: center;\n  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);\n}\n.notifications .fas {\n  color: #cecece;\n  line-height: 60px;\n  font-size: 30px;\n}\n.notifications .num {\n  position: absolute;\n  top: 0px;\n  right: -5px;\n  width: 25px;\n  height: 25px;\n  border-radius: 50%;\n  background: #ff2c74;\n  color: #fff;\n  line-height: 25px;\n  font-family: sans-serif;\n  text-align: center;\n}\n.notifications:hover {\n  width: 300px;\n  height: 60px;\n  text-align: left;\n  padding: 0 15px;\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n@media (max-width: 600px) {\n.notifications:hover {\n    width: 100%;\n    height: 60px;\n    text-align: left;\n    padding: 0 15px;\n    border-bottom-left-radius: 0;\n    border-bottom-right-radius: 0;\n}\n}\n.notifications:hover .num {\n  position: relative;\n  background: transparent;\n  -moz-columns: #fff;\n       columns: #fff;\n  font-size: 24px;\n  top: -4px;\n}\n.notifications:hover .num:after {\n  content: \"Notificaciones\";\n  color: #717171;\n}\n.notifications:hover ul {\n  display: block;\n}\n.list {\n  position: absolute;\n  background: #fff;\n  left: 0;\n  top: 60px;\n  margin: 0;\n  padding: 20px;\n  width: 100%;\n  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);\n  box-sizing: border-box;\n  display: none;\n\n  border-bottom-left-radius: 30px;\n  border-bottom-right-radius: 30px;\n}\n.list li {\n  list-style: none;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n  padding: 8px 0;\n  display: flex;\n  text-overflow: ellipsis;\n}\n.list li:last-child {\n  border-bottom: none;\n}\n.list li .icon {\n  width: 24px;\n  height: 24px;\n  border-radius: 50%;\n  text-align: center;\n  line-height: 24px;\n  margin-right: 15px;\n}\n.list li .icon .fas {\n  color: #97222e;\n  font-size: 24px;\n  line-height: 24px;\n}\n.list li .icon .fa {\n  color: #97222e;\n  font-size: 24px;\n  line-height: 24px;\n}\n.user {\n  color: #97222e;\n}\n.list li .text {\n  position: relative;\n  font-family: sans-serif;\n  top: 3px;\n  cursor: pointer;\n}\n.list li:hover .text {\n  font-weight: bold;\n  color: #97222e;\n}\n", ""]);
+exports.push([module.i, "\n.box {\n  float: right;\n  position: relative;\n  z-index: 10;\n}\n.notifications {\n  width: 60px;\n  height: 60px;\n  background: #fff;\n  border-radius: 30px;\n  box-sizing: border-box;\n  text-align: center;\n  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);\n}\n.notifications .fas {\n  color: #cecece;\n  line-height: 60px;\n  font-size: 30px;\n}\n.notifications .num {\n  position: absolute;\n  top: 0px;\n  right: -5px;\n  width: 25px;\n  height: 25px;\n  border-radius: 50%;\n  background: #c70518;\n  color: #fff;\n  line-height: 25px;\n  font-family: sans-serif;\n  text-align: center;\n}\n.notifications:hover {\n  width: 300px;\n  height: 60px;\n  text-align: left;\n  padding: 0 15px;\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n@media (max-width: 600px) {\n.notifications:hover {\n    width: 100%;\n    height: 60px;\n    text-align: left;\n    padding: 0 15px;\n    border-bottom-left-radius: 0;\n    border-bottom-right-radius: 0;\n}\n}\n.notifications:hover .num {\n  position: relative;\n  background: transparent;\n  -moz-columns: #fff;\n       columns: #fff;\n  font-size: 24px;\n  top: -4px;\n}\n.notifications:hover .num:after {\n  content: \"Notificaciones\";\n  color: #717171;\n}\n.notifications:hover ul {\n  display: block;\n}\n.list {\n  position: absolute;\n  background: #fff;\n  left: 0;\n  top: 60px;\n  margin: 0;\n  padding: 20px;\n  width: 100%;\n  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);\n  box-sizing: border-box;\n  display: none;\n\n  border-bottom-left-radius: 30px;\n  border-bottom-right-radius: 30px;\n}\n.list li {\n  list-style: none;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n  padding: 8px 0;\n  display: flex;\n  text-overflow: ellipsis;\n}\n.list li:last-child {\n  border-bottom: none;\n}\n.list li .icon {\n  width: 24px;\n  height: 24px;\n  border-radius: 50%;\n  text-align: center;\n  line-height: 24px;\n  margin-right: 15px;\n}\n.list li .icon .fas {\n  color: #97222e;\n  font-size: 24px;\n  line-height: 24px;\n}\n.list li .icon .fa {\n  color: #97222e;\n  font-size: 24px;\n  line-height: 24px;\n}\n.user {\n  color: #97222e;\n}\n.list li .text {\n  position: relative;\n  font-family: sans-serif;\n  top: 3px;\n  cursor: pointer;\n}\n.list li:hover .text {\n  font-weight: bold;\n  color: #97222e;\n}\n", ""]);
 
 // exports
 
@@ -48200,7 +48210,8 @@ var render = function() {
                     _c(
                       "button",
                       {
-                        staticClass: "btn btn-outline-success btn-sm redondo",
+                        staticClass:
+                          "btn btn-outline-success btn-sm redondo mb-2",
                         on: {
                           click: function($event) {
                             return _vm.loadComments()
@@ -49108,22 +49119,32 @@ var render = function() {
             ),
             _vm._v(" "),
             !_vm.loading
-              ? _c("PostComponent", {
-                  attrs: {
-                    content: _vm.post.content,
-                    date: _vm.post.created_at,
-                    user: _vm.post.user_id,
-                    img: _vm.post.img,
-                    imgs: _vm.post.imgs,
-                    id: _vm.post.id,
-                    username: _vm.post.username,
-                    address: _vm.post.address,
-                    post_user_id: _vm.post.user_id,
-                    showName: true,
-                    allComments: true,
-                    typePosts: _vm.typePosts
-                  }
-                })
+              ? _c("div", [
+                  !_vm.error
+                    ? _c(
+                        "div",
+                        [
+                          _c("PostComponent", {
+                            attrs: {
+                              content: _vm.post.content,
+                              date: _vm.post.created_at,
+                              user: _vm.post.user_id,
+                              img: _vm.post.img,
+                              imgs: _vm.post.imgs,
+                              id: _vm.post.id,
+                              username: _vm.post.username,
+                              address: _vm.post.address,
+                              post_user_id: _vm.post.user_id,
+                              showName: true,
+                              allComments: true,
+                              typePosts: _vm.typePosts
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    : _c("div", [_vm._v("Ocurrió un error")])
+                ])
               : _c(
                   "div",
                   { staticClass: "w-100 text-center mt-5 pt-5" },
@@ -50091,9 +50112,7 @@ var render = function() {
         _c("div", { staticClass: "notifications" }, [
           _c("i", { staticClass: "fas fa-bell" }),
           _vm._v(" "),
-          _vm.size > 0
-            ? _c("span", { staticClass: "num" }, [_vm._v(_vm._s(_vm.size))])
-            : _vm._e(),
+          _c("span", { staticClass: "num" }, [_vm._v(_vm._s(_vm.size))]),
           _vm._v(" "),
           _c(
             "ul",
@@ -50145,7 +50164,7 @@ var render = function() {
                   [
                     _c("router-link", { attrs: { to: "/car/" + c.post_id } }, [
                       _c("span", { staticClass: "icon" }, [
-                        _c("i", { staticClass: "fas fa-car-side" })
+                        _vm._v('console.log("Aqui ando");')
                       ]),
                       _vm._v(" "),
                       _c("span", { staticClass: "text" }, [

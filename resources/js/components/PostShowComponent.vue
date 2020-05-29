@@ -10,21 +10,25 @@
         <router-link to="/cars" class="btn btn-outline-secondary mb-3">
           <i class="fas fa-arrow-left"></i> Regresar
         </router-link>
-        <PostComponent
-          v-if="!loading"
-          :content="post.content"
-          :date="post.created_at"
-          :user="post.user_id"
-          :img="post.img"
-          :imgs="post.imgs"
-          :id="post.id"
-          :username="post.username"
-          :address="post.address"
-          :post_user_id="post.user_id"
-          :showName="true"
-          :allComments="true"
-          :typePosts="typePosts"
-        />
+        <div v-if="!loading">
+          <div v-if="!error">
+            <PostComponent
+              :content="post.content"
+              :date="post.created_at"
+              :user="post.user_id"
+              :img="post.img"
+              :imgs="post.imgs"
+              :id="post.id"
+              :username="post.username"
+              :address="post.address"
+              :post_user_id="post.user_id"
+              :showName="true"
+              :allComments="true"
+              :typePosts="typePosts"
+            />
+          </div>
+          <div v-else>Ocurrió un error</div>
+        </div>
         <div v-else class="w-100 text-center mt-5 pt-5">
           <LoaderComponent />
         </div>
@@ -59,7 +63,8 @@ export default {
         address: null
       },
       typePosts: "posts",
-      comments: []
+      comments: [],
+      error: false
     };
   },
   created: function() {
@@ -71,8 +76,14 @@ export default {
       fetch("/api/posts/" + this.id)
         .then(response => response.json())
         .then(json => {
-          let data = json.data;
-          this.post = data;
+          console.log(json);
+          if (json.status == 200) {
+            let data = json.data;
+            this.post = data;
+          } else {
+            this.error = true;
+            alert("error");
+          }
           this.loading = false;
         });
     }

@@ -3,7 +3,7 @@
     <div class="box">
       <div class="notifications">
         <i class="fas fa-bell"></i>
-        <span v-if="size > 0" class="num">{{size}}</span>
+        <span class="num">{{size}}</span>
         <ul class="list">
           <li @click="updateNotification(p,'posts')" v-for="p in posts" :key="p.id">
             <router-link :to="'/post/'+p.post_id">
@@ -18,9 +18,7 @@
           </li>
           <li @click="updateNotification(c,'cars')" v-for="c in cars" :key="c.id+'c'">
             <router-link :to="'/car/'+c.post_id">
-              <span class="icon">
-                <i class="fas fa-car-side"></i>
-              </span>
+              <span class="icon">console.log("Aqui ando");</span>
               <span class="text">
                 <span class="user">{{c.user}}</span>:
                 <i style="font-size: 1.0">{{c.comment}}</i>
@@ -105,7 +103,7 @@ export default {
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background: #ff2c74;
+  background: #c70518;
   color: #fff;
   line-height: 25px;
   font-family: sans-serif;

@@ -2553,8 +2553,7 @@ __webpack_require__.r(__webpack_exports__);
       url: "/api/ads"
     };
   },
-  mounted: function mounted() {
-    this.getAds();
+  mounted: function mounted() {//this.getAds();
   },
   methods: {
     setLocation: function setLocation(lat, _long) {

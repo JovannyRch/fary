@@ -37,7 +37,7 @@ export default {
     };
   },
   mounted() {
-    this.getAds();
+    //this.getAds();
   },
   methods: {
     setLocation(lat, long) {

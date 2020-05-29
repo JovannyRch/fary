@@ -24,11 +24,12 @@
                   id="content"
                   class="form-control"
                   autocomplete="off"
+                  required
                   placeholder="Escribe aquí la pieza o refacción"
                 />
               </div>
 
-              <div class="col-12" v-show="content">
+              <div class="col-12">
                 <input id="input-file" @change="onFileChange" type="file" name="file" multiple />
                 <button type="submit" class="btn btn-sm btn-success float-right">Publicar</button>
                 <button id="btn-file" type="button" class="float-right btn btn-success btn-sm mr-2">

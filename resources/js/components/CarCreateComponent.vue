@@ -19,6 +19,7 @@
                   style="-webkit-border-radius: 50px;-moz-border-radius: 50px;border-radius: 50px;"
                   type="text"
                   name="content"
+                  required
                   id="content"
                   class="form-control"
                   autocomplete="off"
@@ -36,7 +37,7 @@
                 />
               </div>
 
-              <div class="col-12" v-show="content">
+              <div class="col-12">
                 <input
                   id="input-file"
                   accept="image/*"

@@ -2035,6 +2035,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {},
   mounted: function mounted() {
@@ -3328,6 +3329,7 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
+//
 //
 //
 //
@@ -48609,6 +48611,7 @@ var render = function() {
                     attrs: {
                       type: "text",
                       name: "content",
+                      required: "",
                       id: "content",
                       autocomplete: "off",
                       placeholder: "Escribe aquí la información sobre el auto "
@@ -48639,43 +48642,29 @@ var render = function() {
                   0
                 ),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.content,
-                        expression: "content"
-                      }
-                    ],
-                    staticClass: "col-12"
-                  },
-                  [
-                    _c("input", {
-                      attrs: {
-                        id: "input-file",
-                        accept: "image/*",
-                        type: "file",
-                        name: "imgs[]",
-                        multiple: ""
-                      },
-                      on: { change: _vm.onFileChange }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-sm btn-success float-right",
-                        attrs: { type: "submit" }
-                      },
-                      [_vm._v("Publicar")]
-                    ),
-                    _vm._v(" "),
-                    _vm._m(0)
-                  ]
-                )
+                _c("div", { staticClass: "col-12" }, [
+                  _c("input", {
+                    attrs: {
+                      id: "input-file",
+                      accept: "image/*",
+                      type: "file",
+                      name: "imgs[]",
+                      multiple: ""
+                    },
+                    on: { change: _vm.onFileChange }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-sm btn-success float-right",
+                      attrs: { type: "submit" }
+                    },
+                    [_vm._v("Publicar")]
+                  ),
+                  _vm._v(" "),
+                  _vm._m(0)
+                ])
               ])
             ])
           ])
@@ -50006,6 +49995,7 @@ var render = function() {
                         name: "content",
                         id: "content",
                         autocomplete: "off",
+                        required: "",
                         placeholder: "Escribe aquí la pieza o refacción"
                       },
                       domProps: { value: _vm.content },
@@ -50021,42 +50011,28 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.content,
-                        expression: "content"
-                      }
-                    ],
-                    staticClass: "col-12"
-                  },
-                  [
-                    _c("input", {
-                      attrs: {
-                        id: "input-file",
-                        type: "file",
-                        name: "file",
-                        multiple: ""
-                      },
-                      on: { change: _vm.onFileChange }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-sm btn-success float-right",
-                        attrs: { type: "submit" }
-                      },
-                      [_vm._v("Publicar")]
-                    ),
-                    _vm._v(" "),
-                    _vm._m(0)
-                  ]
-                )
+                _c("div", { staticClass: "col-12" }, [
+                  _c("input", {
+                    attrs: {
+                      id: "input-file",
+                      type: "file",
+                      name: "file",
+                      multiple: ""
+                    },
+                    on: { change: _vm.onFileChange }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-sm btn-success float-right",
+                      attrs: { type: "submit" }
+                    },
+                    [_vm._v("Publicar")]
+                  ),
+                  _vm._v(" "),
+                  _vm._m(0)
+                ])
               ])
             ])
           ])

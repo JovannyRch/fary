@@ -49481,7 +49481,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "col-md-8 col-10 offset-1 offset-md-0 pt-0 pl-3 pr-3" },
+        { staticClass: "col-md-8 col-12 offset-md-0 pt-0 pl-3 pr-3" },
         [
           _vm.user_id
             ? _c("HeaderComponent", { staticClass: "mb-3" })
@@ -50105,7 +50105,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "col-md-8 col-10 offset-1 offset-md-0 pt-0 pl-3 pr-3" },
+        { staticClass: "col-md-8 col-12 offset-md-0 pt-0 pl-3 pr-3" },
         [
           _vm.user_id
             ? _c("HeaderComponent", { staticClass: "mb-3" })

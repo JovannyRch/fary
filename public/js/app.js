@@ -3227,6 +3227,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -49603,7 +49608,15 @@ var render = function() {
                       "div",
                       [_c("DateComponent", { attrs: { date: _vm.date } })],
                       1
-                    )
+                    ),
+                    _vm._v(" "),
+                    _vm.post_user_id == _vm.user_id
+                      ? _c(
+                          "div",
+                          { staticClass: "dropdown show float-right grid-2" },
+                          [_vm._m(1)]
+                        )
+                      : _vm._e()
                   ])
                 ])
               ]),
@@ -49658,7 +49671,7 @@ var render = function() {
                           "span",
                           { staticClass: "post-user" },
                           [
-                            _vm._m(1),
+                            _vm._m(2),
                             _vm._v(" "),
                             _c(
                               "router-link",
@@ -49680,7 +49693,7 @@ var render = function() {
                       ? _c(
                           "div",
                           { staticClass: "dropdown show float-right grid-2" },
-                          [_vm._m(2)]
+                          [_vm._m(3)]
                         )
                       : _vm._e()
                   ])
@@ -49732,7 +49745,7 @@ var render = function() {
             },
             [
               _c("div", { staticClass: "modal-content" }, [
-                _vm._m(3),
+                _vm._m(4),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
                   _vm._v("¿Estás seguro de eliminar la publicación?")
@@ -49794,12 +49807,12 @@ var render = function() {
                     _vm._v(_vm._s(_vm.content))
                   ]),
                   _vm._v(" "),
-                  _vm._m(4)
+                  _vm._m(5)
                 ]),
                 _vm._v(" "),
-                _vm._m(5),
+                _vm._m(6),
                 _vm._v(" "),
-                _vm._m(6)
+                _vm._m(7)
               ])
             ]
           )
@@ -49817,6 +49830,19 @@ var staticRenderFns = [
     return _c("span", { staticStyle: { color: "grey" } }, [
       _c("small", [_vm._v("Publicado por:")])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticStyle: { color: "grey" },
+        attrs: { "data-toggle": "modal", "data-target": "#confirmDelete" }
+      },
+      [_c("small", [_vm._v("Eliminar publicación")])]
+    )
   },
   function() {
     var _vm = this

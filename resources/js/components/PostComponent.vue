@@ -30,6 +30,11 @@
                 <div>
                   <DateComponent :date="date" />
                 </div>
+                <div class="dropdown show float-right grid-2" v-if="post_user_id == user_id">
+                  <a data-toggle="modal" data-target="#confirmDelete" style="color:grey">
+                    <small>Eliminar publicación</small>
+                  </a>
+                </div>
               </div>
             </div>
           </div>

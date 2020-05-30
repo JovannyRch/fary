@@ -9394,7 +9394,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#container-post {\n  height: 95vh;\n  margin-bottom: 10%;\n  overflow-y: scroll;\n}\n.title-page {\n  font-weight: bold;\n  margin-bottom: 1%;\n  margin-top: 1.5%;\n}\n.container-tools {\n  height: 30px;\n}\n.ad {\n  background-color: transparent;\n}\n.parent {\n  display: grid;\n  grid-template-columns: repeat(2, 1fr);\n  grid-template-rows: 1fr;\n  grid-column-gap: 0px;\n  grid-row-gap: 0px;\n}\n.div1 {\n  grid-area: 1 / 1 / 2 / 2;\n  width: 10px;\n}\n.div2 {\n  grid-area: 1 / 2 / 2 / 3;\n}\n", ""]);
+exports.push([module.i, "\n#container-post {\n  margin-bottom: 1%;\n}\n.title-page {\n  font-weight: bold;\n  margin-bottom: 1%;\n  margin-top: 1.5%;\n}\n.container-tools {\n  height: 30px;\n}\n.ad {\n  background-color: transparent;\n}\n.parent {\n  display: grid;\n  grid-template-columns: repeat(2, 1fr);\n  grid-template-rows: 1fr;\n  grid-column-gap: 0px;\n  grid-row-gap: 0px;\n}\n.div1 {\n  grid-area: 1 / 1 / 2 / 2;\n  width: 10px;\n}\n.div2 {\n  grid-area: 1 / 2 / 2 / 3;\n}\n", ""]);
 
 // exports
 

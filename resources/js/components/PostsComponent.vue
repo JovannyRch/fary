@@ -320,9 +320,7 @@ export default {
 
 <style>
 #container-post {
-  height: 95vh;
-  margin-bottom: 10%;
-  overflow-y: scroll;
+  margin-bottom: 1%;
 }
 
 .title-page {

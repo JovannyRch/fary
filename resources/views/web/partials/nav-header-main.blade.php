@@ -14,7 +14,7 @@
     @endif
   @else
     
-    <a  href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="float-right d-none d-md-block"> <i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+    <a  href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="float-right "> <i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
  
     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
       @csrf

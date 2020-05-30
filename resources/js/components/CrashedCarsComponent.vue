@@ -5,7 +5,7 @@
       <div class="col-md-2 d-none d-md-block">
         <AdsComponent :ads="currentAds" />
       </div>
-      <div class="col-md-8 col-10 offset-1 offset-md-0 pt-0 pl-3 pr-3">
+      <div class="col-md-8 col-12 offset-md-0 pt-0 pl-3 pr-3">
         <PostsComponent @setLocation="setLocation" :ads="currentAds" :typePosts="'cars'" />
       </div>
       <div class="col-md-2 d-none d-md-block">

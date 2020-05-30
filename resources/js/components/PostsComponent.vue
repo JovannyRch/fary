@@ -320,7 +320,7 @@ export default {
 
 <style>
 #container-post {
-  height: 80vh;
+  height: 95vh;
   margin-bottom: 10%;
   overflow-y: scroll;
 }

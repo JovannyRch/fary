@@ -50427,7 +50427,9 @@ var render = function() {
                           : _vm._e(),
                         _vm._v(" "),
                         _vm.isMyPosts
-                          ? _c("h3", [_vm._v("Aún no has ninguna publicación")])
+                          ? _c("h3", [
+                              _vm._v("Aún no has hecho ninguna publicación")
+                            ])
                           : _vm._e()
                       ])
                     : _vm._e()

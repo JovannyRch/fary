@@ -112,7 +112,7 @@
           </div>
           <div v-if="posts.length == 0 && isLoading == false" class="text-center pt-5">
             <h3 v-if="!isMyPosts">Aún no se han hecho publicaciones</h3>
-            <h3 v-if="isMyPosts">Aún no has ninguna publicación</h3>
+            <h3 v-if="isMyPosts">Aún no has hecho ninguna publicación</h3>
           </div>
         </div>
         <div v-else>

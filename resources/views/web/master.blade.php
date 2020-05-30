@@ -30,7 +30,7 @@
     @endif --}}
     <div  id="app">
         @include('web.partials.nav-header-main')
-            <div class="container-fluid p-0 m-0">
+            <div class="container-fluid ">
                 @yield('content')
             </div>
     </div>

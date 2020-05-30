@@ -45,12 +45,7 @@
                 />
               </div>
               <div class="form-group col-1 col-md-1">
-                <button
-                  v-if="commentInput"
-                  type="submit"
-                  name
-                  class="btn btn-success btn-sm redondo"
-                >
+                <button type="submit" name class="btn btn-success btn-sm redondo">
                   <i class="fa fa-check"></i>
                 </button>
               </div>

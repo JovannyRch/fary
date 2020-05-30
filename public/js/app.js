@@ -2270,11 +2270,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -48845,18 +48840,7 @@ var render = function() {
                         })
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "form-group col-1 col-md-1" }, [
-                        _vm.commentInput
-                          ? _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-success btn-sm redondo",
-                                attrs: { type: "submit", name: "" }
-                              },
-                              [_c("i", { staticClass: "fa fa-check" })]
-                            )
-                          : _vm._e()
-                      ])
+                      _vm._m(0)
                     ])
                   ])
                 ])
@@ -48868,7 +48852,23 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group col-1 col-md-1" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-success btn-sm redondo",
+          attrs: { type: "submit", name: "" }
+        },
+        [_c("i", { staticClass: "fa fa-check" })]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 

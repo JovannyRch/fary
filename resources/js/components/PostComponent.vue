@@ -171,7 +171,6 @@ export default {
     "post_user_id",
     "username",
     "address",
-    "showName",
     "imgs",
     "typePosts",
     "allComments"
@@ -187,7 +186,8 @@ export default {
       auxContent: null,
       auxImg: null,
       canComment: false,
-      dialog: false
+      dialog: false,
+      showName: true
     };
   },
   created() {

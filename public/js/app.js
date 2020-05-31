@@ -3236,7 +3236,7 @@ __webpack_require__.r(__webpack_exports__);
     CommentsComponent: _CommentsComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     ImgCarouselComponent: _utils_ImgCarouselComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
-  props: ["content", "date", "user", "img", "id", "post_user_id", "username", "address", "showName", "imgs", "typePosts", "allComments"],
+  props: ["content", "date", "user", "img", "id", "post_user_id", "username", "address", "imgs", "typePosts", "allComments"],
   data: function data() {
     return {
       user_id: document.querySelector('meta[name="user_id"]').getAttribute("content"),
@@ -3244,7 +3244,8 @@ __webpack_require__.r(__webpack_exports__);
       auxContent: null,
       auxImg: null,
       canComment: false,
-      dialog: false
+      dialog: false,
+      showName: true
     };
   },
   created: function created() {
@@ -3598,12 +3599,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_HeaderComponent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./utils/HeaderComponent */ "./resources/js/components/utils/HeaderComponent.vue");
 
 
+function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-//
-//
 //
 //
 //
@@ -3781,12 +3786,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this.locationPermission = false;
               }
-
-              if (_this.user_id && _this.type == "normal" && _this.typePosts == "posts") {
-                _this.myPosts();
+              /* if (this.user_id && this.type == "normal" && this.typePosts == "posts") {
+                this.myPosts();
               } else {
-                _this.allPosts();
-              }
+                this.allPosts();
+              } */
+
+
+              _this.allPosts();
 
             case 9:
             case "end":
@@ -3878,7 +3885,36 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   return response.json();
                 }).then(function (json) {
                   var data = json.data;
-                  _this2.posts = data.data;
+
+                  if (_this2.user_id) {
+                    var posts = [];
+                    var myPosts = [];
+
+                    var _iterator = _createForOfIteratorHelper(data.data),
+                        _step;
+
+                    try {
+                      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+                        var post = _step.value;
+
+                        if (post.user_id == _this2.user_id) {
+                          myPosts.push(post);
+                        } else {
+                          posts.push(post);
+                        }
+                      }
+                    } catch (err) {
+                      _iterator.e(err);
+                    } finally {
+                      _iterator.f();
+                    }
+
+                    _this2.posts = [].concat(myPosts, posts);
+                  } else {
+                    _this2.posts = data.data;
+                  }
+
+                  console.log("Posts", _this2.posts);
                   _this2.currentPage = data.current_page;
                   _this2.firtsPageUrl = data.first_page_url;
                   _this2.lastPage = data.last_page;
@@ -50400,7 +50436,6 @@ var render = function() {
                                   username: p.username,
                                   address: p.address,
                                   post_user_id: p.user_id,
-                                  showName: _vm.showName,
                                   allComments: false,
                                   typePosts: _vm.typePosts
                                 },

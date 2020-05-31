@@ -92,7 +92,6 @@
                 v-if=" (index -2) >= 0 &&(index-2)% 2==0 && (index-2)/2 < ads.length  "
                 class="d-block d-md-none text-center mb-3 w-100"
               />
-
               <PostComponent
                 :content="p.content"
                 :date="p.created_at"
@@ -103,7 +102,6 @@
                 :username="p.username"
                 :address="p.address"
                 :post_user_id="p.user_id"
-                :showName="showName"
                 :allComments="false"
                 :typePosts="typePosts"
                 @updateData="deletePost(index)"
@@ -169,11 +167,12 @@ export default {
       this.locationPermission = false;
     }
 
-    if (this.user_id && this.type == "normal" && this.typePosts == "posts") {
+    /* if (this.user_id && this.type == "normal" && this.typePosts == "posts") {
       this.myPosts();
     } else {
       this.allPosts();
-    }
+    } */
+    this.allPosts();
   },
   data() {
     return {
@@ -243,7 +242,23 @@ export default {
         .then(response => response.json())
         .then(json => {
           let data = json.data;
-          this.posts = data.data;
+
+          if (this.user_id) {
+            let posts = [];
+            let myPosts = [];
+            for (const post of data.data) {
+              if (post.user_id == this.user_id) {
+                myPosts.push(post);
+              } else {
+                posts.push(post);
+              }
+            }
+            this.posts = [...myPosts, ...posts];
+          } else {
+            this.posts = data.data;
+          }
+          console.log("Posts", this.posts);
+
           this.currentPage = data.current_page;
           this.firtsPageUrl = data.first_page_url;
           this.lastPage = data.last_page;

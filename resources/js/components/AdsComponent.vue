@@ -14,7 +14,9 @@ export default {
     return {};
   },
 
-  mounted() {},
+  mounted() {
+    //console.log(this.ads);
+  },
   methods: {
     isVideo(src) {
       return src.endsWith("mp4");

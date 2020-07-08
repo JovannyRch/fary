@@ -41,13 +41,11 @@ export default {
   },
   methods: {
     setLocation(lat, long) {
-      if (lat != null && long != null) {
-      } else {
+      if (lat && long) {
         this.latitud = lat;
         this.longitud = long;
         this.url = "/api/ads/" + lat + "/" + long;
       }
-
       this.getAds();
     },
     getAds() {
@@ -57,16 +55,7 @@ export default {
         .then(json => {
           this.ads = json.data;
 
-          if (this.ads.length >= 3) {
-            this.canUpdate = true;
-            for (let i = 0; i <= 3; i++) {
-              this.currentAds.push(this.ads.pop());
-            }
-          } else {
-            while (this.ads.length > 0) {
-              this.currentAds.push(this.ads.pop());
-            }
-          }
+          this.currentAds = [...this.ads];
           this.isLoading = false;
         });
     },

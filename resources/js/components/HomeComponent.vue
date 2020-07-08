@@ -37,11 +37,11 @@ export default {
     };
   },
   mounted() {
-    //this.getAds();
+    //this.setLocation();
   },
   methods: {
     setLocation(lat, long) {
-      console.log("Seteando location");
+      //console.log("Seteando location");
       if (lat && long) {
         this.latitud = lat;
         this.longitud = long;
@@ -52,21 +52,15 @@ export default {
     },
     getAds() {
       this.isLoading = true;
+      //console.log("Loading ads");
       fetch(this.url)
         .then(response => response.json())
         .then(json => {
           this.ads = json.data;
-          console.log(json);
-          if (this.ads.length >= 3) {
-            this.canUpdate = true;
-            for (let i = 0; i <= 3; i++) {
-              this.currentAds.push(this.ads.pop());
-            }
-          } else {
-            while (this.ads.length > 0) {
-              this.currentAds.push(this.ads.pop());
-            }
-          }
+          //console.log(json);
+          this.currentAds = [...this.ads];
+          //console.log("Cantidad de ads");
+          //console.log(this.currentAds.length);
           this.isLoading = false;
         });
     },

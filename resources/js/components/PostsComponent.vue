@@ -163,6 +163,7 @@ export default {
     if (result.state === "granted" || result.state == "prompt") {
       this.locationPermission = true;
     } else {
+      console.log("emmit load ads");
       this.$emit("setLocation", null, null);
       this.locationPermission = false;
     }
@@ -172,6 +173,7 @@ export default {
     } else {
       this.allPosts();
     } */
+
     this.allPosts();
   },
   data() {
@@ -223,8 +225,10 @@ export default {
           location => {
             let lat = location.coords.latitude;
             let long = location.coords.longitude;
+
             if (!this.isSetLocation) {
               this.isSetLocation = true;
+              //console.log("Obtener ads con ubicacion");
               this.$emit("setLocation", lat, long);
             }
             let url = `${this.defaultUrl}/${lat}/${long}`;
@@ -257,7 +261,7 @@ export default {
           } else {
             this.posts = data.data;
           }
-          console.log("Posts", this.posts);
+          //console.log("Posts", this.posts);
 
           this.currentPage = data.current_page;
           this.firtsPageUrl = data.first_page_url;

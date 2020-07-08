@@ -1934,7 +1934,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {};
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {//console.log(this.ads);
+  },
   methods: {
     isVideo: function isVideo(src) {
       return src.endsWith("mp4");
@@ -2416,6 +2417,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PostsComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PostsComponent.vue */ "./resources/js/components/PostsComponent.vue");
 /* harmony import */ var _AdsComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdsComponent.vue */ "./resources/js/components/AdsComponent.vue");
 /* harmony import */ var _NegociosComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NegociosComponent.vue */ "./resources/js/components/NegociosComponent.vue");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 //
 //
 //
@@ -2456,7 +2469,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     setLocation: function setLocation(lat, _long) {
-      if (lat != null && _long != null) {} else {
+      if (lat && _long) {
         this.latitud = lat;
         this.longitud = _long;
         this.url = "/api/ads/" + lat + "/" + _long;
@@ -2472,19 +2485,7 @@ __webpack_require__.r(__webpack_exports__);
         return response.json();
       }).then(function (json) {
         _this.ads = json.data;
-
-        if (_this.ads.length >= 3) {
-          _this.canUpdate = true;
-
-          for (var i = 0; i <= 3; i++) {
-            _this.currentAds.push(_this.ads.pop());
-          }
-        } else {
-          while (_this.ads.length > 0) {
-            _this.currentAds.push(_this.ads.pop());
-          }
-        }
-
+        _this.currentAds = _toConsumableArray(_this.ads);
         _this.isLoading = false;
       });
     },
@@ -2513,6 +2514,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PostsComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PostsComponent.vue */ "./resources/js/components/PostsComponent.vue");
 /* harmony import */ var _AdsComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdsComponent.vue */ "./resources/js/components/AdsComponent.vue");
 /* harmony import */ var _NegociosComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NegociosComponent.vue */ "./resources/js/components/NegociosComponent.vue");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 //
 //
 //
@@ -2549,12 +2562,11 @@ __webpack_require__.r(__webpack_exports__);
       url: "/api/ads"
     };
   },
-  mounted: function mounted() {//this.getAds();
+  mounted: function mounted() {//this.setLocation();
   },
   methods: {
     setLocation: function setLocation(lat, _long) {
-      console.log("Seteando location");
-
+      //console.log("Seteando location");
       if (lat && _long) {
         this.latitud = lat;
         this.longitud = _long;
@@ -2566,24 +2578,15 @@ __webpack_require__.r(__webpack_exports__);
     getAds: function getAds() {
       var _this = this;
 
-      this.isLoading = true;
+      this.isLoading = true; //console.log("Loading ads");
+
       fetch(this.url).then(function (response) {
         return response.json();
       }).then(function (json) {
-        _this.ads = json.data;
-        console.log(json);
+        _this.ads = json.data; //console.log(json);
 
-        if (_this.ads.length >= 3) {
-          _this.canUpdate = true;
-
-          for (var i = 0; i <= 3; i++) {
-            _this.currentAds.push(_this.ads.pop());
-          }
-        } else {
-          while (_this.ads.length > 0) {
-            _this.currentAds.push(_this.ads.pop());
-          }
-        }
+        _this.currentAds = _toConsumableArray(_this.ads); //console.log("Cantidad de ads");
+        //console.log(this.currentAds.length);
 
         _this.isLoading = false;
       });
@@ -3782,6 +3785,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               if (result.state === "granted" || result.state == "prompt") {
                 _this.locationPermission = true;
               } else {
+                console.log("emmit load ads");
+
                 _this.$emit("setLocation", null, null);
 
                 _this.locationPermission = false;
@@ -3862,7 +3867,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   var _long = location.coords.longitude;
 
                   if (!_this2.isSetLocation) {
-                    _this2.isSetLocation = true;
+                    _this2.isSetLocation = true; //console.log("Obtener ads con ubicacion");
 
                     _this2.$emit("setLocation", lat, _long);
                   }
@@ -3912,9 +3917,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     _this2.posts = [].concat(myPosts, posts);
                   } else {
                     _this2.posts = data.data;
-                  }
+                  } //console.log("Posts", this.posts);
 
-                  console.log("Posts", _this2.posts);
+
                   _this2.currentPage = data.current_page;
                   _this2.firtsPageUrl = data.first_page_url;
                   _this2.lastPage = data.last_page;

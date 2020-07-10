@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Hash;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Negocio;
 
 class RegisterController extends Controller
 {
@@ -65,14 +68,15 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
+    protected function create(array $data, $rol = 'normal')
     {
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'phone' => $data['phone'],
             'address' => $data['address'],
-            'password' => Hash::make($data['password']),
+            'rol' => $rol,
+            'password' => Hash::make($data['password'])
         ]);
     }
 
@@ -82,9 +86,50 @@ class RegisterController extends Controller
             case 'admin':
                 return '/dashboard';
             case 'owner':
-                return'/owner';
+                return'/';
             default:
                 return '/';
+        }
+    }
+
+    public function registerNegocio()
+    {
+
+        return view('auth.register2');
+    }
+
+    public function addNegocio()
+    {
+        $tipos = DB::table('tipos')->get();
+        $owners = DB::table('users')->select('id','name')->where('rol', 'owner')->get();
+        return view('auth.register3',['negocio' => new Negocio(), 'owners' => $owners, "tipos" => $tipos]);
+        
+    }
+
+    public function registerNegocioAccount(Request $request){
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'password' => $request->password,
+            'password_confirmation' => $request->password_confirmation
+        ];
+        
+        if ($data['password'] == $data['password_confirmation']) {
+         
+            if(strlen($data['password']) >= 3){
+                //Registra usuario
+                $user = $this->create($data, 'owner');
+                Auth::login($user);
+                return redirect('/');
+            }
+            else{
+                return back()->with('error','La contraseña debe tener al menos 3 carácteres');
+            }
+        }
+        else {
+            return back()->with('error','Las contraseñas no coinciden');
         }
     }
 }

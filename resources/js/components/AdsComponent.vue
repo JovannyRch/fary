@@ -15,7 +15,8 @@ export default {
   },
 
   mounted() {
-    //console.log(this.ads);
+    //
+    console.log(this.ads);
   },
   methods: {
     isVideo(src) {

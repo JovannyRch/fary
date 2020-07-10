@@ -41,6 +41,7 @@
                 <input
                   id="input-file"
                   accept="image/*"
+                  class="input-file"
                   @change="onFileChange"
                   type="file"
                   name="imgs[]"

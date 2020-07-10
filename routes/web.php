@@ -14,9 +14,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
+Route::get('/register/negocio/paso1', 'Auth\RegisterController@registerNegocio')->name('register.cuenta');
+Route::post('/register/negocio', 'Auth\RegisterController@registerNegocioAccount')->name('register.negocio.post');
+Route::get('/register/negocio/paso2', 'Auth\RegisterController@addNegocio')->middleware('noOwner')->name('register.negocio');
+
+
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/', 'WebController@index')->name('index');
+Route::get('/', 'WebController@index')->middleware('owner')->name('index');
 Route::get('/upload/image', 'WebController@uploadImage')->name('uploadImage');
 
 //POST
@@ -29,7 +34,7 @@ Route::get('/car/{id}', 'WebController@showPost')->name('showPost');
 
 
 //CARS
-Route::get('/cars', 'WebController@index')->name('cars');
+Route::get('/cars', 'WebController@index')->middleware('owner')->name('cars');
 Route::get('/cars/create', 'WebController@createCarPost')->name('newcar');
 Route::post('/cars/save', 'API\CarsController@store')->name('cars.save');
 
@@ -43,9 +48,11 @@ Route::resource('admin/post', 'Dashboard\PostController')->middleware("admin");
 Route::resource('admin/user', 'Dashboard\UserController')->middleware('admin');
 Route::resource('admin/car', 'Dashboard\CarController')->middleware('admin');
 Route::resource('admin/ads', 'Dashboard\AdsController')->middleware('admin');
-Route::resource('admin/negocios', 'Dashboard\NegociosController')->middleware('admin');
+Route::resource('admin/negocios', 'Dashboard\NegociosController');
 Route::resource('admin/tipos', 'Dashboard\TiposController')->middleware('admin');
-
+Route::resource('admin/tipos', 'Dashboard\TiposController')->middleware('admin');
+Route::get('admin/posts/latest', 'Dashboard\PostController@latest')->middleware('admin');
+Route::delete('admin/posts/latest/destroy', 'Dashboard\PostController@latestDestroy')->middleware('admin');
 
 //Informativos
 Route::get('/mision', 'WebController@index')->name('mision');

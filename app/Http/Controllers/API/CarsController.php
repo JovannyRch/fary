@@ -20,7 +20,7 @@ class CarsController extends Controller
             ->orderBy('created_at','desc')
             ->paginate(100);
             foreach ($cars as &$car) {
-                $car['imgs'] = DB::select('select url from imgs_cars where car_id = ?', [$car->id]);
+                $car['imgs'] = $this->getImgs($car);
             }
         }else{
             $location = $this->queryLocation($lat,$long);
@@ -31,7 +31,7 @@ class CarsController extends Controller
             ->orderBy('created_at','desc')
             ->paginate(100);
             foreach ($cars as &$car) {
-                $car['imgs'] = DB::select('select url from imgs_cars where car_id = ?', [$car->id]);
+                $car['imgs'] = $this->getImgs($car);
             }
         }
         return response()->json(['data' => $cars], 200);
@@ -72,7 +72,7 @@ class CarsController extends Controller
             ->where("cars.content","like","%$content%")
             ->paginate(100);
             foreach ($cars as &$car) {
-                $car['imgs'] = DB::select('select url from imgs_cars where car_id = ?', [$car->id]);
+                $car['imgs'] = $this->getImgs($car);
             }
         }else {
             $location = $this->queryLocation($lat,$long);
@@ -84,7 +84,7 @@ class CarsController extends Controller
             ->where("cars.content","like","%$content%")
             ->paginate(100);
             foreach ($cars as &$car) {
-                $car['imgs'] = DB::select('select url from imgs_cars where car_id = ?', [$car->id]);
+                $car['imgs'] = $this->getImgs($car);
             }
         }
         return response()->json(['data' => $cars], 200);
@@ -101,10 +101,14 @@ class CarsController extends Controller
         ->where("cars.user_id","=",$user_id)
         ->paginate(40);
         foreach ($cars as &$car) {
-            $car['imgs'] = DB::select('select url from imgs_cars where car_id = ?', [$car->id]);
+            $car['imgs'] = $this->getImgs($car);
         }
         
         return response()->json(['data' => $cars], 200);
+    }
+
+    public function getImgs($car){
+        return DB::select('select id,url from imgs_cars where car_id = ? order by id desc', [$car->id]);
     }
 
 

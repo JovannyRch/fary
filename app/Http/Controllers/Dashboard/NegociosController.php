@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use App\Http\Requests\StoreNegocioPut;
 use App\Http\Requests\StoreNegocioPost;
+use Illuminate\Support\Facades\Auth;
 
 class NegociosController extends Controller
 {
@@ -35,8 +36,7 @@ class NegociosController extends Controller
     }
 
     public function store(StoreNegocioPost $request){
-      
-        
+       
         $data = $request->validated();
         $negocio = Negocio::create($data);
       
@@ -53,7 +53,13 @@ class NegociosController extends Controller
 
 
         $negocio->save();
-        return redirect()->route('negocios.edit', [$negocio])->with('msg','Negocio guardado con éxito.');
+
+        if(Auth::user()->rol == 'admin'){
+            return redirect()->route('negocios.edit', [$negocio])->with('msg','Negocio guardado con éxito.');
+        }
+        else {
+            return redirect('/');
+        }
     }
 
     public function update(StoreNegocioPut $request, Negocio $negocio){

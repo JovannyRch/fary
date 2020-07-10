@@ -19,7 +19,17 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            return redirect(RouteServiceProvider::HOME);
+            if(Auth::user()->rol == 'owner'){
+                $negocio = Auth::user()->negocio;
+                $negocio;
+                if(!$negocio){
+                    $next($request);
+                }else {
+                    return redirect(RouteServiceProvider::HOME);
+                }
+            }else {
+                return redirect(RouteServiceProvider::HOME);
+            }
         }
 
         return $next($request);

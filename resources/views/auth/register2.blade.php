@@ -13,13 +13,19 @@
                         </div>
                         <div class="col-12 col-md-7">
                             <div class="text-center mb-3">
-                                <h3><b>Registro de usuario</b></h3>
+                                <h3><b>Registro de cuenta de negocio</b></h3>
                             </div>
-                            <div class="alert alert-primary text-center">
-                            ¿Tienes un negocio?<a href="{{route('register.cuenta')}}"> <b> Registra tu negocio aquí</b></a>
+                            <div class="alert alert-info text-center">
+                                <b>Paso 1</b> Crear cuenta de acceso
                             </div>
-                            <form method="POST" id="register-form" action="{{ route('register') }}">
+                            @if (session('error'))
+                            <div class="alert alert-danger col-12 p-2 text-center">
+                                {{session('error')}}
+                            </div>
+                            @endif
+                            <form method="POST" id="register-form" action="{{ route('register.negocio.post') }}">
                                 @csrf
+
                                 <div class="form-group">
                                     <label for="name"
                                         class="col-md-8 p-0 offset-md-2 col-form-label"><b>Nombre</b></label>
@@ -126,7 +132,7 @@
                                 <div class="form-group row mb-0  text-center">
                                     <div class="col-md-8 p-0 offset-md-2">
                                         <button type="submit" class="btn btn-success text-white">
-                                            Registrarme
+                                            Crear cuenta de acceso
                                         </button>
                                     </div>
                                 </div>
@@ -415,6 +421,7 @@
         </div>
     </div>
 </div>
+
 
 
 @endsection

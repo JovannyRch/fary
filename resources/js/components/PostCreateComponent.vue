@@ -30,7 +30,7 @@
               </div>
 
               <div class="col-12">
-                <input id="input-file" @change="onFileChange" type="file" name="file" multiple />
+                <input class="input-file" id="input-file" @change="onFileChange" type="file" name="file" multiple />
                 <button type="submit" class="btn btn-sm btn-success float-right">Publicar</button>
                 <button id="btn-file" type="button" class="float-right btn btn-success btn-sm mr-2">
                   <i class="fas fa-images"></i>

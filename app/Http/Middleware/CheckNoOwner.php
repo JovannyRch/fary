@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class CheckRole
+class CheckNoOwner
 {
     /**
      * Handle an incoming request.
@@ -16,16 +16,14 @@ class CheckRole
      */
     public function handle($request, Closure $next)
     {
-        
         if (!Auth::user()) {
             return redirect('/login');
         }
-        if(Auth::user()->rol == 'admin'){
+    
+        if(Auth::user()->rol == 'owner'){
+            
             return $next($request);
         }
-        else {
-            return redirect('/');
-        }
-
+        return redirect('/');
     }
 }

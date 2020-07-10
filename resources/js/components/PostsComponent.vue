@@ -4,14 +4,14 @@
 
     <div class="row">
       <HeaderComponent v-if="user_id" />
-      <div class="col-12 alert alert-success p-3" v-if="!user_id">
+      <div class="col-12 alert alert-success p-1" v-if="!user_id">
         <b>BIENVENIDOS A RED DE AUTOPARTES FARY</b>
         <br />
         <p>
           Estamos para servirle, puede buscar piezas o refacciones en negocios de su localidad, ya no necesitara ir negocio por negocio ni hacer llamadas solo para saber si tienen lo que busca.
           Para los negocios de Auto Partes Usadas veran lo que buscan los clientes de su zona ademas de ver los autos chocados, arrumbados o desvielados que hay a la venta en su comunidad.
         </p>
-        <p>Active su ubicacion para gozar de nuestros servicios.</p>
+        <p class="m-0 p-0">Active su ubicacion para gozar de nuestros servicios.</p>
       </div>
       <div class="col-12 mt-0 pt-0 mt-4 text-center mb-3" v-if="type == 'owner' && user_id">
         <div class="input-group">

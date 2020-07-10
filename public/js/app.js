@@ -1934,7 +1934,9 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {};
   },
-  mounted: function mounted() {//console.log(this.ads);
+  mounted: function mounted() {
+    //
+    console.log(this.ads);
   },
   methods: {
     isVideo: function isVideo(src) {
@@ -1976,6 +1978,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
+//
 //
 //
 //
@@ -4607,7 +4610,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         initialIndex: 3,
         prevNextButtons: false,
         pageDots: false,
-        wrapAround: true
+        wrapAround: false
       }
     };
   },
@@ -4616,9 +4619,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.imgUrlList = this.toArray();
   },
   mounted: function mounted() {
-    $(".carousel").carousel({
-      interval: 3000
-    });
+    $(".carousel").carousel();
+    $(".carousel").carousel("pause");
   },
   methods: (_methods = {
     next: function next() {
@@ -48685,6 +48687,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "col-12" }, [
                   _c("input", {
+                    staticClass: "input-file",
                     attrs: {
                       id: "input-file",
                       accept: "image/*",
@@ -50076,6 +50079,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "col-12" }, [
                   _c("input", {
+                    staticClass: "input-file",
                     attrs: {
                       id: "input-file",
                       type: "file",
@@ -50240,7 +50244,7 @@ var render = function() {
           _vm.user_id ? _c("HeaderComponent") : _vm._e(),
           _vm._v(" "),
           !_vm.user_id
-            ? _c("div", { staticClass: "col-12 alert alert-success p-3" }, [
+            ? _c("div", { staticClass: "col-12 alert alert-success p-1" }, [
                 _c("b", [_vm._v("BIENVENIDOS A RED DE AUTOPARTES FARY")]),
                 _vm._v(" "),
                 _c("br"),
@@ -50251,7 +50255,7 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
-                _c("p", [
+                _c("p", { staticClass: "m-0 p-0" }, [
                   _vm._v(
                     "Active su ubicacion para gozar de nuestros servicios."
                   )
@@ -51046,7 +51050,7 @@ var render = function() {
                           key: index,
                           class: index == 0 ? "active" : "",
                           attrs: {
-                            "data-target": "#carouselExampleIndicators",
+                            "data-target": "#carousel-" + _vm.id,
                             "data-slide-to": index
                           }
                         })
@@ -51095,7 +51099,7 @@ var render = function() {
                       {
                         staticClass: "carousel-control-prev",
                         attrs: {
-                          href: "#carouselExampleIndicators",
+                          href: "javascript:void(0)",
                           role: "button",
                           "data-slide": "prev"
                         },
@@ -51124,7 +51128,7 @@ var render = function() {
                       {
                         staticClass: "carousel-control-next",
                         attrs: {
-                          href: "#carouselExampleIndicators",
+                          href: "javascript:void(0)",
                           role: "button",
                           "data-slide": "next"
                         },

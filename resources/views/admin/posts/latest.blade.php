@@ -2,16 +2,21 @@
 
 <div class="card">
     <div class="card-header bg-dark text-white">
-      Autopartes
+      <b>Publicaciones antigüas de Autopartes</b>
     </div>
     <div class="card-body">
-        <a class="btn btn-info float-left" href="/admin/posts/latest">Ver publicaciones con más de 3 meses de antigüedad</a>
-        <div class="float-right">
-            Total de registros: <b>{{ $total }}</b>
+        <div class="float-left">
+            <form  id="deleteForm" action="/admin/posts/latest/destroy" method="post">
+                @method('DELETE')
+                @csrf
+                <button type="submit" class="btn btn-secondary text-white">Eliminar todas las publicaciones antigüas</button>
+            </form>
         </div>
-        <br>
-        <br>
+        <div class="float-right">
+            Total de registros: <b>{{ $posts->total() }}</b>
+        </div>
         <div class="table-responsive">
+            <br>
             <table class="table table-striped">
                 <thead class="thead-light">
                     <tr>
@@ -98,7 +103,7 @@
 
 <script>
  window.onload = function(event){
-     console.log("Hola");
+    
     $('#delete-data').on('show.bs.modal', function (event) {
         console.log("hola");
         var button = $(event.relatedTarget) 

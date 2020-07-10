@@ -29,6 +29,39 @@ class PostController extends Controller
         return view('admin.posts.index',['posts' => $posts, 'total' => $total]);
     }
 
+    public function getLatest(){
+        $last3months = new \DateTime();
+        $last3months->modify ('-89 days');
+        $posts = Post::
+        join('users', 'users.id', '=', 'posts.user_id')
+        ->select('posts.*', 'users.name as username')
+        ->orderBy('created_at','desc')
+        ->where('posts.created_at','<',$last3months->format('Y-m-d'))
+        
+        ->paginate(15);
+        return $posts;
+    }
+
+    public function latest(){
+        $posts = $this->getLatest();
+        
+        foreach ($posts as &$p) {
+            $comments = DB::table('comments')->where('post_id', $p['id'])->count();
+            $p['comments'] = $comments;
+        }
+        return view("admin.posts.latest",['posts' => $posts]);
+    }
+
+    public function latestDestroy(){
+        $posts = $this->getLatest();
+        foreach ($posts as &$post) {
+            if($post->img){
+                $this->deleteFile($post->img);
+            }
+            $post->delete();
+        }
+        return back()->with('msg', 'Publicaciones eliminadas con éxito');
+    }
   
     public function create()
     {

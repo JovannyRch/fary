@@ -8,7 +8,7 @@
       <div v-if="!img">
         <ol v-if="imgs.length > 1" class="carousel-indicators">
           <li
-            data-target="#carouselExampleIndicators"
+            :data-target="'#carousel-'+id"
             :data-slide-to="index"
             :class="index == 0?'active':''"
             v-for="(img,index) in imgs"
@@ -34,7 +34,7 @@
           v-if="imgs.length  > 1"
           @click="prev('carousel-'+id)"
           class="carousel-control-prev"
-          href="#carouselExampleIndicators"
+          href="javascript:void(0)"
           role="button"
           data-slide="prev"
         >
@@ -45,7 +45,7 @@
           @click="next('carousel-'+id)"
           v-if="imgs.length  > 1"
           class="carousel-control-next"
-          href="#carouselExampleIndicators"
+          href="javascript:void(0)"
           role="button"
           data-slide="next"
         >
@@ -84,7 +84,7 @@ export default {
         initialIndex: 3,
         prevNextButtons: false,
         pageDots: false,
-        wrapAround: true
+        wrapAround: false
       }
     };
   },
@@ -93,9 +93,8 @@ export default {
     this.imgUrlList = this.toArray();
   },
   mounted() {
-    $(".carousel").carousel({
-      interval: 3000
-    });
+    $(".carousel").carousel();
+    $(".carousel").carousel("pause");
   },
   methods: {
     next() {

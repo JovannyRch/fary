@@ -1,5 +1,5 @@
 <template>
-  <div class="post w-100">
+  <div class="post w-100 pb-3">
     <notifications group="foo" />
     <div class="post-data">
       <div class="row">

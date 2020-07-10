@@ -49598,7 +49598,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "post w-100" },
+    { staticClass: "post w-100 pb-3" },
     [
       _c("notifications", { attrs: { group: "foo" } }),
       _vm._v(" "),

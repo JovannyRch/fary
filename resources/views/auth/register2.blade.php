@@ -28,7 +28,7 @@
 
                                 <div class="form-group">
                                     <label for="name"
-                                        class="col-md-8 p-0 offset-md-2 col-form-label"><b>Nombre</b></label>
+                                        class="col-md-8 p-0 offset-md-2 col-form-label"><b>Nombre del usuario</b></label>
 
                                     <div class="col-md-8 p-0 offset-md-2">
                                         <input id="name" type="text" placeholder="Escribe tu nombre"
@@ -62,7 +62,7 @@
 
                                 <div class="form-group">
                                     <label for="address"
-                                        class="col-md-8 p-0 offset-md-2 col-form-label"><b>Dirección</b></label>
+                                        class="col-md-8 p-0 offset-md-2 col-form-label"><b>Dirección del usuario</b></label>
 
                                     <div class="col-md-8 p-0 offset-md-2">
                                         <input id="address" placeholder="Escribe tu direccíón" type="text"

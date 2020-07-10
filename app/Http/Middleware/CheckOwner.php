@@ -16,8 +16,8 @@ class CheckOwner
      */
     public function handle($request, Closure $next)
     {
-        if (!Auth::user()) {
-            return redirect('/login');
+        if(!Auth::check()){
+            return $next($request);
         }
         if(Auth::user()->rol == 'owner'){
             $negocio = Auth::user()->negocio;

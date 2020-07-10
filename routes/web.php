@@ -48,7 +48,7 @@ Route::resource('admin/post', 'Dashboard\PostController')->middleware("admin");
 Route::resource('admin/user', 'Dashboard\UserController')->middleware('admin');
 Route::resource('admin/car', 'Dashboard\CarController')->middleware('admin');
 Route::resource('admin/ads', 'Dashboard\AdsController')->middleware('admin');
-Route::resource('admin/negocios', 'Dashboard\NegociosController');
+Route::resource('admin/negocios', 'Dashboard\NegociosController')->middleware('admin');
 Route::resource('admin/tipos', 'Dashboard\TiposController')->middleware('admin');
 Route::resource('admin/tipos', 'Dashboard\TiposController')->middleware('admin');
 Route::get('admin/posts/latest', 'Dashboard\PostController@latest')->middleware('admin');

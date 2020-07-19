@@ -26,7 +26,10 @@
                     <img class="card-img-top w-75" src="/images/logo.jpg" alt />
                   </div>
                   <div class="col-md-9 col-12 p-4">
-                    <h5>Inovando para conectar clientes y negocios, de una manera rapida, eficaz y segura, en la compra de refacciones de uso.</h5>
+                    <h5>
+                      Su vehículo estará a su servicio y no usted al servicio de su vehículo,
+                      buscando refacciones para su mantenimiento u óptimo funcionamiento
+                    </h5>
                   </div>
                 </div>
               </div>

@@ -10,17 +10,21 @@ use Illuminate\Support\Facades\DB;
 class AdsController extends Controller
 {
     public function index($latitud = null, $longitud = null){
-    
+        
         if($latitud == null && $longitud == null){
             $data = Ad::select('url','tiempo')->get();
             $msg = "Ok";
         }else {
+            $distance = 100;
             $location = $this->queryLocation($latitud,$longitud);
-            $data = Ad::select('url','tiempo')
+            $sql = Ad::select('url','tiempo','distance')
             ->join('negocios', 'negocios.id', '=', 'ads.negocio_id')
             ->select('ads.url','ads.tiempo', DB::raw($location))
             ->orderBy('distance','asc')
-            ->get();
+            ->toSql();
+            
+            $data = DB::select("select url, tiempo from ($sql) as tabla1 where distance <= $distance ");
+       
             $msg = "Ok";
         }
         

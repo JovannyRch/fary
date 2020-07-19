@@ -13,28 +13,37 @@ class PostsController extends Controller
 {   
 
     public function index($lat = null,$long = null){
+        $otros = [];
         if($lat == null && $long == null){
             $posts = Post::
             join('users', 'users.id', '=', 'posts.user_id')
             ->select('posts.content','posts.created_at','posts.user_id','posts.img','posts.id', 'users.name as username','users.address')
-            ->orderBy('created_at','desc')
-            ->paginate(100);
+            ->orderBy('created_at','desc')->get();
             return response()->json(['data' => $posts], 200);
         }
         else{
-            $location = $this->queryLocation($lat,$long);
-            $posts = Post::
+                $location = $this->queryLocation($lat,$long,'posts');
+                $query = Post::
+                join('users', 'users.id', '=', 'posts.user_id')
+                ->select('posts.rango','posts.content','posts.created_at','posts.user_id','posts.img','posts.id',  'users.name as username','users.address', DB::raw($location))
+               ->toSql();
+            $posts = DB::select("select * from ($query) as tabla1 where distance <= rango or rango = 10000 order by created_at desc, distance asc");
+            //posts sin ubicacion
+            $otros = Post::
             join('users', 'users.id', '=', 'posts.user_id')
-            ->select('posts.content','posts.created_at','posts.user_id','posts.img','posts.id',  'users.name as username','users.address', DB::raw($location))
-            ->orderBy('distance','desc')
-            ->orderBy('created_at','desc')
-            ->paginate(100);
+            ->select('posts.content','posts.created_at','posts.user_id','posts.img','posts.id',  'users.name as username','users.address')
+            ->whereNull('latitud')
+            ->whereNull('longitud')
+            ->toSql();
+            $otros = DB::select($otros);
+           
+            
         }
-        return response()->json(['data' => $posts], 200);
+        return response()->json(['data' => $posts, 'otros' =>  $otros], 200);
         
     }  
 
-    public function queryLocation($lat, $long){
+    public function queryLocation($lat, $long,$table = ""){
         $lat = doubleval($lat);
         $long = doubleval($long);
         return " (
@@ -148,7 +157,7 @@ class PostsController extends Controller
         $post = new Post();
         $data = $request->all();
         $post->content = $request->content;
-        
+        $post->rango = $request->rango;
         $post->user_id = Auth::user()->id; 
         
         

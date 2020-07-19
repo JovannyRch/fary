@@ -3,15 +3,31 @@
     <notifications group="foo" />
     <div class="row">
       <div class="col-md-2 d-none d-md-block">
-        <AdsComponent :ads="currentAds" />
+        <AdsComponent :ads="currentAds" @clickAd="clickAd" />
       </div>
       <div class="col-md-8 col-12 offset-md-0 pt-0 pl-3 pr-3">
-        <PostsComponent @setLocation="setLocation" :ads="currentAds" :typePosts="'posts'" />
+        <PostsComponent
+          @clickAd="clickAd"
+          @setLocation="setLocation"
+          :ads="currentAds"
+          :typePosts="'posts'"
+        />
       </div>
       <div class="col-md-2 d-none d-md-block">
         <NegociosComponent />
       </div>
     </div>
+    <image-viewer-vue
+      v-if="imageViewerFlag"
+      @closeImageViewer="imageViewerFlag = false"
+      @clickImage="clickImage"
+      :imgUrlList="imgUrlList"
+      :index="currentIndex"
+      title="Publicidad"
+      :closable="true"
+      :cyclical="false"
+      :alt="'Fotos'"
+    ></image-viewer-vue>
   </div>
 </template>
 
@@ -20,11 +36,14 @@ import PostsComponent from "./PostsComponent.vue";
 import AdsComponent from "./AdsComponent.vue";
 import NegociosComponent from "./NegociosComponent.vue";
 
+import Flickity from "vue-flickity";
+
 export default {
   components: {
     PostsComponent,
     AdsComponent,
-    NegociosComponent
+    NegociosComponent,
+    Flickity
   },
   data() {
     return {
@@ -33,15 +52,21 @@ export default {
       isLoading: false,
       latitud: null,
       longitud: null,
-      url: "/api/ads"
+      url: "/api/ads",
+      imageViewerFlag: false,
+      currentIndex: 0,
+      imgUrlList: [],
+      flickityOptions: {
+        initialIndex: 3,
+        prevNextButtons: false,
+        pageDots: false,
+        wrapAround: false
+      }
     };
   },
-  mounted() {
-    //this.setLocation();
-  },
+  mounted() {},
   methods: {
     setLocation(lat, long) {
-      //console.log("Seteando location");
       if (lat && long) {
         this.latitud = lat;
         this.longitud = long;
@@ -50,18 +75,21 @@ export default {
 
       this.getAds();
     },
+    clickAd(ad) {
+      this.currentIndex = ad;
+      this.imageViewerFlag = true;
+    },
     getAds() {
       this.isLoading = true;
-      //console.log("Loading ads");
+
       fetch(this.url)
         .then(response => response.json())
         .then(json => {
           this.ads = json.data;
           //console.log(json);
           this.currentAds = [...this.ads];
-          //console.log("Cantidad de ads");
-          //console.log(this.currentAds.length);
           this.isLoading = false;
+          this.imgUrlList = this.currentAds.map(a => a.url);
         });
     },
 

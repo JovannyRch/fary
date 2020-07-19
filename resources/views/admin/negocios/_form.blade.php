@@ -115,20 +115,24 @@
     </div>
 @endif
 
-
-<div class="form-group">
-    <label for=""><b>Tipo de negocio</b></label>
-    <br>
-    @foreach ($tipos as $tipo)
-    <div class="form-check form-check-inline">
-        <input @if (in_array($tipo->id, $negocio->tipos_id() ))
-        checked
-        @endif class="form-check-input" name="tipos[]" type="checkbox" id="inlineCheckbox1" value="{{ $tipo->id }}">
-        <label class="form-check-label" for="inlineCheckbox1">{{ $tipo->name }}</label>
+@if (Auth::user()->rol == "admin")
+    <div class="form-group">
+        <label for=""><b>Tipo de negocio</b></label>
+        <br>
+        @foreach ($tipos as $tipo)
+        <div class="form-check form-check-inline">
+            <input @if (in_array($tipo->id, $negocio->tipos_id() ))
+            checked
+            @endif class="form-check-input" name="tipos[]" type="checkbox" id="inlineCheckbox1" value="{{ $tipo->id }}">
+            <label class="form-check-label" for="inlineCheckbox1">{{ $tipo->name }}</label>
+        </div>
+        @endforeach
     </div>
-    @endforeach
-</div>
-
+@else
+    <div >
+        <input type="hidden" name="tipos[]" value="2">
+    </div>
+@endif
 
 <br>
 

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="(ad,index) in ads" :key="index" class="text-center mt-4">
-      <img class="img-thumbnail" :src="ad.url" v-if="!isVideo(ad.url)" />
+      <img class="img-thumbnail" @click="clickAd(index)" :src="ad.url" v-if="!isVideo(ad.url)" />
       <video v-else autoplay :src="ad.url" width="100%" type="video/mp4"></video>
     </div>
   </div>
@@ -10,17 +10,18 @@
 <script>
 export default {
   props: ["ads"],
+  components: {},
   data() {
     return {};
   },
 
-  mounted() {
-    //
-    console.log(this.ads);
-  },
+  mounted() {},
   methods: {
     isVideo(src) {
       return src.endsWith("mp4");
+    },
+    clickAd(index) {
+      this.$emit("clickAd", index);
     }
   }
 };

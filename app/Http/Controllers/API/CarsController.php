@@ -13,28 +13,53 @@ class CarsController extends Controller
 {
    
     public function index($lat = null, $long = null){
+        $otros = [];
         if($lat == null && $long == null){
             $cars = Car::
             join('users', 'users.id', '=', 'cars.user_id')
             ->select('cars.content','cars.user_id','cars.created_at','cars.id', 'users.name as username','users.address')
-            ->orderBy('created_at','desc')
-            ->paginate(100);
+            ->orderBy('created_at','desc')->get();
+          
             foreach ($cars as &$car) {
                 $car['imgs'] = $this->getImgs($car);
             }
         }else{
             $location = $this->queryLocation($lat,$long);
-            $cars = Car::
+            
+            $query = Car::
             join('users', 'users.id', '=', 'cars.user_id')
-            ->select('cars.content','cars.user_id','cars.created_at','cars.id', 'users.name as username','users.address',DB::raw($location))
-            ->orderBy('distance','desc')
-            ->orderBy('created_at','desc')
-            ->paginate(100);
+            ->select('cars.rango','cars.content','cars.user_id','cars.created_at','cars.id', 'users.name as username','users.address',DB::raw($location))
+            ->toSql();
+            
+            $cars = DB::select("select * from ($query) as tabla1 where distance <= rango or rango = 10000 order by created_at desc, distance asc");
+            //posts sin ubicacion
+            $otros = Car::
+            join('users', 'users.id', '=', 'cars.user_id')
+            ->select('cars.rango','cars.content','cars.user_id','cars.created_at','cars.id', 'users.name as username','users.address',DB::raw($location))
+            ->whereNull('latitud')
+            ->whereNull('longitud')
+            ->toSql();
+            $otros = DB::select($otros);
+            $cars = $this->converJson($cars);
+            $otros = $this->converJson($otros);
+
+            
+           
             foreach ($cars as &$car) {
-                $car['imgs'] = $this->getImgs($car);
+                $car['imgs'] = $this->getImgsById($car['id']);
+            }
+
+            foreach ($otros as &$car) {
+                $car['imgs'] = $this->getImgsById($car['id']);
             }
         }
-        return response()->json(['data' => $cars], 200);
+        return response()->json(['data' => $cars,'otros' => $otros], 200);
+    }
+
+    public function converJson($data){
+        $data = json_encode($data);
+        $data = json_decode($data, true);
+        return $data;
     }
 
     public function show($id){
@@ -111,15 +136,19 @@ class CarsController extends Controller
         return DB::select('select id,url from imgs_cars where car_id = ? order by id desc', [$car->id]);
     }
 
+    public function getImgsById($id){
+        return DB::select('select id,url from imgs_cars where car_id = ? order by id desc', [$id]);
+    }
+
 
     public function store(Request $request){
         
         $car = new Car();
-    
+        
         if($request->content && $request->imgs ){
             $car->user_id = $request->user_id;
             $car->content = $request->content;
-
+            $car->rango = $request->rango;
             if($request->latitud && $request->longitud){
                 //Guardar ubicacion
                 $car->latitud = $request->latitud;

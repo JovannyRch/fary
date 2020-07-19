@@ -2,7 +2,9 @@
 <div class="topnav" id="myTopnav">
   <a href="/" class="active-nav"><b>Fary Red de Autopartes</b></a>
   <a href="/" > <i class="fa fa-wrench "></i> Autopartes</a>
-    <a href="/cars" > <i class="fas fa-car"></i> Autos chocados</a>
+  <a href="/cars" > <i class="fas fa-car"></i> Autos chocados</a>
+  <a href="/zona-publicitaria" > <i class="fas fa-store-alt"></i> Espacio publicitario</a>
+  <a href="/mas" > <i class="fas fa-plus"></i> Más</a>
   @guest
     <a class="float-right" href="{{ route('login') }}">
       Iniciar sesión

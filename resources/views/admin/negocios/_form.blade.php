@@ -5,7 +5,7 @@
 
 <div class="w-100 text-center">
     <i>Imagen actual del negocio</i> <br>
-    <img src="{{ $negocio->img }}" alt="">
+    <img class="img-thumbnail" src="{{ $negocio->img }}" alt="">
 </div>
 <br><br>
 @endif

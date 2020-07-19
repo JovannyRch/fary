@@ -15,7 +15,7 @@ class AdsController extends Controller
             $data = Ad::select('url','tiempo')->get();
             $msg = "Ok";
         }else {
-            $distance = 100;
+            $distance = 100000;
             $location = $this->queryLocation($latitud,$longitud);
             $sql = Ad::select('url','tiempo','distance')
             ->join('negocios', 'negocios.id', '=', 'ads.negocio_id')
@@ -23,8 +23,7 @@ class AdsController extends Controller
             ->orderBy('distance','asc')
             ->toSql();
             
-            $data = DB::select("select url, tiempo from ($sql) as tabla1 where distance <= $distance ");
-       
+            $data = DB::select("select url, tiempo,distance from ($sql) as tabla1 where distance <= $distance order by distance asc ");
             $msg = "Ok";
         }
         

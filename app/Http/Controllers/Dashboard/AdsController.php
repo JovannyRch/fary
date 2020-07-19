@@ -38,9 +38,9 @@ class AdsController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'negocio_id' => 'nullable',
+            'negocio_id' => 'required',
             'file' => 'required|mimes:jpeg,jpg,bmp,png,mp4',
-            'tiempo' => 'required'
+            'tiempo' => 'required',
         ]);
 
         $filename = time().".".$request->file->extension();
@@ -89,7 +89,7 @@ class AdsController extends Controller
     public function update(Request $request, Ad $ad)
     {
         $data = $request->validate([
-            'negocio_id' => 'nullable',
+            'negocio_id' => 'required',
             'file' => 'nullable|mimes:jpeg,jpg,bmp,png,mp4',
             'tiempo' => 'required'
         ]);

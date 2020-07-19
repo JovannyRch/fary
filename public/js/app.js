@@ -3860,14 +3860,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this.locationPermission = false;
               }
-              /* if (this.user_id && this.type == "normal" && this.typePosts == "posts") {
-                this.myPosts();
-              } else {
-                this.allPosts();
-              } */
 
-
-              _this.allPosts();
+              _this.loadData();
 
             case 9:
             case "end":
@@ -3905,6 +3899,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   methods: {
+    allOk: function allOk() {
+      /* if (this.user_id && this.type == "normal" && this.typePosts == "posts") {
+      this.myPosts();
+      } else {
+      this.allPosts();
+      } */
+      this.allPosts();
+    },
     clickAd: function clickAd(ad) {
       this.$emit("clickAd", ad);
     },
@@ -3929,7 +3931,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.isLoading = true;
 
                 if (!(this.locationPermission && url == this.defaultUrl)) {
-                  _context2.next = 7;
+                  _context2.next = 9;
                   break;
                 }
 
@@ -3946,66 +3948,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                   var url = "".concat(_this2.defaultUrl, "/").concat(lat, "/").concat(_long);
 
-                  _this2.loadData(url);
+                  _this2.fetchData(url);
 
                   return;
                 }, function (error) {
                   _this2.locationPermission = false;
 
-                  _this2.loadData();
+                  _this2.$emit("setLocation", null, null);
+
+                  _this2.fetchData(url);
 
                   return;
                 });
 
               case 7:
-                fetch(url).then(function (response) {
-                  return response.json();
-                }).then(function (json) {
-                  var data = json.data;
-                  var otros = json.otros || [];
+                _context2.next = 10;
+                break;
 
-                  if (_this2.user_id) {
-                    var posts = [];
-                    var myPosts = [];
+              case 9:
+                this.fetchData(url);
 
-                    var _iterator = _createForOfIteratorHelper(data),
-                        _step;
-
-                    try {
-                      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-                        var post = _step.value;
-
-                        if (post.user_id == _this2.user_id) {
-                          myPosts.unshift(post);
-                        } else {
-                          posts.push(post);
-                        }
-                      }
-                    } catch (err) {
-                      _iterator.e(err);
-                    } finally {
-                      _iterator.f();
-                    }
-
-                    _this2.posts = [].concat(myPosts, posts, _toConsumableArray(otros));
-                  } else {
-                    _this2.posts = [].concat(_toConsumableArray(data), _toConsumableArray(otros));
-                  } //console.log("Posts", this.posts);
-
-
-                  _this2.isLoading = false;
-
-                  if (isBusqueda) {
-                    Vue.notify({
-                      group: "foo",
-                      title: "Éxito",
-                      text: "Busqueda completada",
-                      type: "success"
-                    });
-                  }
-                });
-
-              case 8:
+              case 10:
               case "end":
                 return _context2.stop();
             }
@@ -4019,6 +3982,56 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return loadData;
     }(),
+    fetchData: function fetchData(url) {
+      var _this3 = this;
+
+      fetch(url).then(function (response) {
+        return response.json();
+      }).then(function (json) {
+        var data = json.data;
+        var otros = json.otros || [];
+
+        if (_this3.user_id) {
+          var posts = [];
+          var myPosts = [];
+
+          var _iterator = _createForOfIteratorHelper(data),
+              _step;
+
+          try {
+            for (_iterator.s(); !(_step = _iterator.n()).done;) {
+              var post = _step.value;
+
+              if (post.user_id == _this3.user_id) {
+                myPosts.unshift(post);
+              } else {
+                posts.push(post);
+              }
+            }
+          } catch (err) {
+            _iterator.e(err);
+          } finally {
+            _iterator.f();
+          }
+
+          _this3.posts = [].concat(myPosts, posts, _toConsumableArray(otros));
+        } else {
+          _this3.posts = [].concat(_toConsumableArray(data), _toConsumableArray(otros));
+        } //console.log("Posts", this.posts);
+
+
+        _this3.isLoading = false;
+
+        if (isBusqueda) {
+          Vue.notify({
+            group: "foo",
+            title: "Éxito",
+            text: "Busqueda completada",
+            type: "success"
+          });
+        }
+      });
+    },
     allPosts: function allPosts() {
       this.busqueda = "";
       this.loadData();
@@ -4035,7 +4048,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.posts.splice(index, 1);
     },
     buscar: function buscar() {
-      var _this3 = this;
+      var _this4 = this;
 
       if (!this.busqueda) {
         Vue.notify({
@@ -4054,16 +4067,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         navigator.geolocation.getCurrentPosition(function (location) {
           var lat = location.coords.latitude;
           var _long2 = location.coords.longitude;
-          var url = "".concat(_this3.defaultUrl, "/search/").concat(_this3.busqueda, "/").concat(lat, "/").concat(_long2);
+          var url = "".concat(_this4.defaultUrl, "/search/").concat(_this4.busqueda, "/").concat(lat, "/").concat(_long2);
 
-          _this3.loadData(url, true);
+          _this4.loadData(url, true);
 
           return;
         }, function (error) {
-          _this3.locationPermission = false;
-          var url = "".concat(_this3.defaultUrl, "/search/").concat(_this3.busqueda);
+          _this4.locationPermission = false;
+          var url = "".concat(_this4.defaultUrl, "/search/").concat(_this4.busqueda);
 
-          _this3.loadData(url, true);
+          _this4.loadData(url, true);
 
           return;
         });
@@ -49751,7 +49764,12 @@ var render = function() {
         _c(
           "div",
           { staticClass: "col-md-2 d-none d-md-block" },
-          [_c("NegociosComponent")],
+          [
+            _c("AdsComponent", {
+              attrs: { ads: _vm.currentAds },
+              on: { clickAd: _vm.clickAd }
+            })
+          ],
           1
         )
       ]),
@@ -50713,7 +50731,7 @@ var staticRenderFns = [
       _c(
         "button",
         {
-          staticClass: "btn btn-secondary",
+          staticClass: "btn btn-success",
           attrs: { type: "button", "data-dismiss": "modal" }
         },
         [_vm._v("Ok")]
@@ -51219,8 +51237,7 @@ var render = function() {
                               (index - 2) % 2 == 0 &&
                               (index - 2) / 2 < _vm.ads.length
                                 ? _c("img", {
-                                    staticClass:
-                                      "d-block d-md-none text-center mb-3 w-100",
+                                    staticClass: "text-center mb-3 w-100",
                                     attrs: {
                                       src: _vm.ads[(index - 2) / 2].url
                                     },

@@ -90,8 +90,8 @@
               <img
                 @click="clickAd((index-2)/2)"
                 :src="ads[(index-2)/2].url"
-                v-if=" (index -2) >= 0 &&(index-2)% 2==0 && (index-2)/2 < ads.length  "
-                class="d-block d-md-none text-center mb-3 w-100"
+                v-if="(index -2) >= 0 &&(index-2)% 2==0 && (index-2)/2 < ads.length"
+                class="text-center mb-3 w-100"
               />
               <PostComponent
                 :content="p.content"
@@ -168,14 +168,7 @@ export default {
       this.$emit("setLocation", null, null);
       this.locationPermission = false;
     }
-
-    /* if (this.user_id && this.type == "normal" && this.typePosts == "posts") {
-      this.myPosts();
-    } else {
-      this.allPosts();
-    } */
-
-    this.allPosts();
+    this.loadData();
   },
   data() {
     return {
@@ -216,6 +209,14 @@ export default {
     };
   },
   methods: {
+    allOk() {
+      /* if (this.user_id && this.type == "normal" && this.typePosts == "posts") {
+      this.myPosts();
+    } else {
+      this.allPosts();
+    } */
+      this.allPosts();
+    },
     clickAd(ad) {
       this.$emit("clickAd", ad);
     },
@@ -236,16 +237,21 @@ export default {
               this.$emit("setLocation", lat, long);
             }
             let url = `${this.defaultUrl}/${lat}/${long}`;
-            this.loadData(url);
+            this.fetchData(url);
             return;
           },
           error => {
             this.locationPermission = false;
-            this.loadData();
+            this.$emit("setLocation", null, null);
+            this.fetchData(url);
             return;
           }
         );
+      } else {
+        this.fetchData(url);
       }
+    },
+    fetchData(url) {
       fetch(url)
         .then(response => response.json())
         .then(json => {
@@ -279,7 +285,6 @@ export default {
           }
         });
     },
-
     allPosts() {
       this.busqueda = "";
       this.loadData();

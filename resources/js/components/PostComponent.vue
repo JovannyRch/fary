@@ -143,7 +143,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+            <button type="button" class="btn btn-success" data-dismiss="modal">Ok</button>
           </div>
         </div>
       </div>

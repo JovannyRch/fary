@@ -12,7 +12,7 @@
             <form action="{{ route('user.update',$user->id) }}" method="post">
                 @method('PUT')
                 @include('admin.users._form', ['pass' => false])
-                <button type="submit" class="btn btn-secondary text-white">Guardar cambios</button>
+                <button type="submit" class="btn btn-success text-white">Guardar cambios</button>
             </form>
           
         </div>

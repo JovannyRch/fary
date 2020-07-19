@@ -14,7 +14,7 @@
         />
       </div>
       <div class="col-md-2 d-none d-md-block">
-        <NegociosComponent />
+        <AdsComponent :ads="currentAds" @clickAd="clickAd" />
       </div>
     </div>
     <image-viewer-vue

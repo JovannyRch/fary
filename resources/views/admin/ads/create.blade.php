@@ -9,7 +9,7 @@
         <div class="card-body">
             <form action="{{ route('ads.store') }}" method="post"  enctype="multipart/form-data" >
                 @include('admin.ads._form', ['pass' => true])
-                <button type="submit" class="btn btn-secondary text-white">Agregar</button>
+                <button type="submit" class="btn btn-success text-white">Agregar</button>
             </form>
           
         

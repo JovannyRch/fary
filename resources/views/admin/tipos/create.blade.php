@@ -8,7 +8,7 @@
         <div class="card-body">
             <form action="{{ route('tipos.store') }}" method="post" autocomplete="off">
                 @include('admin.tipos._form')
-                <button type="submit" class="btn btn-secondary text-white">Registrar tipo</button>
+                <button type="submit" class="btn btn-success text-white">Registrar tipo</button>
             </form>
           
         </div>

@@ -26,6 +26,16 @@
                   placeholder="Escribe aquí la información sobre el auto "
                 />
               </div>
+              <div class="col-md-6 col-md-offset-6 col-12" v-show="content">
+                <div class="form-group">
+                  <label for="rango">Seleccione rango de publicación</label>
+                  <select class="custom-select" name="rango" id="rango" required>
+                    <option value="30" selected>30 km</option>
+                    <option value="70">70 km</option>
+                    <option value="1000000">Libre</option>
+                  </select>
+                </div>
+              </div>
               <div class="col-12">
                 <img
                   style="width: 80px"

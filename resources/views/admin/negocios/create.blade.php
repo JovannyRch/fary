@@ -10,7 +10,7 @@
         @if (sizeof($tipos) > 0)
             <form action="{{ route('negocios.store') }}" method="post" enctype="multipart/form-data" autocomplete="off">
                 @include('admin.negocios._form')
-                <button type="submit" class="btn btn-secondary text-white">Registrar negocio</button>
+                <button type="submit" class="btn btn-success text-white">Registrar negocio</button>
             </form>
         @else
             <div class="alert alert-warning">

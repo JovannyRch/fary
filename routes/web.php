@@ -56,6 +56,7 @@ Route::delete('admin/posts/latest/destroy', 'Dashboard\PostController@latestDest
 
 //Informativos
 Route::get('/mision', 'WebController@index')->name('mision');
+Route::get('/mas', 'WebController@index')->name('mas');
 Route::get('/vision', 'WebController@index')->name('vision');
 Route::get('/aviso-privacidad', 'WebController@index')->name('aviso-privacidad');
 Route::get('/ayuda', 'WebController@index')->name('ayuda');

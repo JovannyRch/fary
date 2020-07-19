@@ -15,6 +15,7 @@
               <div :class="images.length? 'col-3 text-center':''">
                 <img style="max-height: 100px" class="img-fluid" :src="images[0]" />
               </div>
+
               <div :class="images.length? 'col-9 form-group':'col-12 col-md-12 form-group'">
                 <input
                   v-model="content"
@@ -28,9 +29,25 @@
                   placeholder="Escribe aquí la pieza o refacción"
                 />
               </div>
-
+              <div class="col-md-6 col-md-offset-6 col-12" v-show="content">
+                <div class="form-group">
+                  <label for="rango">Seleccione rango de publicación</label>
+                  <select class="custom-select" name="rango" id="rango" required>
+                    <option value="30" selected>30 km</option>
+                    <option value="70">70 km</option>
+                    <option value="1000000">Libre</option>
+                  </select>
+                </div>
+              </div>
               <div class="col-12">
-                <input class="input-file" id="input-file" @change="onFileChange" type="file" name="file" multiple />
+                <input
+                  class="input-file"
+                  id="input-file"
+                  @change="onFileChange"
+                  type="file"
+                  name="file"
+                  multiple
+                />
                 <button type="submit" class="btn btn-sm btn-success float-right">Publicar</button>
                 <button id="btn-file" type="button" class="float-right btn btn-success btn-sm mr-2">
                   <i class="fas fa-images"></i>

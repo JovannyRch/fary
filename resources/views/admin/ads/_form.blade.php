@@ -54,10 +54,11 @@
     </div>
 
     <div class="form-group">
-      <label for=""><b>Seleccione el negocio</b> <small>*Opcional</small></label>
+      <label for=""><b>Seleccione el negocio</b></label>
       <select class="form-control" name="negocio_id" id="">
         <option @if (!$ad->negocio)
           selected
+          required
         @endif disabled>Seleccione un negocio</option>
         @foreach ($negocios as $negocio)
             <option @if ($ad->negocio && $ad->negocio->id == $negocio->id)

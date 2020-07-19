@@ -88,9 +88,10 @@
           <div v-if="posts.length != 0">
             <div style="background-color: transparent; " v-for="(p,index) in posts" :key="p.id">
               <img
+                @click="clickAd((index-2)/2)"
                 :src="ads[(index-2)/2].url"
-                v-if=" (index -2) >= 0 &&(index-2)% 2==0 && (index-2)/2 < ads.length  "
-                class="d-block d-md-none text-center mb-3 w-100"
+                v-if="(index -2) >= 0 &&(index-2)% 2==0 && (index-2)/2 < ads.length"
+                class="text-center mb-3 w-100"
               />
               <PostComponent
                 :content="p.content"
@@ -163,18 +164,11 @@ export default {
     if (result.state === "granted" || result.state == "prompt") {
       this.locationPermission = true;
     } else {
-      console.log("emmit load ads");
+      /* console.log("emmit load ads"); */
       this.$emit("setLocation", null, null);
       this.locationPermission = false;
     }
-
-    /* if (this.user_id && this.type == "normal" && this.typePosts == "posts") {
-      this.myPosts();
-    } else {
-      this.allPosts();
-    } */
-
-    this.allPosts();
+    this.loadData();
   },
   data() {
     return {
@@ -215,6 +209,17 @@ export default {
     };
   },
   methods: {
+    allOk() {
+      /* if (this.user_id && this.type == "normal" && this.typePosts == "posts") {
+      this.myPosts();
+    } else {
+      this.allPosts();
+    } */
+      this.allPosts();
+    },
+    clickAd(ad) {
+      this.$emit("clickAd", ad);
+    },
     loadData: async function(url = null, isBusqueda = false) {
       if (url == null) {
         url = this.defaultUrl;
@@ -232,45 +237,43 @@ export default {
               this.$emit("setLocation", lat, long);
             }
             let url = `${this.defaultUrl}/${lat}/${long}`;
-            this.loadData(url);
+            this.fetchData(url);
             return;
           },
           error => {
             this.locationPermission = false;
-            this.loadData();
+            this.$emit("setLocation", null, null);
+            this.fetchData(url);
             return;
           }
         );
+      } else {
+        this.fetchData(url);
       }
+    },
+    fetchData(url) {
       fetch(url)
         .then(response => response.json())
         .then(json => {
           let data = json.data;
+          let otros = json.otros || [];
 
           if (this.user_id) {
             let posts = [];
             let myPosts = [];
-            for (const post of data.data) {
+            for (const post of data) {
               if (post.user_id == this.user_id) {
-                myPosts.push(post);
+                myPosts.unshift(post);
               } else {
                 posts.push(post);
               }
             }
-            this.posts = [...myPosts, ...posts];
+            this.posts = [...myPosts, ...posts, ...otros];
           } else {
-            this.posts = data.data;
+            this.posts = [...data, ...otros];
           }
           //console.log("Posts", this.posts);
-
-          this.currentPage = data.current_page;
-          this.firtsPageUrl = data.first_page_url;
-          this.lastPage = data.last_page;
-          this.nextPageUrl = data.next_page_url;
-          this.prevPageUrl = data.prev_page_url;
           this.isLoading = false;
-          this.total = Math.ceil(data.total / data.per_page);
-          this.path = data.path;
 
           if (isBusqueda) {
             Vue.notify({
@@ -282,7 +285,6 @@ export default {
           }
         });
     },
-
     allPosts() {
       this.busqueda = "";
       this.loadData();

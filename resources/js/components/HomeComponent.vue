@@ -3,7 +3,7 @@
     <notifications group="foo" />
     <div class="row">
       <div class="col-md-2 d-none d-md-block">
-        <AdsComponent :ads="currentAds" @clickAd="clickAd" />
+        <AdsComponent :ads="currentAds1" @clickAd="clickAd" />
       </div>
       <div class="col-md-8 col-12 offset-md-0 pt-0 pl-3 pr-3">
         <PostsComponent
@@ -14,7 +14,7 @@
         />
       </div>
       <div class="col-md-2 d-none d-md-block">
-        <AdsComponent :ads="currentAds" @clickAd="clickAd" />
+        <AdsComponent :ads="currentAds2" @clickAd="clickAd2" />
       </div>
     </div>
     <image-viewer-vue
@@ -49,6 +49,8 @@ export default {
     return {
       ads: [],
       currentAds: [],
+      currentAds1: [],
+      currentAds2: [],
       isLoading: false,
       latitud: null,
       longitud: null,
@@ -79,6 +81,20 @@ export default {
       this.currentIndex = ad;
       this.imageViewerFlag = true;
     },
+    clickAd2(ad) {
+      this.currentIndex = this.currentAds.length / 2 + ad;
+      this.imageViewerFlag = true;
+    },
+    divideAds() {
+      let n = this.currentAds.length;
+      for (let i = 0; i < n; i++) {
+        if (i < n / 2) {
+          this.currentAds1.push(this.currentAds[i]);
+        } else {
+          this.currentAds2.push(this.currentAds[i]);
+        }
+      }
+    },
     getAds() {
       this.isLoading = true;
 
@@ -88,6 +104,7 @@ export default {
           this.ads = json.data;
           //console.log(json);
           this.currentAds = [...this.ads];
+          this.divideAds();
           this.isLoading = false;
           this.imgUrlList = this.currentAds.map(a => a.url);
         });

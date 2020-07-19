@@ -2589,6 +2589,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     return {
       ads: [],
       currentAds: [],
+      currentAds1: [],
+      currentAds2: [],
       isLoading: false,
       latitud: null,
       longitud: null,
@@ -2619,6 +2621,21 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       this.currentIndex = ad;
       this.imageViewerFlag = true;
     },
+    clickAd2: function clickAd2(ad) {
+      this.currentIndex = this.currentAds.length / 2 + ad;
+      this.imageViewerFlag = true;
+    },
+    divideAds: function divideAds() {
+      var n = this.currentAds.length;
+
+      for (var i = 0; i < n; i++) {
+        if (i < n / 2) {
+          this.currentAds1.push(this.currentAds[i]);
+        } else {
+          this.currentAds2.push(this.currentAds[i]);
+        }
+      }
+    },
     getAds: function getAds() {
       var _this = this;
 
@@ -2629,6 +2646,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         _this.ads = json.data; //console.log(json);
 
         _this.currentAds = _toConsumableArray(_this.ads);
+
+        _this.divideAds();
+
         _this.isLoading = false;
         _this.imgUrlList = _this.currentAds.map(function (a) {
           return a.url;
@@ -49742,7 +49762,7 @@ var render = function() {
           { staticClass: "col-md-2 d-none d-md-block" },
           [
             _c("AdsComponent", {
-              attrs: { ads: _vm.currentAds },
+              attrs: { ads: _vm.currentAds1 },
               on: { clickAd: _vm.clickAd }
             })
           ],
@@ -49766,8 +49786,8 @@ var render = function() {
           { staticClass: "col-md-2 d-none d-md-block" },
           [
             _c("AdsComponent", {
-              attrs: { ads: _vm.currentAds },
-              on: { clickAd: _vm.clickAd }
+              attrs: { ads: _vm.currentAds2 },
+              on: { clickAd: _vm.clickAd2 }
             })
           ],
           1

@@ -18,9 +18,7 @@
                   <span style="color:grey">
                     <small>Publicado por:</small>
                   </span>
-                  <router-link :to="'/users/'+user_id">
-                    <small>{{username}}</small>
-                  </router-link>
+                  <small>{{username}}</small>
                 </span>
                 <!-- <div>
                   <i>
@@ -54,13 +52,16 @@
                 {{content}}
               </span>
               <div class="col-12">
-                <span class="post-user" v-if="showName">
+                <span class="post-user" v-if="post_user_id != user_id">
                   <span style="color:grey">
                     <small>Publicado por:</small>
                   </span>
-                  <router-link :to="'/users/'+user_id">
-                    <small>{{username}}</small>
-                  </router-link>
+                  <small>{{username}}</small>
+                </span>
+                <span v-if="post_user_id == user_id" class="post-user">
+                  <small style="color:grey">
+                    <i>Tu publicación</i>
+                  </small>
                 </span>
                 <!-- <div>
                   <i>

@@ -6,7 +6,10 @@
         <AdsComponent :ads="currentAds1" @clickAd="clickAd" />
       </div>
       <div class="col-md-8 col-12 offset-md-0 pt-0 pl-3 pr-3">
-        {{flag}}
+        <pre>
+          {{flag}}
+          {{currentAds}}
+        </pre>
         <PostsComponent
           @clickAd="clickAd"
           @setLocation="setLocation"
@@ -141,8 +144,6 @@ export default {
       if (ads.length) {
         let aux = [...ads];
         aux = this.shuffle(aux);
-        console.log(ads);
-        console.log(aux);
         console.log(this.currentAds);
         for (let i in ads) {
           this.currentAds[ads[i]] = this.currentAds[aux[i]];

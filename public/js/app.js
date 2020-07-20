@@ -2574,6 +2574,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
 
 
 
@@ -2688,8 +2691,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         var aux = _toConsumableArray(ads);
 
         aux = this.shuffle(aux);
-        console.log(ads);
-        console.log(aux);
         console.log(this.currentAds);
 
         for (var i in ads) {
@@ -3881,6 +3882,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["ads", "typePosts"],
+  watch: {
+    ads: function ads(newValue, oldValue) {
+      this.ads = newValue;
+    }
+  },
   components: {
     PostComponent: _PostComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     LoaderComponent: _utils_LoaderComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -49799,7 +49805,16 @@ var render = function() {
           "div",
           { staticClass: "col-md-8 col-12 offset-md-0 pt-0 pl-3 pr-3" },
           [
-            _vm._v("\n      " + _vm._s(_vm.flag) + "\n      "),
+            _c("pre", [
+              _vm._v(
+                "        " +
+                  _vm._s(_vm.flag) +
+                  "\n        " +
+                  _vm._s(_vm.currentAds) +
+                  "\n      "
+              )
+            ]),
+            _vm._v(" "),
             _c("PostsComponent", {
               attrs: { ads: _vm.currentAds, typePosts: "posts" },
               on: { clickAd: _vm.clickAd, setLocation: _vm.setLocation }

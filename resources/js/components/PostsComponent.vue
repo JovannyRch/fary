@@ -122,6 +122,11 @@ import HeaderComponent from "./utils/HeaderComponent";
 
 export default {
   props: ["ads", "typePosts"],
+  watch: {
+    ads(newValue, oldValue) {
+      this.ads = newValue;
+    }
+  },
   components: {
     PostComponent,
     LoaderComponent,

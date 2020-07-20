@@ -7,11 +7,11 @@
       <div class="col-12 alert alert-success p-1" v-if="!user_id">
         <b>BIENVENIDOS A RED DE AUTOPARTES FARY</b>
         <br />
-        <p>
-          Estamos para servirle, puede buscar piezas o refacciones en negocios de su localidad, ya no necesitara ir negocio por negocio ni hacer llamadas solo para saber si tienen lo que busca.
-          Para los negocios de Auto Partes Usadas veran lo que buscan los clientes de su zona ademas de ver los autos chocados, arrumbados o desvielados que hay a la venta en su comunidad.
+        <p>Facilita buscar piezas o refacciones en negocios de su localidad, ya no necesitara caminar negocio por negocio ni hacer llamadas, solo para saber si tienen lo que busca.</p>
+        <p>Ofrece a los negocios de autopartes usadas clientes potenciales y publicidad sin costo, registrándose al correo faryseccionderegistros@gmail.com Además una sección de venta de autos chocados, arrumbados o desvielados con membresía gratuita por apertura</p>
+        <p class="m-0 p-0">
+          <b>Active su ubicacion para gozar de nuestros servicios.</b>
         </p>
-        <p class="m-0 p-0">Active su ubicacion para gozar de nuestros servicios.</p>
       </div>
       <div class="col-12 mt-0 pt-0 mt-4 text-center mb-3" v-if="type == 'owner' && user_id">
         <div class="input-group">
@@ -66,21 +66,13 @@
 
       <div class="col-md-12 mt-4">
         <div v-if="typePosts == 'posts'">
-          <h4 v-if="type == 'normal' && isMyPosts">
-            <i class="fa fa-wrench"></i> Mis Publicaciones de Autopartes
-          </h4>
-          <h4 v-else>
+          <h4>
             <i class="fa fa-wrench"></i> Publicaciones de autopartes
           </h4>
         </div>
         <div v-else>
-          <h4 v-if="type == 'normal' && isMyPosts">
-            <i class="fa fa-car"></i>
-            Mis Publicaciones de Autos chocados
-          </h4>
-          <h4 v-else>
-            <i class="fa fa-car"></i>
-            Publicaciones de Autos chocados
+          <h4>
+            <i class="fa fa-car"></i> Publicaciones de Autos chocados
           </h4>
         </div>
 
@@ -168,6 +160,7 @@ export default {
       this.$emit("setLocation", null, null);
       this.locationPermission = false;
     }
+
     this.loadData();
   },
   data() {
@@ -226,27 +219,32 @@ export default {
       }
       this.isLoading = true;
       if (this.locationPermission && url == this.defaultUrl) {
-        await navigator.geolocation.getCurrentPosition(
-          location => {
-            let lat = location.coords.latitude;
-            let long = location.coords.longitude;
+        try {
+          await navigator.geolocation.getCurrentPosition(
+            location => {
+              let lat = location.coords.latitude;
+              let long = location.coords.longitude;
 
-            if (!this.isSetLocation) {
-              this.isSetLocation = true;
-              //console.log("Obtener ads con ubicacion");
-              this.$emit("setLocation", lat, long);
+              if (!this.isSetLocation) {
+                this.isSetLocation = true;
+                this.$emit("setLocation", lat, long);
+              }
+              let url = `${this.defaultUrl}/${lat}/${long}`;
+              this.fetchData(url);
+              return;
+            },
+            error => {
+              this.locationPermission = false;
+              this.$emit("setLocation", null, null);
+              this.fetchData(url);
+              return;
             }
-            let url = `${this.defaultUrl}/${lat}/${long}`;
-            this.fetchData(url);
-            return;
-          },
-          error => {
-            this.locationPermission = false;
-            this.$emit("setLocation", null, null);
-            this.fetchData(url);
-            return;
-          }
-        );
+          );
+        } catch (error) {
+          this.locationPermission = false;
+          this.$emit("setLocation", null, null);
+          this.fetchData(url);
+        }
       } else {
         this.fetchData(url);
       }
@@ -255,27 +253,13 @@ export default {
       fetch(url)
         .then(response => response.json())
         .then(json => {
-          let data = json.data;
+          let data = json.data || [];
           let otros = json.otros || [];
-
-          if (this.user_id) {
-            let posts = [];
-            let myPosts = [];
-            for (const post of data) {
-              if (post.user_id == this.user_id) {
-                myPosts.unshift(post);
-              } else {
-                posts.push(post);
-              }
-            }
-            this.posts = [...myPosts, ...posts, ...otros];
-          } else {
-            this.posts = [...data, ...otros];
-          }
-          //console.log("Posts", this.posts);
+          let myposts = json.myposts || [];
+          this.posts = [...myposts, ...data, ...otros];
           this.isLoading = false;
 
-          if (isBusqueda) {
+          if (this.isBusqueda) {
             Vue.notify({
               group: "foo",
               title: "Éxito",

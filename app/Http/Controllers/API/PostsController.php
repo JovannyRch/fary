@@ -13,6 +13,43 @@ class PostsController extends Controller
 {   
 
     public function index($lat = null,$long = null){
+        if(Auth::check()){
+            return $this->withLogin($lat,$long);
+        }else{
+            return $this->withoutLogin($lat,$long);
+        }
+
+    }  
+
+    public function withLogin($lat, $long){
+        $otros = [];
+        $user_id = Auth::user()->id;
+        $myPosts = $this->myPosts($lat,$long);
+        if($lat == null && $long == null){
+            $posts = $this->myNoPosts();
+            return response()->json(['data' => $posts,'otros' =>  $otros,'myPosts' => $myPosts], 200);
+        }
+        else{
+            $location = $this->queryLocation($lat,$long,'posts');
+            $posts = Post::
+                join('users', 'users.id', '=', 'posts.user_id')
+                ->select('posts.rango','posts.content','posts.created_at','posts.user_id','posts.img','posts.id',  'users.name as username','users.address', DB::raw($location))
+                ->where('posts.user_id','!=',$user_id)
+                ->toSql();
+            $posts = DB::select("select * from ($query) as tabla1 where distance <= rango or rango = 10000 order by created_at desc, distance asc");
+            /* $otros = Post::
+            join('users', 'users.id', '=', 'posts.user_id')
+            ->select('posts.content','posts.created_at','posts.user_id','posts.img','posts.id',  'users.name as username','users.address')
+            ->where('posts.user_id','!=',$user_id)
+            ->whereNull('latitud')
+            ->whereNull('longitud')
+            ->toSql();
+            $otros = DB::select($otros); */
+        }
+        return response()->json(['data' => $posts, 'otros' =>  $otros,'myPosts' => $myPosts], 200);
+    }
+
+    public function withoutLogin($lat,$long){
         $otros = [];
         if($lat == null && $long == null){
             $posts = Post::
@@ -22,8 +59,8 @@ class PostsController extends Controller
             return response()->json(['data' => $posts], 200);
         }
         else{
-                $location = $this->queryLocation($lat,$long,'posts');
-                $query = Post::
+            $location = $this->queryLocation($lat,$long,'posts');
+            $query = Post::
                 join('users', 'users.id', '=', 'posts.user_id')
                 ->select('posts.rango','posts.content','posts.created_at','posts.user_id','posts.img','posts.id',  'users.name as username','users.address', DB::raw($location))
                ->toSql();
@@ -39,9 +76,9 @@ class PostsController extends Controller
            
             
         }
-        return response()->json(['data' => $posts, 'otros' =>  $otros], 200);
-        
-    }  
+        return response()->json(['data' => $posts, 'otros' =>  $otros,'misposts' => []], 200);
+    }
+
 
     public function queryLocation($lat, $long,$table = ""){
         $lat = doubleval($lat);
@@ -91,7 +128,18 @@ class PostsController extends Controller
             ->select('posts.content','posts.created_at','posts.user_id','posts.img','posts.id','users.name as username','users.address')
             ->orderBy('created_at','desc')
             ->where("posts.user_id","=",$user_id)
-            ->paginate(100);
+            ->get();
+        return response()->json(['data' => $posts], 200);            
+    }
+
+    public function myNoPosts($user_id){
+        $posts = Post::
+            join('users', 'users.id', '=', 'posts.user_id')
+            ->select('posts.content','posts.created_at','posts.user_id','posts.img','posts.id','users.name as username','users.address')
+            ->orderBy('created_at','desc')
+            ->where("posts.user_id","!=",$user_id)
+            ->take(100)
+            ->get();
         return response()->json(['data' => $posts], 200);
     }
 

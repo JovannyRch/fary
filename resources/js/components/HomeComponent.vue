@@ -6,6 +6,7 @@
         <AdsComponent :ads="currentAds1" @clickAd="clickAd" />
       </div>
       <div class="col-md-8 col-12 offset-md-0 pt-0 pl-3 pr-3">
+        {{flag}}
         <PostsComponent
           @clickAd="clickAd"
           @setLocation="setLocation"
@@ -51,6 +52,9 @@ export default {
       currentAds: [],
       currentAds1: [],
       currentAds2: [],
+      ads7s: [],
+      ads10s: [],
+      ads15s: [],
       isLoading: false,
       latitud: null,
       longitud: null,
@@ -63,7 +67,8 @@ export default {
         prevNextButtons: false,
         pageDots: false,
         wrapAround: false
-      }
+      },
+      flag: true
     };
   },
   mounted() {},
@@ -95,6 +100,20 @@ export default {
         }
       }
     },
+
+    getAdsByTime() {
+      for (let i in this.currentAds) {
+        let ad = this.currentAds[i];
+        if (ad.tiempo == 15) {
+          this.ads15s.push(i);
+        } else if (ad.tiempo == 10) {
+          this.ads10s.push(i);
+        } else if (ad.tiempo == 7) {
+          this.ads7s.push(i);
+        }
+      }
+    },
+
     getAds() {
       this.isLoading = true;
 
@@ -102,9 +121,11 @@ export default {
         .then(response => response.json())
         .then(json => {
           this.ads = json.data;
-          //console.log(json);
+
           this.currentAds = [...this.ads];
           this.divideAds();
+          this.getAdsByTime();
+          this.initAds();
           this.isLoading = false;
           this.imgUrlList = this.currentAds.map(a => a.url);
         });
@@ -115,6 +136,39 @@ export default {
     },
     shuffle(array) {
       array.sort(() => Math.random() - 0.5);
+    },
+    changeAds(ads) {
+      if (ads.length) {
+        let aux = [...ads];
+        aux = this.shuffle(aux);
+        console.log(ads);
+        console.log(aux);
+        console.log(this.currentAds);
+        for (let i in ads) {
+          this.currentAds[ads[i]] = this.currentAds[aux[i]];
+        }
+        this.flag = !this.flag;
+        console.log(this.currentAds);
+      }
+    },
+
+    initAds() {
+      setInterval(() => {
+        this.changeAds(this.ads7s);
+      }, 7000);
+      setInterval(() => {
+        this.changeAds(this.ads10s);
+      }, 10000);
+      setInterval(() => {
+        this.changeAds(this.ads15s);
+      }, 15000);
+    },
+    shuffle(a) {
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
     }
   }
 };

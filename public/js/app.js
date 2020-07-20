@@ -2048,9 +2048,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {},
   mounted: function mounted() {
@@ -2529,6 +2526,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AdsComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdsComponent.vue */ "./resources/js/components/AdsComponent.vue");
 /* harmony import */ var _NegociosComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NegociosComponent.vue */ "./resources/js/components/NegociosComponent.vue");
 /* harmony import */ var vue_flickity__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-flickity */ "./node_modules/vue-flickity/src/flickity.vue");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -2541,6 +2540,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
+//
 //
 //
 //
@@ -2591,6 +2591,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       currentAds: [],
       currentAds1: [],
       currentAds2: [],
+      ads7s: [],
+      ads10s: [],
+      ads15s: [],
       isLoading: false,
       latitud: null,
       longitud: null,
@@ -2603,11 +2606,12 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         prevNextButtons: false,
         pageDots: false,
         wrapAround: false
-      }
+      },
+      flag: true
     };
   },
   mounted: function mounted() {},
-  methods: {
+  methods: _defineProperty({
     setLocation: function setLocation(lat, _long) {
       if (lat && _long) {
         this.latitud = lat;
@@ -2636,6 +2640,19 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         }
       }
     },
+    getAdsByTime: function getAdsByTime() {
+      for (var i in this.currentAds) {
+        var ad = this.currentAds[i];
+
+        if (ad.tiempo == 15) {
+          this.ads15s.push(i);
+        } else if (ad.tiempo == 10) {
+          this.ads10s.push(i);
+        } else if (ad.tiempo == 7) {
+          this.ads7s.push(i);
+        }
+      }
+    },
     getAds: function getAds() {
       var _this = this;
 
@@ -2643,11 +2660,14 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       fetch(this.url).then(function (response) {
         return response.json();
       }).then(function (json) {
-        _this.ads = json.data; //console.log(json);
-
+        _this.ads = json.data;
         _this.currentAds = _toConsumableArray(_this.ads);
 
         _this.divideAds();
+
+        _this.getAdsByTime();
+
+        _this.initAds();
 
         _this.isLoading = false;
         _this.imgUrlList = _this.currentAds.map(function (a) {
@@ -2662,8 +2682,47 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       array.sort(function () {
         return Math.random() - 0.5;
       });
+    },
+    changeAds: function changeAds(ads) {
+      if (ads.length) {
+        var aux = _toConsumableArray(ads);
+
+        aux = this.shuffle(aux);
+        console.log(ads);
+        console.log(aux);
+        console.log(this.currentAds);
+
+        for (var i in ads) {
+          this.currentAds[ads[i]] = this.currentAds[aux[i]];
+        }
+
+        this.flag = !this.flag;
+        console.log(this.currentAds);
+      }
+    },
+    initAds: function initAds() {
+      var _this2 = this;
+
+      setInterval(function () {
+        _this2.changeAds(_this2.ads7s);
+      }, 7000);
+      setInterval(function () {
+        _this2.changeAds(_this2.ads10s);
+      }, 10000);
+      setInterval(function () {
+        _this2.changeAds(_this2.ads15s);
+      }, 15000);
     }
-  }
+  }, "shuffle", function shuffle(a) {
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var _ref = [a[j], a[i]];
+      a[i] = _ref[0];
+      a[j] = _ref[1];
+    }
+
+    return a;
+  })
 });
 
 /***/ }),
@@ -3294,6 +3353,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -3687,13 +3747,11 @@ function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableTo
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
-function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
@@ -3701,14 +3759,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -3951,17 +4001,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.isLoading = true;
 
                 if (!(this.locationPermission && url == this.defaultUrl)) {
-                  _context2.next = 9;
+                  _context2.next = 17;
                   break;
                 }
 
-                _context2.next = 7;
+                _context2.prev = 5;
+                _context2.next = 8;
                 return navigator.geolocation.getCurrentPosition(function (location) {
                   var lat = location.coords.latitude;
                   var _long = location.coords.longitude;
 
                   if (!_this2.isSetLocation) {
-                    _this2.isSetLocation = true; //console.log("Obtener ads con ubicacion");
+                    _this2.isSetLocation = true;
 
                     _this2.$emit("setLocation", lat, _long);
                   }
@@ -3981,19 +4032,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   return;
                 });
 
-              case 7:
-                _context2.next = 10;
+              case 8:
+                _context2.next = 15;
                 break;
 
-              case 9:
+              case 10:
+                _context2.prev = 10;
+                _context2.t0 = _context2["catch"](5);
+                this.locationPermission = false;
+                this.$emit("setLocation", null, null);
                 this.fetchData(url);
 
-              case 10:
+              case 15:
+                _context2.next = 18;
+                break;
+
+              case 17:
+                this.fetchData(url);
+
+              case 18:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee2, this, [[5, 10]]);
       }));
 
       function loadData() {
@@ -4008,41 +4070,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       fetch(url).then(function (response) {
         return response.json();
       }).then(function (json) {
-        var data = json.data;
+        var data = json.data || [];
         var otros = json.otros || [];
-
-        if (_this3.user_id) {
-          var posts = [];
-          var myPosts = [];
-
-          var _iterator = _createForOfIteratorHelper(data),
-              _step;
-
-          try {
-            for (_iterator.s(); !(_step = _iterator.n()).done;) {
-              var post = _step.value;
-
-              if (post.user_id == _this3.user_id) {
-                myPosts.unshift(post);
-              } else {
-                posts.push(post);
-              }
-            }
-          } catch (err) {
-            _iterator.e(err);
-          } finally {
-            _iterator.f();
-          }
-
-          _this3.posts = [].concat(myPosts, posts, _toConsumableArray(otros));
-        } else {
-          _this3.posts = [].concat(_toConsumableArray(data), _toConsumableArray(otros));
-        } //console.log("Posts", this.posts);
-
-
+        var myposts = json.myposts || [];
+        _this3.posts = [].concat(_toConsumableArray(myposts), _toConsumableArray(data), _toConsumableArray(otros));
         _this3.isLoading = false;
 
-        if (isBusqueda) {
+        if (_this3.isBusqueda) {
           Vue.notify({
             group: "foo",
             title: "Éxito",
@@ -49396,7 +49430,7 @@ var render = function() {
                         expression: "content"
                       }
                     ],
-                    staticClass: "col-md-6 col-md-offset-6 col-12"
+                    staticClass: "col-md-6 col-md-offset-6 col-12 d-none"
                   },
                   [_vm._m(0)]
                 ),
@@ -49453,10 +49487,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "rango" } }, [
-        _vm._v("Seleccione rango de publicación")
-      ]),
-      _vm._v(" "),
       _c(
         "select",
         {
@@ -49464,13 +49494,9 @@ var staticRenderFns = [
           attrs: { name: "rango", id: "rango", required: "" }
         },
         [
-          _c("option", { attrs: { value: "30", selected: "" } }, [
-            _vm._v("30 km")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "70" } }, [_vm._v("70 km")]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "1000000" } }, [_vm._v("Libre")])
+          _c("option", { attrs: { value: "1000000", selected: "" } }, [
+            _vm._v("Libre")
+          ])
         ]
       )
     ])
@@ -49773,6 +49799,7 @@ var render = function() {
           "div",
           { staticClass: "col-md-8 col-12 offset-md-0 pt-0 pl-3 pr-3" },
           [
+            _vm._v("\n      " + _vm._s(_vm.flag) + "\n      "),
             _c("PostsComponent", {
               attrs: { ads: _vm.currentAds, typePosts: "posts" },
               on: { clickAd: _vm.clickAd, setLocation: _vm.setLocation }
@@ -50414,20 +50441,11 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "col-12" }, [
                     _vm.showName
-                      ? _c(
-                          "span",
-                          { staticClass: "post-user" },
-                          [
-                            _vm._m(0),
-                            _vm._v(" "),
-                            _c(
-                              "router-link",
-                              { attrs: { to: "/users/" + _vm.user_id } },
-                              [_c("small", [_vm._v(_vm._s(_vm.username))])]
-                            )
-                          ],
-                          1
-                        )
+                      ? _c("span", { staticClass: "post-user" }, [
+                          _vm._m(0),
+                          _vm._v(" "),
+                          _c("small", [_vm._v(_vm._s(_vm.username))])
+                        ])
                       : _vm._e(),
                     _vm._v(" "),
                     _c(
@@ -50492,21 +50510,16 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-12" }, [
-                    _vm.showName
-                      ? _c(
-                          "span",
-                          { staticClass: "post-user" },
-                          [
-                            _vm._m(2),
-                            _vm._v(" "),
-                            _c(
-                              "router-link",
-                              { attrs: { to: "/users/" + _vm.user_id } },
-                              [_c("small", [_vm._v(_vm._s(_vm.username))])]
-                            )
-                          ],
-                          1
-                        )
+                    _vm.post_user_id != _vm.user_id
+                      ? _c("span", { staticClass: "post-user" }, [
+                          _vm._m(2),
+                          _vm._v(" "),
+                          _c("small", [_vm._v(_vm._s(_vm.username))])
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.post_user_id == _vm.user_id
+                      ? _c("span", { staticClass: "post-user" }, [_vm._m(3)])
                       : _vm._e(),
                     _vm._v(" "),
                     _c(
@@ -50519,7 +50532,7 @@ var render = function() {
                       ? _c(
                           "div",
                           { staticClass: "dropdown show float-right grid-2" },
-                          [_vm._m(3)]
+                          [_vm._m(4)]
                         )
                       : _vm._e()
                   ])
@@ -50571,7 +50584,7 @@ var render = function() {
             },
             [
               _c("div", { staticClass: "modal-content" }, [
-                _vm._m(4),
+                _vm._m(5),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
                   _vm._v("¿Estás seguro de eliminar la publicación?")
@@ -50633,12 +50646,12 @@ var render = function() {
                     _vm._v(_vm._s(_vm.content))
                   ]),
                   _vm._v(" "),
-                  _vm._m(5)
+                  _vm._m(6)
                 ]),
                 _vm._v(" "),
-                _vm._m(6),
+                _vm._m(7),
                 _vm._v(" "),
-                _vm._m(7)
+                _vm._m(8)
               ])
             ]
           )
@@ -50676,6 +50689,14 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("span", { staticStyle: { color: "grey" } }, [
       _c("small", [_vm._v("Publicado por:")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("small", { staticStyle: { color: "grey" } }, [
+      _c("i", [_vm._v("Tu publicación")])
     ])
   },
   function() {
@@ -51080,15 +51101,17 @@ var render = function() {
                 _vm._v(" "),
                 _c("p", [
                   _vm._v(
-                    "\n        Estamos para servirle, puede buscar piezas o refacciones en negocios de su localidad, ya no necesitara ir negocio por negocio ni hacer llamadas solo para saber si tienen lo que busca.\n        Para los negocios de Auto Partes Usadas veran lo que buscan los clientes de su zona ademas de ver los autos chocados, arrumbados o desvielados que hay a la venta en su comunidad.\n      "
+                    "Facilita buscar piezas o refacciones en negocios de su localidad, ya no necesitara caminar negocio por negocio ni hacer llamadas, solo para saber si tienen lo que busca."
                   )
                 ]),
                 _vm._v(" "),
-                _c("p", { staticClass: "m-0 p-0" }, [
+                _c("p", [
                   _vm._v(
-                    "Active su ubicacion para gozar de nuestros servicios."
+                    "Ofrece a los negocios de autopartes usadas clientes potenciales y publicidad sin costo, registrándose al correo faryseccionderegistros@gmail.com Además una sección de venta de autos chocados, arrumbados o desvielados con membresía gratuita por apertura"
                   )
-                ])
+                ]),
+                _vm._v(" "),
+                _vm._m(0)
               ])
             : _vm._e(),
           _vm._v(" "),
@@ -51213,32 +51236,8 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "col-md-12 mt-4" }, [
             _vm.typePosts == "posts"
-              ? _c("div", [
-                  _vm.type == "normal" && _vm.isMyPosts
-                    ? _c("h4", [
-                        _c("i", { staticClass: "fa fa-wrench" }),
-                        _vm._v(" Mis Publicaciones de Autopartes\n        ")
-                      ])
-                    : _c("h4", [
-                        _c("i", { staticClass: "fa fa-wrench" }),
-                        _vm._v(" Publicaciones de autopartes\n        ")
-                      ])
-                ])
-              : _c("div", [
-                  _vm.type == "normal" && _vm.isMyPosts
-                    ? _c("h4", [
-                        _c("i", { staticClass: "fa fa-car" }),
-                        _vm._v(
-                          "\n          Mis Publicaciones de Autos chocados\n        "
-                        )
-                      ])
-                    : _c("h4", [
-                        _c("i", { staticClass: "fa fa-car" }),
-                        _vm._v(
-                          "\n          Publicaciones de Autos chocados\n        "
-                        )
-                      ])
-                ]),
+              ? _c("div", [_vm._m(1)])
+              : _c("div", [_vm._m(2)]),
             _vm._v(" "),
             !_vm.isLoading
               ? _c("div", { staticClass: "posts-container" }, [
@@ -51322,7 +51321,34 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "m-0 p-0" }, [
+      _c("b", [_vm._v("Active su ubicacion para gozar de nuestros servicios.")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h4", [
+      _c("i", { staticClass: "fa fa-wrench" }),
+      _vm._v(" Publicaciones de autopartes\n        ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h4", [
+      _c("i", { staticClass: "fa fa-car" }),
+      _vm._v(" Publicaciones de Autos chocados\n        ")
+    ])
+  }
+]
 render._withStripped = true
 
 

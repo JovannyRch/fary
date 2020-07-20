@@ -7,12 +7,89 @@ use App\ImgsCar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
 class CarsController extends Controller
 {
    
     public function index($lat = null, $long = null){
+        if(Auth::check()){
+            return $this->withLogin($lat, $long);
+        }else{
+            return $this->withOutLogin($lat,$long);
+        }
+    }
+
+    public function withLogin($lat, $long){
+        $user_id = Auth::user()->id;
+        $otros = [];
+        $cars = [];
+        $myPosts = $this->myPosts($user_id);
+        if($lat == null && $long == null){
+            $cars = $this->myNoPosts($user_id); 
+        }else {
+            $location = $this->queryLocation($lat,$long);
+            
+            $query = Car::
+            join('users', 'users.id', '=', 'cars.user_id')
+            ->select('cars.rango','cars.content','cars.user_id','cars.created_at','cars.id', 'users.name as username','users.address',DB::raw($location))
+            ->where("cars.user_id","!=",$user_id)
+            ->toSql();
+            
+            $cars = DB::select("select * from ($query) as tabla1 where distance <= rango or rango = 10000 order by created_at desc, distance asc");
+            //posts sin ubicacion
+            $otros = Car::
+            join('users', 'users.id', '=', 'cars.user_id')
+            ->select('cars.rango','cars.content','cars.user_id','cars.created_at','cars.id', 'users.name as username','users.address',DB::raw($location))
+            ->where("cars.user_id","!=",$user_id)
+            ->whereNull('latitud')
+            ->whereNull('longitud')
+            ->toSql();
+            $otros = DB::select($otros);
+            $cars = $this->converJson($cars);
+            $otros = $this->converJson($otros);
+
+            
+           
+            foreach ($cars as &$car) {
+                $car['imgs'] = $this->getImgsById($car['id']);
+            }
+
+            foreach ($otros as &$car) {
+                $car['imgs'] = $this->getImgsById($car['id']);
+            }
+        }  
+        return response()->json(['data' => $cars, 'otros' =>  $otros,'myposts' => $myPosts], 200);
+    }
+
+    public function myPosts($user_id){
+        $cars = Car::
+            join('users', 'users.id', '=', 'cars.user_id')
+            ->select('cars.content','cars.user_id','cars.created_at','cars.id', 'users.name as username','users.address')
+            ->where("cars.user_id","=",$user_id)
+            ->orderBy('created_at','desc')->get();
+        foreach ($cars as &$car) {
+            $car['imgs'] = $this->getImgs($car);
+        }
+        return $cars;
+    }
+
+
+    public function myNoPosts($user_id){
+        $cars = Car::
+            join('users', 'users.id', '=', 'cars.user_id')
+            ->select('cars.content','cars.user_id','cars.created_at','cars.id', 'users.name as username','users.address')
+            ->where("cars.user_id","!=",$user_id)
+            ->orderBy('created_at','desc')->take(100)->get();
+        foreach ($cars as &$car) {
+                $car['imgs'] = $this->getImgs($car);
+        }
+        return $cars;
+    }
+
+
+    public function withOutLogin($lat, $long){
         $otros = [];
         if($lat == null && $long == null){
             $cars = Car::
@@ -55,6 +132,7 @@ class CarsController extends Controller
         }
         return response()->json(['data' => $cars,'otros' => $otros], 200);
     }
+
 
     public function converJson($data){
         $data = json_encode($data);
@@ -115,22 +193,6 @@ class CarsController extends Controller
         return response()->json(['data' => $cars], 200);
     }
 
-
-    public function myPosts($user_id){
-    
-        
-        $cars = Car::
-        join('users', 'users.id', '=', 'cars.user_id')
-        ->select('cars.*', 'users.name as username','users.address')
-        ->orderBy('created_at','desc')
-        ->where("cars.user_id","=",$user_id)
-        ->paginate(40);
-        foreach ($cars as &$car) {
-            $car['imgs'] = $this->getImgs($car);
-        }
-        
-        return response()->json(['data' => $cars], 200);
-    }
 
     public function getImgs($car){
         return DB::select('select id,url from imgs_cars where car_id = ? order by id desc', [$car->id]);

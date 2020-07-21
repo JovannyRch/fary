@@ -1,19 +1,7 @@
 <template>
     <div>
         <div v-for="(ad, index) in ads" :key="index" class="text-center mt-4">
-            <img
-                class="img-thumbnail"
-                @click="clickAd(index)"
-                :src="ad.url"
-                v-if="!isVideo(ad.url)"
-            />
-            <video
-                v-else
-                autoplay
-                :src="ad.url"
-                width="100%"
-                type="video/mp4"
-            ></video>
+            <img class="img-thumbnail" @click="clickAd(index)" :src="ad.url" />
         </div>
     </div>
 </template>

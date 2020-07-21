@@ -17,8 +17,16 @@ export default {
         ads() {
             let n = this.$store.getters.ads.length;
             let ads = [];
-            for (let i = 0; i < n / 2; i++) {
-                ads.push(this.$store.getters.ads[i]);
+            if (this.part == 1) {
+                for (let i = 0; i < n / 2; i++) {
+                    ads.push(this.$store.getters.ads[i]);
+                }
+            } else {
+                console.log(n / 2);
+                console.log(this.$store.getters.ads);
+                for (let i = parseInt(n / 2); i < n; i++) {
+                    ads.push(this.$store.getters.ads[i]);
+                }
             }
             return ads;
         }

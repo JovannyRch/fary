@@ -24,6 +24,7 @@ Route::middleware('auth:API')->get('/user', function (Request $request) {
  Route::post('posts/', 'API\PostsController@create');
  Route::delete('posts/{id}', 'API\PostsController@destroy');
  Route::get('posts/', 'API\PostsController@index');
+ Route::get('posts/urgentes', 'API\PostsController@postsWithoutRange');
  Route::get('posts/user/{user_id}', 'API\PostsController@myPosts');
  Route::get('posts/{lat}/{long}', 'API\PostsController@index');
  Route::get('posts/search/{content}', 'API\PostsController@search');

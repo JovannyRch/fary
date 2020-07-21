@@ -61,7 +61,7 @@
                                         <option value="70" selected
                                             >70 km</option
                                         >
-                                        <option value="1000000">Libre</option>
+                                        <option value="1000000">Urgente</option>
                                     </select>
                                 </div>
                             </div>

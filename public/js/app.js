@@ -1939,8 +1939,17 @@ __webpack_require__.r(__webpack_exports__);
       var n = this.$store.getters.ads.length;
       var ads = [];
 
-      for (var i = 0; i < n / 2; i++) {
-        ads.push(this.$store.getters.ads[i]);
+      if (this.part == 1) {
+        for (var i = 0; i < n / 2; i++) {
+          ads.push(this.$store.getters.ads[i]);
+        }
+      } else {
+        console.log(n / 2);
+        console.log(this.$store.getters.ads);
+
+        for (var _i = parseInt(n / 2); _i < n; _i++) {
+          ads.push(this.$store.getters.ads[_i]);
+        }
       }
 
       return ads;
@@ -3565,6 +3574,41 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -10305,7 +10349,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.form-container {\n  background-color: white;\n  border-radius: 5px;\n  padding-right: 40px;\n  padding-left: 40px;\n  padding-top: 10px;\n  padding-bottom: 10px;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.06),\n    0 3px 8px rgba(0, 0, 0, 0.09);\n}\n.title-page {\n  font-weight: bold;\n  margin-bottom: 1%;\n  margin-top: 1.5%;\n}\n.col-12 {\n  padding: 0;\n}\n.col-md-12 {\n  padding: 0;\n}\n.col-md-4 {\n  padding: 0;\n  padding-right: 3%;\n}\n.fileinput-button {\n  position: relative;\n  overflow: hidden;\n  display: inline-block;\n}\n", ""]);
+exports.push([module.i, "\n.form-container {\n    background-color: white;\n    border-radius: 5px;\n    padding-right: 40px;\n    padding-left: 40px;\n    padding-top: 10px;\n    padding-bottom: 10px;\n    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.06),\n        0 3px 8px rgba(0, 0, 0, 0.09);\n}\n.title-page {\n    font-weight: bold;\n    margin-bottom: 1%;\n    margin-top: 1.5%;\n}\n.col-12 {\n    padding: 0;\n}\n.col-md-12 {\n    padding: 0;\n}\n.col-md-4 {\n    padding: 0;\n    padding-right: 3%;\n}\n.fileinput-button {\n    position: relative;\n    overflow: hidden;\n    display: inline-block;\n}\n", ""]);
 
 // exports
 
@@ -51104,7 +51148,11 @@ var render = function() {
                       staticClass: "btn btn-sm btn-success float-right",
                       attrs: { type: "submit" }
                     },
-                    [_vm._v("Publicar")]
+                    [
+                      _vm._v(
+                        "\n                                Publicar\n                            "
+                      )
+                    ]
                   ),
                   _vm._v(" "),
                   _vm._m(1)
@@ -51134,11 +51182,11 @@ var staticRenderFns = [
           attrs: { name: "rango", id: "rango", required: "" }
         },
         [
-          _c("option", { attrs: { value: "30", selected: "" } }, [
-            _vm._v("30 km")
-          ]),
+          _c("option", { attrs: { value: "30" } }, [_vm._v("30 km")]),
           _vm._v(" "),
-          _c("option", { attrs: { value: "70" } }, [_vm._v("70 km")]),
+          _c("option", { attrs: { value: "70", selected: "" } }, [
+            _vm._v("70 km")
+          ]),
           _vm._v(" "),
           _c("option", { attrs: { value: "1000000" } }, [_vm._v("Libre")])
         ]

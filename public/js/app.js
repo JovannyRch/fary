@@ -1928,18 +1928,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["part"],
   components: {},
@@ -49522,24 +49510,15 @@ var render = function() {
     "div",
     _vm._l(_vm.ads, function(ad, index) {
       return _c("div", { key: index, staticClass: "text-center mt-4" }, [
-        !_vm.isVideo(ad.url)
-          ? _c("img", {
-              staticClass: "img-thumbnail",
-              attrs: { src: ad.url },
-              on: {
-                click: function($event) {
-                  return _vm.clickAd(index)
-                }
-              }
-            })
-          : _c("video", {
-              attrs: {
-                autoplay: "",
-                src: ad.url,
-                width: "100%",
-                type: "video/mp4"
-              }
-            })
+        _c("img", {
+          staticClass: "img-thumbnail",
+          attrs: { src: ad.url },
+          on: {
+            click: function($event) {
+              return _vm.clickAd(index)
+            }
+          }
+        })
       ])
     }),
     0

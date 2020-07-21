@@ -20,7 +20,7 @@
 
 <script>
 export default {
-    props: ["ads", "part"],
+    props: ["part"],
     components: {},
     data() {
         return {};

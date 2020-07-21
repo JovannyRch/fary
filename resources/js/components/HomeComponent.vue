@@ -6,7 +6,6 @@
                 <AdsComponent part="1" @clickAd="clickAd" />
             </div>
             <div class="col-md-8 col-12 offset-md-0 pt-0 pl-3 pr-3">
-                <button @click="incrementCounter">increment counter</button>
                 <PostsComponent
                     @clickAd="clickAd"
                     @setLocation="setLocation"
@@ -66,7 +65,9 @@ export default {
                 pageDots: false,
                 wrapAround: false
             },
-            flag: true
+            interval1: null,
+            interval2: null,
+            interval3: null
         };
     },
     mounted() {
@@ -80,9 +81,6 @@ export default {
         }
     },
     methods: {
-        incrementCounter() {
-            this.$store.dispatch("inrementAction", 1);
-        },
         setLocation(lat, long) {
             if (lat && long) {
                 this.latitud = lat;
@@ -92,28 +90,23 @@ export default {
 
             this.getAds();
         },
+        destroyed() {
+            clearInterval(this.interval1);
+            clearInterval(this.interval2);
+            clearInterval(this.interval3);
+        },
         clickAd(ad) {
             this.currentIndex = ad;
             this.imageViewerFlag = true;
         },
         clickAd2(ad) {
-            this.currentIndex = this.currentAds.length / 2 + ad;
+            this.currentIndex = this.ads.length / 2 + ad;
             this.imageViewerFlag = true;
-        },
-        divideAds() {
-            let n = this.currentAds.length;
-            for (let i = 0; i < n; i++) {
-                if (i < n / 2) {
-                    this.currentAds1.push(this.currentAds[i]);
-                } else {
-                    this.currentAds2.push(this.currentAds[i]);
-                }
-            }
         },
 
         getAdsByTime() {
-            for (let i in this.currentAds) {
-                let ad = this.currentAds[i];
+            for (let i in this.ads) {
+                let ad = this.ads[i];
                 if (ad.tiempo == 15) {
                     this.ads15s.push(i);
                 } else if (ad.tiempo == 10) {
@@ -127,23 +120,20 @@ export default {
         getAds() {
             this.isLoading = true;
 
-            fetch(this.url)
-                .then(response => response.json())
-                .then(json => {
-                    this.currentAds = [...json.data];
-                    this.$store.dispatch("updateAction", this.currentAds);
-                    this.divideAds();
-                    this.getAdsByTime();
-                    this.initAds();
-                    this.isLoading = false;
-                    this.imgUrlList = this.currentAds.map(a => a.url);
-                });
-        },
-
-        getRandom() {
-            return this.currentAds[
-                Math.floor(Math.random() * this.currentAds.length)
-            ];
+            if (!this.ads.length) {
+                fetch(this.url)
+                    .then(response => response.json())
+                    .then(json => {
+                        this.$store.dispatch("updateAction", [...json.data]);
+                        this.getAdsByTime();
+                        this.initAds();
+                        this.isLoading = false;
+                    });
+            } else {
+                this.getAdsByTime();
+                this.initAds();
+                this.isLoading = false;
+            }
         },
         shuffle(array) {
             array.sort(() => Math.random() - 0.5);
@@ -160,13 +150,13 @@ export default {
         },
 
         initAds() {
-            setInterval(() => {
+            this.interval1 = setInterval(() => {
                 this.changeAds(this.ads7s);
             }, 7000);
-            setInterval(() => {
+            this.interval2 = setInterval(() => {
                 this.changeAds(this.ads10s);
             }, 10000);
-            setInterval(() => {
+            this.interval3 = setInterval(() => {
                 this.changeAds(this.ads15s);
             }, 15000);
         },

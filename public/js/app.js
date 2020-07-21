@@ -1941,7 +1941,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["ads", "part"],
+  props: ["part"],
   components: {},
   data: function data() {
     return {};
@@ -2459,6 +2459,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PostsComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PostsComponent.vue */ "./resources/js/components/PostsComponent.vue");
 /* harmony import */ var _AdsComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdsComponent.vue */ "./resources/js/components/AdsComponent.vue");
 /* harmony import */ var _NegociosComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NegociosComponent.vue */ "./resources/js/components/NegociosComponent.vue");
+/* harmony import */ var vue_flickity__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-flickity */ "./node_modules/vue-flickity/src/flickity.vue");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -2488,6 +2491,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+
 
 
 
@@ -2495,21 +2502,48 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   components: {
     PostsComponent: _PostsComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     AdsComponent: _AdsComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    NegociosComponent: _NegociosComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    NegociosComponent: _NegociosComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    Flickity: vue_flickity__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
     return {
-      ads: [],
       currentAds: [],
+      currentAds1: [],
+      currentAds2: [],
+      ads7s: [],
+      ads10s: [],
+      ads15s: [],
       isLoading: false,
       latitud: null,
       longitud: null,
-      url: "/api/ads"
+      url: "/api/ads",
+      imageViewerFlag: false,
+      currentIndex: 0,
+      imgUrlList: [],
+      flickityOptions: {
+        initialIndex: 3,
+        prevNextButtons: false,
+        pageDots: false,
+        wrapAround: false
+      },
+      interval1: null,
+      interval2: null,
+      interval3: null
     };
   },
   mounted: function mounted() {//this.getAds();
   },
-  methods: {
+  destroyed: function destroyed() {
+    clearInterval(this.interval1);
+    clearInterval(this.interval2);
+    clearInterval(this.interval3);
+  },
+  computed: {
+    ads: function ads() {
+      return this.$store.getters.ads;
+    }
+  },
+  methods: _defineProperty({
     setLocation: function setLocation(lat, _long) {
       if (lat && _long) {
         this.latitud = lat;
@@ -2519,27 +2553,93 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
       this.getAds();
     },
+    clickAd: function clickAd(ad) {
+      this.currentIndex = ad;
+      this.imageViewerFlag = true;
+    },
+    clickAd2: function clickAd2(ad) {
+      this.currentIndex = this.ads.length / 2 + ad;
+      this.imageViewerFlag = true;
+    },
+    getAdsByTime: function getAdsByTime() {
+      for (var i in this.ads) {
+        var ad = this.ads[i];
+
+        if (ad.tiempo == 15) {
+          this.ads15s.push(i);
+        } else if (ad.tiempo == 10) {
+          this.ads10s.push(i);
+        } else if (ad.tiempo == 7) {
+          this.ads7s.push(i);
+        }
+      }
+    },
     getAds: function getAds() {
       var _this = this;
 
       this.isLoading = true;
-      fetch(this.url).then(function (response) {
-        return response.json();
-      }).then(function (json) {
-        _this.ads = json.data;
-        _this.currentAds = _toConsumableArray(_this.ads);
-        _this.isLoading = false;
-      });
-    },
-    getRandom: function getRandom() {
-      return this.ads[Math.floor(Math.random() * this.ads.length)];
+
+      if (!this.ads.length) {
+        fetch(this.url).then(function (response) {
+          return response.json();
+        }).then(function (json) {
+          _this.$store.dispatch("updateAction", _toConsumableArray(json.data));
+
+          _this.getAdsByTime();
+
+          _this.initAds();
+
+          _this.isLoading = false;
+        });
+      } else {
+        this.getAdsByTime();
+        this.initAds();
+        this.isLoading = false;
+      }
     },
     shuffle: function shuffle(array) {
       array.sort(function () {
         return Math.random() - 0.5;
       });
+    },
+    changeAds: function changeAds(ads) {
+      if (ads.length) {
+        var auxState = _toConsumableArray(this.ads);
+
+        var newIndexes = this.shuffle(ads);
+
+        for (var i = 0; i < ads.length; i++) {
+          auxState[newIndexes[i]] = this.ads[ads[i]];
+        }
+
+        this.$store.dispatch("updateAction", auxState);
+      }
+    },
+    initAds: function initAds() {
+      var _this2 = this;
+
+      this.interval1 = setInterval(function () {
+        _this2.changeAds(_this2.ads7s);
+      }, 7000);
+      this.interval2 = setInterval(function () {
+        _this2.changeAds(_this2.ads10s);
+      }, 10000);
+      this.interval3 = setInterval(function () {
+        _this2.changeAds(_this2.ads15s);
+      }, 15000);
     }
-  }
+  }, "shuffle", function shuffle(b) {
+    var a = _toConsumableArray(b);
+
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var _ref = [a[j], a[i]];
+      a[i] = _ref[0];
+      a[j] = _ref[1];
+    }
+
+    return a;
+  })
 });
 
 /***/ }),
@@ -2571,7 +2671,6 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-//
 //
 //
 //
@@ -2636,7 +2735,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         pageDots: false,
         wrapAround: false
       },
-      flag: true
+      interval1: null,
+      interval2: null,
+      interval3: null
     };
   },
   mounted: function mounted() {
@@ -2649,9 +2750,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     }
   },
   methods: _defineProperty({
-    incrementCounter: function incrementCounter() {
-      this.$store.dispatch("inrementAction", 1);
-    },
     setLocation: function setLocation(lat, _long) {
       if (lat && _long) {
         this.latitud = lat;
@@ -2661,28 +2759,22 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
       this.getAds();
     },
+    destroyed: function destroyed() {
+      clearInterval(this.interval1);
+      clearInterval(this.interval2);
+      clearInterval(this.interval3);
+    },
     clickAd: function clickAd(ad) {
       this.currentIndex = ad;
       this.imageViewerFlag = true;
     },
     clickAd2: function clickAd2(ad) {
-      this.currentIndex = this.currentAds.length / 2 + ad;
+      this.currentIndex = this.ads.length / 2 + ad;
       this.imageViewerFlag = true;
     },
-    divideAds: function divideAds() {
-      var n = this.currentAds.length;
-
-      for (var i = 0; i < n; i++) {
-        if (i < n / 2) {
-          this.currentAds1.push(this.currentAds[i]);
-        } else {
-          this.currentAds2.push(this.currentAds[i]);
-        }
-      }
-    },
     getAdsByTime: function getAdsByTime() {
-      for (var i in this.currentAds) {
-        var ad = this.currentAds[i];
+      for (var i in this.ads) {
+        var ad = this.ads[i];
 
         if (ad.tiempo == 15) {
           this.ads15s.push(i);
@@ -2697,27 +2789,24 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       var _this = this;
 
       this.isLoading = true;
-      fetch(this.url).then(function (response) {
-        return response.json();
-      }).then(function (json) {
-        _this.currentAds = _toConsumableArray(json.data);
 
-        _this.$store.dispatch("updateAction", _this.currentAds);
+      if (!this.ads.length) {
+        fetch(this.url).then(function (response) {
+          return response.json();
+        }).then(function (json) {
+          _this.$store.dispatch("updateAction", _toConsumableArray(json.data));
 
-        _this.divideAds();
+          _this.getAdsByTime();
 
-        _this.getAdsByTime();
+          _this.initAds();
 
-        _this.initAds();
-
-        _this.isLoading = false;
-        _this.imgUrlList = _this.currentAds.map(function (a) {
-          return a.url;
+          _this.isLoading = false;
         });
-      });
-    },
-    getRandom: function getRandom() {
-      return this.currentAds[Math.floor(Math.random() * this.currentAds.length)];
+      } else {
+        this.getAdsByTime();
+        this.initAds();
+        this.isLoading = false;
+      }
     },
     shuffle: function shuffle(array) {
       array.sort(function () {
@@ -2740,13 +2829,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     initAds: function initAds() {
       var _this2 = this;
 
-      setInterval(function () {
+      this.interval1 = setInterval(function () {
         _this2.changeAds(_this2.ads7s);
       }, 7000);
-      setInterval(function () {
+      this.interval2 = setInterval(function () {
         _this2.changeAds(_this2.ads10s);
       }, 10000);
-      setInterval(function () {
+      this.interval3 = setInterval(function () {
         _this2.changeAds(_this2.ads15s);
       }, 15000);
     }
@@ -49854,7 +49943,7 @@ var render = function() {
         _c(
           "div",
           { staticClass: "col-md-2 d-none d-md-block" },
-          [_c("AdsComponent", { attrs: { ads: _vm.currentAds } })],
+          [_c("AdsComponent", { attrs: { part: "1" } })],
           1
         ),
         _vm._v(" "),
@@ -49863,7 +49952,7 @@ var render = function() {
           { staticClass: "col-md-8 col-12 offset-md-0 pt-0 pl-3 pr-3" },
           [
             _c("PostsComponent", {
-              attrs: { ads: _vm.currentAds, typePosts: "cars" },
+              attrs: { typePosts: "cars" },
               on: { setLocation: _vm.setLocation }
             })
           ],
@@ -49873,7 +49962,7 @@ var render = function() {
         _c(
           "div",
           { staticClass: "col-md-2 d-none d-md-block" },
-          [_c("NegociosComponent")],
+          [_c("AdsComponent", { attrs: { part: "2" } })],
           1
         )
       ])
@@ -49926,10 +50015,6 @@ var render = function() {
           "div",
           { staticClass: "col-md-8 col-12 offset-md-0 pt-0 pl-3 pr-3" },
           [
-            _c("button", { on: { click: _vm.incrementCounter } }, [
-              _vm._v("increment counter")
-            ]),
-            _vm._v(" "),
             _c("PostsComponent", {
               attrs: { typePosts: "posts" },
               on: { clickAd: _vm.clickAd, setLocation: _vm.setLocation }

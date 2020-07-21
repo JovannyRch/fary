@@ -24,7 +24,7 @@ export default {
             } else {
                 console.log(n / 2);
                 console.log(this.$store.getters.ads);
-                for (let i = parseInt(n / 2); i < n; i++) {
+                for (let i = parseInt(n / 2) + 1; i < n; i++) {
                     ads.push(this.$store.getters.ads[i]);
                 }
             }

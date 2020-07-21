@@ -18,7 +18,18 @@
         @csrf
       </form>
     @endguest
-    
+    <script>
+
+      function openTab() {
+          var x = document.getElementById("myTopnav");
+          if (x.className === "topnav") {
+              x.className += " responsive";
+          } else {
+              x.className = "topnav";
+          }
+      }
+  
+      </script>
     <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="openTab()">&#9776;</a>
   </div>
   

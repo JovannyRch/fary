@@ -3,6 +3,12 @@
         <li class="list-group-item">
             <a href="#"><b>{{ strtoupper(Auth::user()->name) }}</b> </a>
         </li>
+        <li class="list-group-item">
+            <a  href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" > <i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+        </li>
     </ul>
     <br>
 

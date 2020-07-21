@@ -1947,7 +1947,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log(n / 2);
         console.log(this.$store.getters.ads);
 
-        for (var _i = parseInt(n / 2); _i < n; _i++) {
+        for (var _i = parseInt(n / 2) + 1; _i < n; _i++) {
           ads.push(this.$store.getters.ads[_i]);
         }
       }

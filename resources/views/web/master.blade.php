@@ -24,12 +24,41 @@
   
 </head>
 <body>
-   {{--  @if (Auth::user())
-        Cosas del usuario: {{Auth::user()->id}}
-        Negocio del usuario: {{Auth::user()->negocio}}
-    @endif --}}
+  
     <div  id="app">
-        @include('web.partials.nav-header-main')
+
+        <div class="topnav" id="myTopnav">
+
+            <router-link to="/" class="active-nav"><b>Fary Red de Autopartes</b></router-link>
+            <router-link to="/" > <i class="fa fa-wrench "></i> Autopartes</router-link>
+            <router-link to="/cars" > <i class="fa fa-car "></i> Autos chocados</router-link>
+            <router-link to="/zona-publicitaria" > <i class="fas fa-store-alt"></i> Espacio publicitario</router-link>
+            <router-link to="/mas" > <i class="fas fa-plus"></i> Más</router-link>
+          
+            
+            @guest
+            <a class="float-right" href="{{ route('login') }}">
+                Iniciar sesión
+            </a>
+            @if (Route::has('register'))
+                <a class="float-right" href="{{ route('register') }}">
+                Registrarse
+                </a>
+            @endif
+            @else
+            
+            <a  href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="float-right "> <i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+        
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+            @endguest
+            
+            <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="openTab()">&#9776;</a>
+        </div>
+        
+        
+  
             <div class="container-fluid ">
                 @yield('content')
             </div>

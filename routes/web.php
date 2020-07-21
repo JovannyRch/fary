@@ -22,11 +22,10 @@ Route::get('/register/negocio/paso2', 'Auth\RegisterController@addNegocio')->mid
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'WebController@index')->middleware('owner')->name('index');
+Route::get('/urgentes', 'WebController@index')->middleware('owner')->name('index');
 Route::get('/upload/image', 'WebController@uploadImage')->name('uploadImage');
 
 //POST
-
-
 Route::get('/posts/create', 'WebController@createPost')->name('createpost');
 Route::post('/posts/save', 'API\PostsController@create')->name('post.save');
 Route::get('/post/{id}', 'WebController@showPost')->name('showPost');

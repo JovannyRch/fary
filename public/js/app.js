@@ -1944,9 +1944,6 @@ __webpack_require__.r(__webpack_exports__);
           ads.push(this.$store.getters.ads[i]);
         }
       } else {
-        console.log(n / 2);
-        console.log(this.$store.getters.ads);
-
         for (var _i = parseInt(n / 2) + 1; _i < n; _i++) {
           ads.push(this.$store.getters.ads[_i]);
         }
@@ -2243,6 +2240,21 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4059,6 +4071,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4147,6 +4176,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       locationPermission: false,
       showName: false,
       isSetLocation: false,
+      publicacionesUrgentes: [],
+      isUrgentes: false,
       msgForm: "",
       user_id: document.querySelector('meta[name="user_id"]') ? document.querySelector('meta[name="user_id"]').getAttribute("content") : null,
       type: document.querySelector('meta[name="type"]') ? document.querySelector('meta[name="type"]').getAttribute("content") : null,
@@ -4160,13 +4191,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   methods: {
-    allOk: function allOk() {
-      /* if (this.user_id && this.type == "normal" && this.typePosts == "posts") {
-      this.myPosts();
-      } else {
-      this.allPosts();
-      } */
-      this.allPosts();
+    loadPostUrgentes: function loadPostUrgentes() {
+      this.isUrgentes = true;
+      this.isLoading = true;
+      this.fetchData("api/posts/urgentes");
+    },
+    volverPostsNormales: function volverPostsNormales() {
+      this.isLoading = true;
+      this.fetchData(this.defaultUrl);
+      this.isUrgentes = false;
     },
     clickAd: function clickAd(ad) {
       this.$emit("clickAd", ad);
@@ -4208,9 +4241,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     _this2.$emit("setLocation", lat, _long);
                   }
 
-                  var url = "".concat(_this2.defaultUrl, "/").concat(lat, "/").concat(_long);
+                  _this2.defaultUrl = "".concat(_this2.defaultUrl, "/").concat(lat, "/").concat(_long);
 
-                  _this2.fetchData(url);
+                  _this2.fetchData(_this2.defaultUrl);
 
                   return;
                 }, function (error) {
@@ -10311,7 +10344,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.comment {\n  background-color: rgb(250, 250, 250);\n  border: 0.5px solid rgb(218, 218, 218);\n  color: rgb(85, 85, 85);\n  margin-bottom: 5px;\n  padding-top: 0.5%;\n  padding-bottom: 0%;\n  padding-left: 1.5%;\n  padding-right: 1.5%;\n  border-radius: 2px;\n  margin-right: 2px;\n  margin-left: 2px;\n  width: 90%;\n}\n.input-comment {\n  background-color: #f5f5f5;\n  color: rgb(124, 124, 124);\n  font-size: 0.8em;\n  background-image: url(" + escape(__webpack_require__(/*! ../../../public/images/resources/comment.png */ "./public/images/resources/comment.png")) + ");\n  background-position: 10px 10px;\n  background-size: 20px;\n  background-repeat: no-repeat;\n  padding-left: 40px;\n}\n", ""]);
+exports.push([module.i, "\n.comment {\n    background-color: rgb(250, 250, 250);\n    border: 0.5px solid rgb(218, 218, 218);\n    color: rgb(85, 85, 85);\n    margin-bottom: 5px;\n    padding-top: 0.5%;\n    padding-bottom: 0%;\n    padding-left: 1.5%;\n    padding-right: 1.5%;\n    border-radius: 10px;\n    margin-right: 2px;\n    margin-left: 2px;\n    width: 90%;\n}\n.input-comment {\n    background-color: #f5f5f5;\n    color: rgb(124, 124, 124);\n    font-size: 0.8em;\n    background-image: url(" + escape(__webpack_require__(/*! ../../../public/images/resources/comment.png */ "./public/images/resources/comment.png")) + ");\n    background-position: 10px 10px;\n    background-size: 20px;\n    background-repeat: no-repeat;\n    padding-left: 40px;\n}\n", ""]);
 
 // exports
 
@@ -49845,7 +49878,11 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("Mostrar todos los comentarios")]
+                      [
+                        _vm._v(
+                          "\n                Mostrar todos los comentarios\n            "
+                        )
+                      ]
                     )
                   ])
                 : _vm._e()
@@ -51188,7 +51225,7 @@ var staticRenderFns = [
             _vm._v("70 km")
           ]),
           _vm._v(" "),
-          _c("option", { attrs: { value: "1000000" } }, [_vm._v("Libre")])
+          _c("option", { attrs: { value: "1000000" } }, [_vm._v("Urgente")])
         ]
       )
     ])
@@ -51472,8 +51509,62 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "col-md-12 mt-4" }, [
             _vm.typePosts == "posts"
-              ? _c("div", [_vm._m(1)])
-              : _c("div", [_vm._m(2)]),
+              ? _c("div", [
+                  !_vm.isUrgentes
+                    ? _c("h4", { staticStyle: { display: "inline" } }, [
+                        _c("i", { staticClass: "fa fa-wrench" }),
+                        _vm._v(" Publicaciones de autopartes\n                ")
+                      ])
+                    : _c("h4", { staticStyle: { display: "inline" } }, [
+                        _c("i", { staticClass: "fa fa-wrench" }),
+                        _vm._v(
+                          " Publicaciones de autopartes\n                    urgentes\n                "
+                        )
+                      ])
+                ])
+              : _c("div", [_vm._m(1)]),
+            _vm._v(" "),
+            _vm.typePosts == "posts"
+              ? _c("div", { staticClass: "text-right mb-3" }, [
+                  !_vm.isUrgentes
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-warning",
+                          on: {
+                            click: function($event) {
+                              return _vm.loadPostUrgentes()
+                            }
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "fas fa-exclamation" }),
+                          _vm._v(
+                            " Ver publicaciones\n                    urgentes\n                "
+                          )
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.isUrgentes
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-success",
+                          on: {
+                            click: function($event) {
+                              return _vm.volverPostsNormales()
+                            }
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "fas fa-arrow-left" }),
+                          _vm._v(" Regresar\n                ")
+                        ]
+                      )
+                    : _vm._e()
+                ])
+              : _vm._e(),
             _vm._v(" "),
             !_vm.isLoading
               ? _c("div", { staticClass: "posts-container" }, [
@@ -51534,21 +51625,11 @@ var render = function() {
                   _vm._v(" "),
                   _vm.posts.length == 0 && _vm.isLoading == false
                     ? _c("div", { staticClass: "text-center pt-5" }, [
-                        !_vm.isMyPosts
-                          ? _c("h3", [
-                              _vm._v(
-                                "\n                        Aún no se han hecho publicaciones\n                    "
-                              )
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.isMyPosts
-                          ? _c("h3", [
-                              _vm._v(
-                                "\n                        Aún no has hecho ninguna publicación\n                    "
-                              )
-                            ])
-                          : _vm._e()
+                        _c("h3", [
+                          _vm._v(
+                            "\n                        Aún no se han hecho publicaciones\n                    "
+                          )
+                        ])
                       ])
                     : _vm._e()
                 ])
@@ -51568,15 +51649,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("p", { staticClass: "m-0 p-0" }, [
       _c("b", [_vm._v("Active su ubicacion para gozar de nuestros servicios.")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h4", [
-      _c("i", { staticClass: "fa fa-wrench" }),
-      _vm._v(" Publicaciones de autopartes\n                ")
     ])
   },
   function() {

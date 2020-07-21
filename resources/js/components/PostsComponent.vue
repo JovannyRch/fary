@@ -82,8 +82,12 @@
 
             <div class="col-md-12 mt-4">
                 <div v-if="typePosts == 'posts'">
-                    <h4>
+                    <h4 style="display:inline" v-if="!isUrgentes">
                         <i class="fa fa-wrench"></i> Publicaciones de autopartes
+                    </h4>
+                    <h4 v-else style="display:inline">
+                        <i class="fa fa-wrench"></i> Publicaciones de autopartes
+                        urgentes
                     </h4>
                 </div>
                 <div v-else>
@@ -92,7 +96,23 @@
                         chocados
                     </h4>
                 </div>
-
+                <div class="text-right mb-3" v-if="typePosts == 'posts'">
+                    <button
+                        v-if="!isUrgentes"
+                        class="btn btn-warning"
+                        @click="loadPostUrgentes()"
+                    >
+                        <i class="fas fa-exclamation"></i> Ver publicaciones
+                        urgentes
+                    </button>
+                    <button
+                        v-if="isUrgentes"
+                        @click="volverPostsNormales()"
+                        class="btn btn-success"
+                    >
+                        <i class="fas fa-arrow-left"></i> Regresar
+                    </button>
+                </div>
                 <div class="posts-container" v-if="!isLoading">
                     <div v-if="posts.length != 0">
                         <div
@@ -131,11 +151,8 @@
                         v-if="posts.length == 0 && isLoading == false"
                         class="text-center pt-5"
                     >
-                        <h3 v-if="!isMyPosts">
+                        <h3>
                             Aún no se han hecho publicaciones
-                        </h3>
-                        <h3 v-if="isMyPosts">
-                            Aún no has hecho ninguna publicación
                         </h3>
                     </div>
                 </div>
@@ -217,7 +234,8 @@ export default {
             locationPermission: false,
             showName: false,
             isSetLocation: false,
-
+            publicacionesUrgentes: [],
+            isUrgentes: false,
             msgForm: "",
             user_id: document.querySelector('meta[name="user_id"]')
                 ? document
@@ -247,13 +265,15 @@ export default {
         }
     },
     methods: {
-        allOk() {
-            /* if (this.user_id && this.type == "normal" && this.typePosts == "posts") {
-      this.myPosts();
-    } else {
-      this.allPosts();
-    } */
-            this.allPosts();
+        loadPostUrgentes() {
+            this.isUrgentes = true;
+            this.isLoading = true;
+            this.fetchData("api/posts/urgentes");
+        },
+        volverPostsNormales() {
+            this.isLoading = true;
+            this.fetchData(this.defaultUrl);
+            this.isUrgentes = false;
         },
         clickAd(ad) {
             this.$emit("clickAd", ad);
@@ -274,8 +294,8 @@ export default {
                                 this.isSetLocation = true;
                                 this.$emit("setLocation", lat, long);
                             }
-                            let url = `${this.defaultUrl}/${lat}/${long}`;
-                            this.fetchData(url);
+                            this.defaultUrl = `${this.defaultUrl}/${lat}/${long}`;
+                            this.fetchData(this.defaultUrl);
                             return;
                         },
                         error => {

@@ -21,6 +21,7 @@ class PostsController extends Controller
 
     }  
 
+
     public function withLogin($lat, $long){
         $otros = [];
         $user_id = Auth::user()->id;
@@ -37,14 +38,7 @@ class PostsController extends Controller
                 ->where('posts.user_id','!=',$user_id)
                 ->toSql();
             $posts = DB::select("select * from ($query) as tabla1 where distance <= rango or rango = 10000 order by created_at desc, distance asc");
-            /* $otros = Post::
-            join('users', 'users.id', '=', 'posts.user_id')
-            ->select('posts.content','posts.created_at','posts.user_id','posts.img','posts.id',  'users.name as username','users.address')
-            ->where('posts.user_id','!=',$user_id)
-            ->whereNull('latitud')
-            ->whereNull('longitud')
-            ->toSql();
-            $otros = DB::select($otros); */
+           
         }
         return response()->json(['data' => $posts, 'otros' =>  $otros,'myPosts' => $myPosts], 200);
     }
@@ -64,7 +58,7 @@ class PostsController extends Controller
                 join('users', 'users.id', '=', 'posts.user_id')
                 ->select('posts.rango','posts.content','posts.created_at','posts.user_id','posts.img','posts.id',  'users.name as username','users.address', DB::raw($location))
                ->toSql();
-            $posts = DB::select("select * from ($query) as tabla1 where distance <= rango or rango = 10000 order by created_at desc, distance asc");
+            $posts = DB::select("select * from ($query) as tabla1 where distance <= rango  order by created_at desc, distance asc");
             //posts sin ubicacion
             $otros = Post::
             join('users', 'users.id', '=', 'posts.user_id')
@@ -143,6 +137,14 @@ class PostsController extends Controller
         return response()->json(['data' => $posts], 200);
     }
 
+    public function postsWithoutRange(){
+        $query = Post::
+                join('users', 'users.id', '=', 'posts.user_id')
+                ->select('posts.rango','posts.content','posts.created_at','posts.user_id','posts.img','posts.id',  'users.name as username','users.address')
+               ->toSql();
+        $posts = DB::select("select * from ($query) as tabla1 where rango = 1000000 order by created_at desc");
+        return response()->json(['data' => $posts, 'otros' =>  [],'misposts' => []], 200);
+    }
 
     public function show($id){
         $post = Post::where('posts.id', $id)
@@ -197,7 +199,6 @@ class PostsController extends Controller
         LIMIT 15;
     ";  
     }
-
 
     public function create(Request $request){
         

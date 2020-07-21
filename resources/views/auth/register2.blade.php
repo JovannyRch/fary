@@ -124,7 +124,7 @@
                                 </div>
 
                                 <div class="col-md-8 p-9 offset-md-2 text-center" style="color: grey">
-                                    Al hacer clic en "Crear cuenta de acceso" 
+                                    Al hacer clic en "Crear cuenta de acceso" aceptas la
                                     <a href="#" style="color: rgb(105, 140, 150);" data-toggle="modal"
                                         data-target="#user-register">política de privacidad</a>, <a href="/docs/contrato.pdf" target="_blank" style="color: rgb(105, 140, 150);" >terminos y condiciones</a>.
                                 </div>

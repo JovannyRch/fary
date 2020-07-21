@@ -1939,19 +1939,11 @@ __webpack_require__.r(__webpack_exports__);
       var n = this.$store.getters.ads.length;
       var ads = [];
 
-      if (this.part == 1) {
-        for (var i = 0; i < n / 2; i++) {
-          ads.push(this.$store.getters.ads[i]);
-        }
-
-        return ads;
-      } else {
-        for (var _i = n / 2; _i < n; _i++) {
-          ads.push(this.$store.getters.ads[_i]);
-        }
-
-        return ads;
+      for (var i = 0; i < n / 2; i++) {
+        ads.push(this.$store.getters.ads[i]);
       }
+
+      return ads;
     }
   },
   mounted: function mounted() {},

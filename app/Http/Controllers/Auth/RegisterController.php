@@ -117,7 +117,6 @@ class RegisterController extends Controller
         ];
         
         if ($data['password'] == $data['password_confirmation']) {
-         
             if(strlen($data['password']) >= 3){
                 //Registra usuario
                 $user = $this->create($data, 'owner');

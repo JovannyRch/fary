@@ -64,14 +64,12 @@ class NegociosController extends Controller
 
     public function update(StoreNegocioPut $request, Negocio $negocio){
         $data = $request->validated();
-        
+      
         $tipos = $request->tipos;
         DB::delete('delete from tipos_negocios where negocio_id = ?',[$negocio->id]);
         foreach ($tipos as $tipo ) {
             DB::insert('INSERT into tipos_negocios(negocio_id,tipo_id,created_at,updated_at) values(?,?,NOW(),NOW())', [$negocio->id, $tipo]);
         }
-      
-        
         if($request->hasFile('img')){
             $this->deleteFile($negocio->img);
             $filename = time().".".$request->img->extension();

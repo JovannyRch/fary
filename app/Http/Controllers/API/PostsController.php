@@ -34,7 +34,7 @@ class PostsController extends Controller
             $location = $this->queryLocation($lat,$long,'posts');
             $posts = Post::
                 join('users', 'users.id', '=', 'posts.user_id')
-                ->select('posts.rango','posts.content','posts.created_at','posts.user_id','posts.img','posts.id',  'users.name as username','users.address', DB::raw($location))
+                ->select('posts.latitud','posts.longitud','posts.rango','posts.content','posts.created_at','posts.user_id','posts.img','posts.id',  'users.name as username','users.address', DB::raw($location))
                 ->where('posts.user_id','!=',$user_id)
                 ->toSql();
             $posts = DB::select("select * from ($query) as tabla1 where distance <= rango or rango = 10000 order by created_at desc, distance asc");
@@ -56,7 +56,7 @@ class PostsController extends Controller
             $location = $this->queryLocation($lat,$long,'posts');
             $query = Post::
                 join('users', 'users.id', '=', 'posts.user_id')
-                ->select('posts.rango','posts.content','posts.created_at','posts.user_id','posts.img','posts.id',  'users.name as username','users.address', DB::raw($location))
+                ->select('posts.latitud','posts.longitud','posts.rango','posts.content','posts.created_at','posts.user_id','posts.img','posts.id',  'users.name as username','users.address', DB::raw($location))
                ->toSql();
             $posts = DB::select("select * from ($query) as tabla1 where distance <= rango  order by created_at desc, distance asc");
             //posts sin ubicacion

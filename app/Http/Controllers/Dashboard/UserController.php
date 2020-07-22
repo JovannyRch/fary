@@ -93,12 +93,17 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)
-    {
-        try {
-            $user->delete();
-            return back()->with('msg','Eliminación correcta');
-        } catch (\Throwable $th) {
-            return back()->with('warning','Ocurrio un error al eliminar el usuario');
+    {   
+        if($user->email != 'autopartesfary@gmail.com'){
+            try{
+                $user->delete();
+                return back()->with('msg','Eliminación correcta');
+            } catch (\Throwable $th) {
+                return back()->with('warning','Ocurrio un error al eliminar el usuario');
+            }
+        }else {
+            return back()->with('warning','Acción no permitida');
         }
+        
     }
 }

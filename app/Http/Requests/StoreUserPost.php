@@ -23,7 +23,7 @@ class StoreUserPost extends FormRequest
             'email' => 'required|email|max:255|unique:users',
             'address' => 'required|max:255',
             'phone' => 'required|min:10|max:10',
-            'password' => 'required|min:8:string',
+            'password' => 'required|min:3:string',
             'rol' => 'required'
         ];
     }
@@ -43,6 +43,7 @@ class StoreUserPost extends FormRequest
             'name.required' => "El nombre de usuario es requerido",
             'phone.min' => "El teléfono debe tener 10 dígitos",
             'phone.max' => "El teléfono debe tener 10 dígitos",
+            'password.min' => "La contraseña debe tener al menos 10 dígitos",
             'rol.required' => "El tipo de usuario es requerido"
         ];
     }

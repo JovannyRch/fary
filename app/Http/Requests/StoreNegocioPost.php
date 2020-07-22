@@ -31,8 +31,8 @@ class StoreNegocioPost extends FormRequest
             'email' => 'required|email',
             'tipos' => 'required',
             'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4048',
-            'latitud' => 'nullable',
-            'longitud' => 'nullable'
+            'latitud' => 'required',
+            'longitud' => 'required'
         ];
     }
 
@@ -52,6 +52,8 @@ class StoreNegocioPost extends FormRequest
     public function messages(){
         return [
             'name.required' => "El nombre del negocio es requerido",
+            'latitud.required' => "La latitud del negocio es requerida",
+            'longitud.required' => "La longitud del negocio es requerida",
             'name.unique' => 'Ya existe un registro de negocio con el mismo nombre, intente con otro',
             'phone.min' => "El teléfono debe tener 10 dígitos",
             'phone.max' => "El teléfono debe tener 10 dígitos",

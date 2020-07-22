@@ -10344,7 +10344,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.comment {\n    background-color: rgb(250, 250, 250);\n    border: 0.5px solid rgb(218, 218, 218);\n    color: rgb(85, 85, 85);\n    margin-bottom: 5px;\n    padding-top: 0.5%;\n    padding-bottom: 0%;\n    padding-left: 1.5%;\n    padding-right: 1.5%;\n    border-radius: 10px;\n    margin-right: 2px;\n    margin-left: 2px;\n    width: 90%;\n}\n.input-comment {\n    background-color: #f5f5f5;\n    color: rgb(124, 124, 124);\n    font-size: 0.8em;\n    background-image: url(" + escape(__webpack_require__(/*! ../../../public/images/resources/comment.png */ "./public/images/resources/comment.png")) + ");\n    background-position: 10px 10px;\n    background-size: 20px;\n    background-repeat: no-repeat;\n    padding-left: 40px;\n}\n", ""]);
+exports.push([module.i, "\n.comment {\r\n    background-color: rgb(250, 250, 250);\r\n    border: 0.5px solid rgb(218, 218, 218);\r\n    color: rgb(85, 85, 85);\r\n    margin-bottom: 5px;\r\n    padding-top: 0.5%;\r\n    padding-bottom: 0%;\r\n    padding-left: 1.5%;\r\n    padding-right: 1.5%;\r\n    border-radius: 10px;\r\n    margin-right: 2px;\r\n    margin-left: 2px;\r\n    width: 90%;\n}\n.input-comment {\r\n    background-color: #f5f5f5;\r\n    color: rgb(124, 124, 124);\r\n    font-size: 0.8em;\r\n    background-image: url(" + escape(__webpack_require__(/*! ../../../public/images/resources/comment.png */ "./public/images/resources/comment.png")) + ");\r\n    background-position: 10px 10px;\r\n    background-size: 20px;\r\n    background-repeat: no-repeat;\r\n    padding-left: 40px;\n}\r\n", ""]);
 
 // exports
 
@@ -10363,7 +10363,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.post-data {\n  font-size: 1.2em;\n}\n.separator {\n  margin: 0;\n  height: 1px;\n  border-radius: 10px;\n  background-color: gainsboro;\n}\n.content {\n  color: rgb(94, 94, 94);\n}\n.post {\n  padding-top: 0%;\n  padding-left: 2%;\n  padding-right: 2%;\n  background-color: white;\n  border-radius: 10px;\n  margin-bottom: 3%;\n  box-shadow: 1px 9px 18px -11px rgba(191, 191, 191, 1);\n}\n.post-detail {\n  color: #a7a7a7;\n}\n.post-info {\n  margin-top: 1%;\n  margin-bottom: 1%;\n  padding: 1%;\n}\n.topics-container {\n  margin-top: 1%;\n  margin-bottom: 1%;\n  padding: 1%;\n}\n.topic {\n  background-color: #e7f3ff;\n  margin-right: 4px;\n  color: #427fc2;\n  font-size: 0.7em;\n  padding: 2%;\n  padding-bottom: 0.7%;\n  padding-top: 0.7%;\n  border-radius: 5px;\n  font-weight: 600;\n}\n.grid {\n  display: grid;\n  grid-template-columns: repeat(5, 1fr);\n  grid-template-rows: 1fr;\n  grid-column-gap: 0px;\n  grid-row-gap: 0px;\n}\n.grid-1 {\n  grid-area: 1 / 1 / 2 / 4;\n}\n.grid-2 {\n  grid-area: 1 / 4 / 2 / 6;\n}\n.details {\n  width: 100%;\n}\n.details p {\n  width: 100%;\n}\n.main-row {\n  width: inherit;\n}\n", ""]);
+exports.push([module.i, "\n.post-data {\r\n  font-size: 1.2em;\n}\n.separator {\r\n  margin: 0;\r\n  height: 1px;\r\n  border-radius: 10px;\r\n  background-color: gainsboro;\n}\n.content {\r\n  color: rgb(94, 94, 94);\n}\n.post {\r\n  padding-top: 0%;\r\n  padding-left: 2%;\r\n  padding-right: 2%;\r\n  background-color: white;\r\n  border-radius: 10px;\r\n  margin-bottom: 3%;\r\n  box-shadow: 1px 9px 18px -11px rgba(191, 191, 191, 1);\n}\n.post-detail {\r\n  color: #a7a7a7;\n}\n.post-info {\r\n  margin-top: 1%;\r\n  margin-bottom: 1%;\r\n  padding: 1%;\n}\n.topics-container {\r\n  margin-top: 1%;\r\n  margin-bottom: 1%;\r\n  padding: 1%;\n}\n.topic {\r\n  background-color: #e7f3ff;\r\n  margin-right: 4px;\r\n  color: #427fc2;\r\n  font-size: 0.7em;\r\n  padding: 2%;\r\n  padding-bottom: 0.7%;\r\n  padding-top: 0.7%;\r\n  border-radius: 5px;\r\n  font-weight: 600;\n}\n.grid {\r\n  display: grid;\r\n  grid-template-columns: repeat(5, 1fr);\r\n  grid-template-rows: 1fr;\r\n  grid-column-gap: 0px;\r\n  grid-row-gap: 0px;\n}\n.grid-1 {\r\n  grid-area: 1 / 1 / 2 / 4;\n}\n.grid-2 {\r\n  grid-area: 1 / 4 / 2 / 6;\n}\n.details {\r\n  width: 100%;\n}\n.details p {\r\n  width: 100%;\n}\n.main-row {\r\n  width: inherit;\n}\r\n", ""]);
 
 // exports
 
@@ -10382,7 +10382,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.form-container {\n    background-color: white;\n    border-radius: 5px;\n    padding-right: 40px;\n    padding-left: 40px;\n    padding-top: 10px;\n    padding-bottom: 10px;\n    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.06),\n        0 3px 8px rgba(0, 0, 0, 0.09);\n}\n.title-page {\n    font-weight: bold;\n    margin-bottom: 1%;\n    margin-top: 1.5%;\n}\n.col-12 {\n    padding: 0;\n}\n.col-md-12 {\n    padding: 0;\n}\n.col-md-4 {\n    padding: 0;\n    padding-right: 3%;\n}\n.fileinput-button {\n    position: relative;\n    overflow: hidden;\n    display: inline-block;\n}\n", ""]);
+exports.push([module.i, "\n.form-container {\r\n    background-color: white;\r\n    border-radius: 5px;\r\n    padding-right: 40px;\r\n    padding-left: 40px;\r\n    padding-top: 10px;\r\n    padding-bottom: 10px;\r\n    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.06),\r\n        0 3px 8px rgba(0, 0, 0, 0.09);\n}\n.title-page {\r\n    font-weight: bold;\r\n    margin-bottom: 1%;\r\n    margin-top: 1.5%;\n}\n.col-12 {\r\n    padding: 0;\n}\n.col-md-12 {\r\n    padding: 0;\n}\n.col-md-4 {\r\n    padding: 0;\r\n    padding-right: 3%;\n}\n.fileinput-button {\r\n    position: relative;\r\n    overflow: hidden;\r\n    display: inline-block;\n}\r\n", ""]);
 
 // exports
 
@@ -10401,7 +10401,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#container-post {\n    margin-bottom: 1%;\n}\n.title-page {\n    font-weight: bold;\n    margin-bottom: 1%;\n    margin-top: 1.5%;\n}\n.container-tools {\n    height: 30px;\n}\n.ad {\n    background-color: transparent;\n}\n.parent {\n    display: grid;\n    grid-template-columns: repeat(2, 1fr);\n    grid-template-rows: 1fr;\n    grid-column-gap: 0px;\n    grid-row-gap: 0px;\n}\n.div1 {\n    grid-area: 1 / 1 / 2 / 2;\n    width: 10px;\n}\n.div2 {\n    grid-area: 1 / 2 / 2 / 3;\n}\n", ""]);
+exports.push([module.i, "\n#container-post {\r\n    margin-bottom: 1%;\n}\n.title-page {\r\n    font-weight: bold;\r\n    margin-bottom: 1%;\r\n    margin-top: 1.5%;\n}\n.container-tools {\r\n    height: 30px;\n}\n.ad {\r\n    background-color: transparent;\n}\n.parent {\r\n    display: grid;\r\n    grid-template-columns: repeat(2, 1fr);\r\n    grid-template-rows: 1fr;\r\n    grid-column-gap: 0px;\r\n    grid-row-gap: 0px;\n}\n.div1 {\r\n    grid-area: 1 / 1 / 2 / 2;\r\n    width: 10px;\n}\n.div2 {\r\n    grid-area: 1 / 2 / 2 / 3;\n}\r\n", ""]);
 
 // exports
 
@@ -10420,7 +10420,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.date {\n  color: #9e9e9e;\n  font-weight: 600;\n  font-size: 0.7em;\n  margin-right: 10px;\n}\n", ""]);
+exports.push([module.i, "\n.date {\r\n  color: #9e9e9e;\r\n  font-weight: 600;\r\n  font-size: 0.7em;\r\n  margin-right: 10px;\n}\r\n", ""]);
 
 // exports
 
@@ -10439,7 +10439,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.box-header {\n  background: #fefefe;\n  border-top-left-radius: 10px;\n  border-top-right-radius: 10px;\n  box-shadow: -2px 6px 5px 0px rgba(222, 222, 222, 1);\n  border-bottom: 3px solid #a73b46;\n}\n", ""]);
+exports.push([module.i, "\n.box-header {\r\n  background: #fefefe;\r\n  border-top-left-radius: 10px;\r\n  border-top-right-radius: 10px;\r\n  box-shadow: -2px 6px 5px 0px rgba(222, 222, 222, 1);\r\n  border-bottom: 3px solid #a73b46;\n}\r\n", ""]);
 
 // exports
 
@@ -10458,7 +10458,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.carousel-indicators .active {\n  color: #3c7c64;\n}\n.carousel-control-prev-icon {\n  background-color: #90b4a6;\n}\n.carousel-control-next-icon {\n  background-color: #90b4a6;\n}\n", ""]);
+exports.push([module.i, "\n.carousel-indicators .active {\r\n  color: #3c7c64;\n}\n.carousel-control-prev-icon {\r\n  background-color: #90b4a6;\n}\n.carousel-control-next-icon {\r\n  background-color: #90b4a6;\n}\r\n", ""]);
 
 // exports
 
@@ -10477,7 +10477,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.box {\n  float: right;\n  position: relative;\n  z-index: 10;\n}\n.notifications {\n  width: 60px;\n  height: 60px;\n  background: #fff;\n  border-radius: 30px;\n  box-sizing: border-box;\n  text-align: center;\n  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);\n}\n.notifications .fas {\n  color: #cecece;\n  line-height: 60px;\n  font-size: 30px;\n}\n.notifications .num {\n  position: absolute;\n  top: 0px;\n  right: -5px;\n  width: 25px;\n  height: 25px;\n  border-radius: 50%;\n  background: #c70518;\n  color: #fff;\n  line-height: 25px;\n  font-family: sans-serif;\n  text-align: center;\n}\n.notifications:hover {\n  width: 300px;\n  height: 60px;\n  text-align: left;\n  padding: 0 15px;\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n}\n@media (max-width: 600px) {\n.notifications:hover {\n    width: 100%;\n    height: 60px;\n    text-align: left;\n    padding: 0 15px;\n    border-bottom-left-radius: 0;\n    border-bottom-right-radius: 0;\n}\n}\n.notifications:hover .num {\n  position: relative;\n  background: transparent;\n  -moz-columns: #fff;\n       columns: #fff;\n  font-size: 24px;\n  top: -4px;\n}\n.notifications:hover .num:after {\n  content: \"Notificaciones\";\n  color: #717171;\n}\n.notifications:hover ul {\n  display: block;\n}\n.list {\n  position: absolute;\n  background: #fff;\n  left: 0;\n  top: 60px;\n  margin: 0;\n  padding: 20px;\n  width: 100%;\n  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);\n  box-sizing: border-box;\n  display: none;\n\n  border-bottom-left-radius: 30px;\n  border-bottom-right-radius: 30px;\n}\n.list li {\n  list-style: none;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n  padding: 8px 0;\n  display: flex;\n  text-overflow: ellipsis;\n}\n.list li:last-child {\n  border-bottom: none;\n}\n.list li .icon {\n  width: 24px;\n  height: 24px;\n  border-radius: 50%;\n  text-align: center;\n  line-height: 24px;\n  margin-right: 15px;\n}\n.list li .icon .fas {\n  color: #97222e;\n  font-size: 24px;\n  line-height: 24px;\n}\n.list li .icon .fa {\n  color: #97222e;\n  font-size: 24px;\n  line-height: 24px;\n}\n.user {\n  color: #97222e;\n}\n.list li .text {\n  position: relative;\n  font-family: sans-serif;\n  top: 3px;\n  cursor: pointer;\n}\n.list li:hover .text {\n  font-weight: bold;\n  color: #97222e;\n}\n.list li:hover .noread {\n  background-color: rgb(169, 44, 44);\n}\n", ""]);
+exports.push([module.i, "\n.box {\r\n  float: right;\r\n  position: relative;\r\n  z-index: 10;\n}\n.notifications {\r\n  width: 60px;\r\n  height: 60px;\r\n  background: #fff;\r\n  border-radius: 30px;\r\n  box-sizing: border-box;\r\n  text-align: center;\r\n  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);\n}\n.notifications .fas {\r\n  color: #cecece;\r\n  line-height: 60px;\r\n  font-size: 30px;\n}\n.notifications .num {\r\n  position: absolute;\r\n  top: 0px;\r\n  right: -5px;\r\n  width: 25px;\r\n  height: 25px;\r\n  border-radius: 50%;\r\n  background: #c70518;\r\n  color: #fff;\r\n  line-height: 25px;\r\n  font-family: sans-serif;\r\n  text-align: center;\n}\n.notifications:hover {\r\n  width: 300px;\r\n  height: 60px;\r\n  text-align: left;\r\n  padding: 0 15px;\r\n  border-bottom-left-radius: 0;\r\n  border-bottom-right-radius: 0;\n}\n@media (max-width: 600px) {\n.notifications:hover {\r\n    width: 100%;\r\n    height: 60px;\r\n    text-align: left;\r\n    padding: 0 15px;\r\n    border-bottom-left-radius: 0;\r\n    border-bottom-right-radius: 0;\n}\n}\n.notifications:hover .num {\r\n  position: relative;\r\n  background: transparent;\r\n  -moz-columns: #fff;\r\n       columns: #fff;\r\n  font-size: 24px;\r\n  top: -4px;\n}\n.notifications:hover .num:after {\r\n  content: \"Notificaciones\";\r\n  color: #717171;\n}\n.notifications:hover ul {\r\n  display: block;\n}\n.list {\r\n  position: absolute;\r\n  background: #fff;\r\n  left: 0;\r\n  top: 60px;\r\n  margin: 0;\r\n  padding: 20px;\r\n  width: 100%;\r\n  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);\r\n  box-sizing: border-box;\r\n  display: none;\r\n\r\n  border-bottom-left-radius: 30px;\r\n  border-bottom-right-radius: 30px;\n}\n.list li {\r\n  list-style: none;\r\n  border-bottom: 1px solid rgba(0, 0, 0, 0.1);\r\n  padding: 8px 0;\r\n  display: flex;\r\n  text-overflow: ellipsis;\n}\n.list li:last-child {\r\n  border-bottom: none;\n}\n.list li .icon {\r\n  width: 24px;\r\n  height: 24px;\r\n  border-radius: 50%;\r\n  text-align: center;\r\n  line-height: 24px;\r\n  margin-right: 15px;\n}\n.list li .icon .fas {\r\n  color: #97222e;\r\n  font-size: 24px;\r\n  line-height: 24px;\n}\n.list li .icon .fa {\r\n  color: #97222e;\r\n  font-size: 24px;\r\n  line-height: 24px;\n}\n.user {\r\n  color: #97222e;\n}\n.list li .text {\r\n  position: relative;\r\n  font-family: sans-serif;\r\n  top: 3px;\r\n  cursor: pointer;\n}\n.list li:hover .text {\r\n  font-weight: bold;\r\n  color: #97222e;\n}\n.list li:hover .noread {\r\n  background-color: rgb(169, 44, 44);\n}\r\n", ""]);
 
 // exports
 
@@ -52599,7 +52599,7 @@ var staticRenderFns = [
       _c("div", { staticClass: "card-header" }, [
         _c("h2", [
           _c("i", { staticClass: "fas fa-eye" }),
-          _vm._v(" Visión\n            ")
+          _vm._v(" slajdlksa jdsa Visión\n            ")
         ])
       ]),
       _vm._v(" "),
@@ -72802,8 +72802,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/jovannyrch/Documents/Proyectos/fary/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/jovannyrch/Documents/Proyectos/fary/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\fary\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\fary\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

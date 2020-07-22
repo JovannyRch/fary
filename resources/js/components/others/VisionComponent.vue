@@ -16,7 +16,7 @@
           <div class="card">
             <div class="card-header">
               <h2>
-                <i class="fas fa-eye"></i> Visión
+                <i class="fas fa-eye"></i> slajdlksa jdsa Visión
               </h2>
             </div>
             <div class="card-body">

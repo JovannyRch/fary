@@ -143,6 +143,7 @@
                                 :post_user_id="p.user_id"
                                 :allComments="false"
                                 :typePosts="typePosts"
+                                :deleteUrl="defaultUrl"
                                 @updateData="deletePost(index)"
                             />
                         </div>
@@ -236,6 +237,7 @@ export default {
             isSetLocation: false,
             publicacionesUrgentes: [],
             isUrgentes: false,
+            urlDelete: "",
             msgForm: "",
             user_id: document.querySelector('meta[name="user_id"]')
                 ? document

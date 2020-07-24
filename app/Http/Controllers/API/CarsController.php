@@ -257,7 +257,8 @@ class CarsController extends Controller
                 $this->deleteImages($imgs);
                 return response()->json(['msg' => 'Eliminado correctamente'], 200);
             } catch (\Throwable $th) {
-                return response()->json(['msg'=> 'Ocurrió un error al eliminar'], 400);
+                echo $th;
+                //return response()->json(['msg'=> 'Ocurrió un error al eliminar'], 400);
             }
         }
         return response()->json(['msg' => 'El id no existe'], 400);

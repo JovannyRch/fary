@@ -3483,6 +3483,83 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3492,7 +3569,7 @@ __webpack_require__.r(__webpack_exports__);
     CommentsComponent: _CommentsComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     ImgCarouselComponent: _utils_ImgCarouselComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
-  props: ["content", "date", "user", "img", "id", "post_user_id", "username", "address", "imgs", "typePosts", "allComments"],
+  props: ["content", "date", "user", "img", "id", "post_user_id", "username", "address", "imgs", "typePosts", "allComments", "deleteUrl"],
   data: function data() {
     return {
       user_id: document.querySelector('meta[name="user_id"]').getAttribute("content"),
@@ -3539,7 +3616,7 @@ __webpack_require__.r(__webpack_exports__);
     deletePost: function deletePost() {
       var _this = this;
 
-      fetch("/api/posts/" + this.id, {
+      fetch("api/".concat(this.typePosts, "/") + this.id, {
         method: "delete"
       }).then(function (response) {
         if (response.status == 200) {
@@ -4088,6 +4165,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -4178,6 +4256,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       isSetLocation: false,
       publicacionesUrgentes: [],
       isUrgentes: false,
+      urlDelete: "",
       msgForm: "",
       user_id: document.querySelector('meta[name="user_id"]') ? document.querySelector('meta[name="user_id"]').getAttribute("content") : null,
       type: document.querySelector('meta[name="type"]') ? document.querySelector('meta[name="type"]').getAttribute("content") : null,
@@ -10372,7 +10451,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.post-data {\n  font-size: 1.2em;\n}\n.separator {\n  margin: 0;\n  height: 1px;\n  border-radius: 10px;\n  background-color: gainsboro;\n}\n.content {\n  color: rgb(94, 94, 94);\n}\n.post {\n  padding-top: 0%;\n  padding-left: 2%;\n  padding-right: 2%;\n  background-color: white;\n  border-radius: 10px;\n  margin-bottom: 3%;\n  box-shadow: 1px 9px 18px -11px rgba(191, 191, 191, 1);\n}\n.post-detail {\n  color: #a7a7a7;\n}\n.post-info {\n  margin-top: 1%;\n  margin-bottom: 1%;\n  padding: 1%;\n}\n.topics-container {\n  margin-top: 1%;\n  margin-bottom: 1%;\n  padding: 1%;\n}\n.topic {\n  background-color: #e7f3ff;\n  margin-right: 4px;\n  color: #427fc2;\n  font-size: 0.7em;\n  padding: 2%;\n  padding-bottom: 0.7%;\n  padding-top: 0.7%;\n  border-radius: 5px;\n  font-weight: 600;\n}\n.grid {\n  display: grid;\n  grid-template-columns: repeat(5, 1fr);\n  grid-template-rows: 1fr;\n  grid-column-gap: 0px;\n  grid-row-gap: 0px;\n}\n.grid-1 {\n  grid-area: 1 / 1 / 2 / 4;\n}\n.grid-2 {\n  grid-area: 1 / 4 / 2 / 6;\n}\n.details {\n  width: 100%;\n}\n.details p {\n  width: 100%;\n}\n.main-row {\n  width: inherit;\n}\n", ""]);
+exports.push([module.i, "\n.post-data {\n    font-size: 1.2em;\n}\n.separator {\n    margin: 0;\n    height: 1px;\n    border-radius: 10px;\n    background-color: gainsboro;\n}\n.content {\n    color: rgb(94, 94, 94);\n}\n.post {\n    padding-top: 0%;\n    padding-left: 2%;\n    padding-right: 2%;\n    background-color: white;\n    border-radius: 10px;\n    margin-bottom: 3%;\n    box-shadow: 1px 9px 18px -11px rgba(191, 191, 191, 1);\n}\n.post-detail {\n    color: #a7a7a7;\n}\n.post-info {\n    margin-top: 1%;\n    margin-bottom: 1%;\n    padding: 1%;\n}\n.topics-container {\n    margin-top: 1%;\n    margin-bottom: 1%;\n    padding: 1%;\n}\n.topic {\n    background-color: #e7f3ff;\n    margin-right: 4px;\n    color: #427fc2;\n    font-size: 0.7em;\n    padding: 2%;\n    padding-bottom: 0.7%;\n    padding-top: 0.7%;\n    border-radius: 5px;\n    font-weight: 600;\n}\n.grid {\n    display: grid;\n    grid-template-columns: repeat(5, 1fr);\n    grid-template-rows: 1fr;\n    grid-column-gap: 0px;\n    grid-row-gap: 0px;\n}\n.grid-1 {\n    grid-area: 1 / 1 / 2 / 4;\n}\n.grid-2 {\n    grid-area: 1 / 4 / 2 / 6;\n}\n.details {\n    width: 100%;\n}\n.details p {\n    width: 100%;\n}\n.main-row {\n    width: inherit;\n}\n", ""]);
 
 // exports
 
@@ -50709,9 +50788,9 @@ var render = function() {
                       ? _c("i", { staticClass: "fa fa-wrench" })
                       : _c("i", { staticClass: "fas fa-car-side" }),
                     _vm._v(
-                      "\n              " +
+                      "\n                            " +
                         _vm._s(_vm.content) +
-                        "\n            "
+                        "\n                        "
                     )
                   ]),
                   _vm._v(" "),
@@ -50779,9 +50858,9 @@ var render = function() {
                       ? _c("i", { staticClass: "fa fa-wrench" })
                       : _c("i", { staticClass: "fas fa-car-side" }),
                     _vm._v(
-                      "\n              " +
+                      "\n                            " +
                         _vm._s(_vm.content) +
-                        "\n            "
+                        "\n                        "
                     )
                   ]),
                   _vm._v(" "),
@@ -50795,7 +50874,15 @@ var render = function() {
                       : _vm._e(),
                     _vm._v(" "),
                     _vm.post_user_id == _vm.user_id
-                      ? _c("span", { staticClass: "post-user" }, [_vm._m(3)])
+                      ? _c("span", { staticClass: "post-user" }, [
+                          _vm._m(3),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
+                          _vm._m(4),
+                          _vm._v(" "),
+                          _c("small", [_vm._v(_vm._s(_vm.username))])
+                        ])
                       : _vm._e(),
                     _vm._v(" "),
                     _c(
@@ -50808,7 +50895,7 @@ var render = function() {
                       ? _c(
                           "div",
                           { staticClass: "dropdown show float-right grid-2" },
-                          [_vm._m(4)]
+                          [_vm._m(5)]
                         )
                       : _vm._e()
                   ])
@@ -50860,10 +50947,12 @@ var render = function() {
             },
             [
               _c("div", { staticClass: "modal-content" }, [
-                _vm._m(5),
+                _vm._m(6),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
-                  _vm._v("¿Estás seguro de eliminar la publicación?")
+                  _vm._v(
+                    "\n                    ¿Estás seguro de eliminar la publicación?\n                "
+                  )
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-footer" }, [
@@ -50878,7 +50967,11 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("Eliminar")]
+                    [
+                      _vm._v(
+                        "\n                        Eliminar\n                    "
+                      )
+                    ]
                   ),
                   _vm._v(" "),
                   _c(
@@ -50887,7 +50980,11 @@ var render = function() {
                       staticClass: "btn btn-outline-dark",
                       attrs: { type: "button", "data-dismiss": "modal" }
                     },
-                    [_vm._v("Cancelar")]
+                    [
+                      _vm._v(
+                        "\n                        Cancelar\n                    "
+                      )
+                    ]
                   )
                 ])
               ])
@@ -50922,12 +51019,12 @@ var render = function() {
                     _vm._v(_vm._s(_vm.content))
                   ]),
                   _vm._v(" "),
-                  _vm._m(6)
+                  _vm._m(7)
                 ]),
                 _vm._v(" "),
-                _vm._m(7),
+                _vm._m(8),
                 _vm._v(" "),
-                _vm._m(8)
+                _vm._m(9)
               ])
             ]
           )
@@ -50973,6 +51070,14 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("small", { staticStyle: { color: "grey" } }, [
       _c("i", [_vm._v("Tu publicación")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticStyle: { color: "grey" } }, [
+      _c("small", [_vm._v("Publicado por:")])
     ])
   },
   function() {
@@ -51051,7 +51156,7 @@ var staticRenderFns = [
           staticClass: "btn btn-success",
           attrs: { type: "button", "data-dismiss": "modal" }
         },
-        [_vm._v("Ok")]
+        [_vm._v("\n                        Ok\n                    ")]
       )
     ])
   }
@@ -51616,7 +51721,8 @@ var render = function() {
                                   address: p.address,
                                   post_user_id: p.user_id,
                                   allComments: false,
-                                  typePosts: _vm.typePosts
+                                  typePosts: _vm.typePosts,
+                                  deleteUrl: _vm.defaultUrl
                                 },
                                 on: {
                                   updateData: function($event) {

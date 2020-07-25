@@ -15,7 +15,7 @@
                             <div class="text-center mb-3">
                                 <h3><b>Registro de cuenta de negocio</b></h3>
                             </div>
-                            <div class="alert alert-info text-center">
+                            <div class="alert alert-success text-center">
                                 <b>Paso 1</b> Crear cuenta de acceso
                             </div>
                             @if (session('error'))

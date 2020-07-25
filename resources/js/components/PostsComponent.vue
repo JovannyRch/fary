@@ -365,24 +365,25 @@ export default {
             }
             this.isBusqueda = true;
             this.busquedaAux = this.busqueda;
+
             if (this.locationPermission) {
                 navigator.geolocation.getCurrentPosition(
                     location => {
                         let lat = location.coords.latitude;
                         let long = location.coords.longitude;
-                        let url = `${this.defaultUrl}/search/${this.busqueda}/${lat}/${long}`;
+                        let url = `api/search/${this.typePosts}/${this.busqueda}/${lat}/${long}`;
                         this.loadData(url, true);
                         return;
                     },
                     error => {
                         this.locationPermission = false;
-                        let url = `${this.defaultUrl}/search/${this.busqueda}`;
+                        let url = `api/search/${this.typePosts}/${this.busqueda}`;
                         this.loadData(url, true);
                         return;
                     }
                 );
             } else {
-                let url = `${this.defaultUrl}/search/${this.busqueda}`;
+                let url = `api/search/${this.typePosts}/${this.busqueda}`;
                 this.loadData(url, true);
             }
         }

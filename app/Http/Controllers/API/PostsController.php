@@ -98,7 +98,8 @@ class PostsController extends Controller
                 ->select('posts.content','posts.created_at','posts.user_id','posts.img','posts.id', 'users.name as username','users.address')
                 ->orderBy('created_at','desc')
                 ->where("posts.content","like","%$content%")
-                ->paginate(100);
+                ->limit(100)
+                ->get();
         }
         else {
             $location = $this->queryLocation($lat,$long);
@@ -108,8 +109,8 @@ class PostsController extends Controller
             ->orderBy('distance','desc')
             ->orderBy('created_at','desc')
             ->where("posts.content","like","%$content%")
-           
-            ->paginate(100);
+            ->limit(100)
+            ->get();
         }
         return response()->json(['data' => $posts], 200);
         

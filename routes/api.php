@@ -27,8 +27,8 @@ Route::middleware('auth:API')->get('/user', function (Request $request) {
  Route::get('posts/urgentes', 'API\PostsController@postsWithoutRange');
  Route::get('posts/user/{user_id}', 'API\PostsController@myPosts');
  Route::get('posts/{lat}/{long}', 'API\PostsController@index');
- Route::get('posts/search/{content}', 'API\PostsController@search');
- Route::get('posts/search/{content}/{lat}/{long}', 'API\PostsController@search');
+ Route::get('search/posts/{content}', 'API\PostsController@search');
+ Route::get('search/posts/{content}/{lat}/{long}', 'API\PostsController@search');
  Route::get('posts/{id}', 'API\PostsController@show');
  
  //Comments
@@ -46,8 +46,8 @@ Route::middleware('auth:API')->get('/user', function (Request $request) {
  Route::get('cars','API\CarsController@index'); 
  Route::get('cars/user/{user_id}','API\CarsController@myPosts'); 
  Route::get('cars/{lat}/{long}','API\CarsController@index'); 
- Route::get('cars/search/{content}','API\CarsController@search'); 
- Route::get('cars/search/{content}/{lat}/{long}','API\CarsController@search'); 
+ Route::get('search/cars/{content}','API\CarsController@search'); 
+ Route::get('search/cars/{content}/{lat}/{long}','API\CarsController@search'); 
 
  
  

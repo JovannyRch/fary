@@ -4424,21 +4424,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         navigator.geolocation.getCurrentPosition(function (location) {
           var lat = location.coords.latitude;
           var _long2 = location.coords.longitude;
-          var url = "".concat(_this4.defaultUrl, "/search/").concat(_this4.busqueda, "/").concat(lat, "/").concat(_long2);
+          var url = "api/search/".concat(_this4.typePosts, "/").concat(_this4.busqueda, "/").concat(lat, "/").concat(_long2);
 
           _this4.loadData(url, true);
 
           return;
         }, function (error) {
           _this4.locationPermission = false;
-          var url = "".concat(_this4.defaultUrl, "/search/").concat(_this4.busqueda);
+          var url = "api/search/".concat(_this4.typePosts, "/").concat(_this4.busqueda);
 
           _this4.loadData(url, true);
 
           return;
         });
       } else {
-        var url = "".concat(this.defaultUrl, "/search/").concat(this.busqueda);
+        var url = "api/search/".concat(this.typePosts, "/").concat(this.busqueda);
         this.loadData(url, true);
       }
     }

@@ -173,7 +173,8 @@ class CarsController extends Controller
             ->select('cars.*', 'users.name as username','users.address')
             ->orderBy('created_at','desc')
             ->where("cars.content","like","%$content%")
-            ->paginate(100);
+            ->limit(100)
+            ->get();
             foreach ($cars as &$car) {
                 $car['imgs'] = $this->getImgs($car);
             }
@@ -185,7 +186,8 @@ class CarsController extends Controller
             ->orderBy('distance','desc')
             ->orderBy('created_at','desc')
             ->where("cars.content","like","%$content%")
-            ->paginate(100);
+            ->limit(100)
+            ->get();
             foreach ($cars as &$car) {
                 $car['imgs'] = $this->getImgs($car);
             }

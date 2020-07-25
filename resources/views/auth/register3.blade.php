@@ -15,7 +15,7 @@
                             <div class="text-center mb-3">
                                 <h3><b>Registro de negocio</b></h3>
                             </div>
-                            <div class="alert alert-info text-center">
+                            <div class="alert alert-success text-center">
                                 <b>Paso 2</b> Asociar negocio
                             </div>
                             @if (session('msg'))

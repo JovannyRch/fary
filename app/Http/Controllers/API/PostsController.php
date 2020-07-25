@@ -37,7 +37,7 @@ class PostsController extends Controller
                 ->select('posts.latitud','posts.longitud','posts.rango','posts.content','posts.created_at','posts.user_id','posts.img','posts.id',  'users.name as username','users.address', DB::raw($location))
                 ->where('posts.user_id','!=',$user_id)
                 ->toSql();
-            $posts = DB::select("select * from ($query) as tabla1 where distance <= rango or rango = 10000 order by created_at desc, distance asc");
+            $posts = DB::select("select * from ($query) as tabla1 where distance <= rango and rango != 1000000 order by created_at desc, distance asc");
            
         }
         return response()->json(['data' => $posts, 'otros' =>  $otros,'myPosts' => $myPosts], 200);
@@ -58,7 +58,7 @@ class PostsController extends Controller
                 join('users', 'users.id', '=', 'posts.user_id')
                 ->select('posts.latitud','posts.longitud','posts.rango','posts.content','posts.created_at','posts.user_id','posts.img','posts.id',  'users.name as username','users.address', DB::raw($location))
                ->toSql();
-            $posts = DB::select("select * from ($query) as tabla1 where distance <= rango  order by created_at desc, distance asc");
+            $posts = DB::select("select * from ($query) as tabla1 where distance <= rango and rango != 1000000 order by created_at desc, distance asc");
             //posts sin ubicacion
             $otros = Post::
             join('users', 'users.id', '=', 'posts.user_id')

@@ -9,12 +9,13 @@
 </div>
 <br><br>
 @endif
-@error('latitud')
-    <div class="alert alert-danger">
-        No se ha podido establecer la ubicación del negocio, asegurese de haber aceptado los permisos y tener activado la ubicación en su dispositivo.
-    </div>
-@enderror
-
+@if (Auth::user()->rol == "admin")
+    @error('latitud')
+        <div class="alert alert-danger">
+            No se ha podido establecer la ubicación del negocio, asegurese de haber aceptado los permisos y tener activado la ubicación en su dispositivo.
+        </div>
+    @enderror
+@endif
 <div class="form-group">
     <label for="name"><b>Nombre del negocio</b></label>
     <input type="text" class="form-control" name="name" id="name" placeholder="Escribe el nombre del negocio"
@@ -102,13 +103,22 @@
         <label for="name"><b>Latitud</b></label>
         <input type="text" class="form-control" name="latitud" id="latitud" placeholder="Latitud del negocio"
             value="{{old('latitud',$negocio->latitud)}}" />
+        @error('latitud')
+            <small class="text-danger">
+                {{$message}}
+            </small>
+        @enderror
        
     </div>
     <div class="form-group">
         <label for="name"><b>Longitud</b></label>
         <input type="text" class="form-control" name="longitud" id="longitud" placeholder="Longitud del negocio"
             value="{{old('longitud',$negocio->longitud)}}" />
-       
+        @error('longitud')
+            <small class="text-danger">
+                {{$message}}
+            </small>
+        @enderror
     </div>
 @endif
 

@@ -38,6 +38,7 @@ class NegociosController extends Controller
     public function store(StoreNegocioPost $request){
        
         $data = $request->validated();
+       
         $negocio = Negocio::create($data);
       
         $tipos = $request->tipos;

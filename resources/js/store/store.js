@@ -6,15 +6,15 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
     state: {
-        count: 0,
-        ads: []
+        ads: [],
+        deleteId: 0
     },
     mutations: {
-        incrementCounter(state, payload) {
-            state.count += payload;
-        },
         updateAds(state, payload) {
             state.ads = payload;
+        },
+        setDeleteId(state, payload) {
+            state.deleteId = payload;
         }
     },
     actions: {
@@ -23,6 +23,9 @@ const store = new Vuex.Store({
         },
         updateAction(context, payload) {
             context.commit("updateAds", payload);
+        },
+        setAction(context, payload) {
+            context.commit("setDeleteId", payload);
         }
     },
     getters: {
@@ -31,6 +34,9 @@ const store = new Vuex.Store({
         },
         ads(state) {
             return state.ads;
+        },
+        deleteId(state) {
+            return state.deleteId;
         }
     }
 });

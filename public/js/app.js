@@ -3501,65 +3501,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -3570,6 +3511,11 @@ __webpack_require__.r(__webpack_exports__);
     ImgCarouselComponent: _utils_ImgCarouselComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   props: ["content", "date", "user", "img", "id", "post_user_id", "username", "address", "imgs", "typePosts", "allComments", "deleteUrl"],
+  computed: {
+    deleteId: function deleteId() {
+      return this.$store.getters.deleteId;
+    }
+  },
   data: function data() {
     return {
       user_id: document.querySelector('meta[name="user_id"]').getAttribute("content"),
@@ -3608,6 +3554,9 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
+    setDeleteId: function setDeleteId(id) {
+      this.$store.dispatch("setAction", id);
+    },
     showPost: function showPost() {
       $("#img-post").attr("src", this.img);
       $("#show-img").modal("show");
@@ -3616,7 +3565,8 @@ __webpack_require__.r(__webpack_exports__);
     deletePost: function deletePost() {
       var _this = this;
 
-      fetch("api/".concat(this.typePosts, "/") + this.id, {
+      var url = "api/".concat(this.typePosts, "/") + this.deleteId;
+      fetch(url, {
         method: "delete"
       }).then(function (response) {
         if (response.status == 200) {
@@ -4143,29 +4093,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -4266,6 +4193,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   computed: {
     ads: function ads() {
+      return this.$store.getters.ads;
+    },
+    idDelete: function idDelete() {
       return this.$store.getters.ads;
     }
   },
@@ -10451,7 +10381,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.post-data {\n    font-size: 1.2em;\n}\n.separator {\n    margin: 0;\n    height: 1px;\n    border-radius: 10px;\n    background-color: gainsboro;\n}\n.content {\n    color: rgb(94, 94, 94);\n}\n.post {\n    padding-top: 0%;\n    padding-left: 2%;\n    padding-right: 2%;\n    background-color: white;\n    border-radius: 10px;\n    margin-bottom: 3%;\n    box-shadow: 1px 9px 18px -11px rgba(191, 191, 191, 1);\n}\n.post-detail {\n    color: #a7a7a7;\n}\n.post-info {\n    margin-top: 1%;\n    margin-bottom: 1%;\n    padding: 1%;\n}\n.topics-container {\n    margin-top: 1%;\n    margin-bottom: 1%;\n    padding: 1%;\n}\n.topic {\n    background-color: #e7f3ff;\n    margin-right: 4px;\n    color: #427fc2;\n    font-size: 0.7em;\n    padding: 2%;\n    padding-bottom: 0.7%;\n    padding-top: 0.7%;\n    border-radius: 5px;\n    font-weight: 600;\n}\n.grid {\n    display: grid;\n    grid-template-columns: repeat(5, 1fr);\n    grid-template-rows: 1fr;\n    grid-column-gap: 0px;\n    grid-row-gap: 0px;\n}\n.grid-1 {\n    grid-area: 1 / 1 / 2 / 4;\n}\n.grid-2 {\n    grid-area: 1 / 4 / 2 / 6;\n}\n.details {\n    width: 100%;\n}\n.details p {\n    width: 100%;\n}\n.main-row {\n    width: inherit;\n}\n", ""]);
+exports.push([module.i, "\n.post-data {\n  font-size: 1.2em;\n}\n.separator {\n  margin: 0;\n  height: 1px;\n  border-radius: 10px;\n  background-color: gainsboro;\n}\n.content {\n  color: rgb(94, 94, 94);\n}\n.post {\n  padding-top: 0%;\n  padding-left: 2%;\n  padding-right: 2%;\n  background-color: white;\n  border-radius: 10px;\n  margin-bottom: 3%;\n  box-shadow: 1px 9px 18px -11px rgba(191, 191, 191, 1);\n}\n.post-detail {\n  color: #a7a7a7;\n}\n.post-info {\n  margin-top: 1%;\n  margin-bottom: 1%;\n  padding: 1%;\n}\n.topics-container {\n  margin-top: 1%;\n  margin-bottom: 1%;\n  padding: 1%;\n}\n.topic {\n  background-color: #e7f3ff;\n  margin-right: 4px;\n  color: #427fc2;\n  font-size: 0.7em;\n  padding: 2%;\n  padding-bottom: 0.7%;\n  padding-top: 0.7%;\n  border-radius: 5px;\n  font-weight: 600;\n}\n.grid {\n  display: grid;\n  grid-template-columns: repeat(5, 1fr);\n  grid-template-rows: 1fr;\n  grid-column-gap: 0px;\n  grid-row-gap: 0px;\n}\n.grid-1 {\n  grid-area: 1 / 1 / 2 / 4;\n}\n.grid-2 {\n  grid-area: 1 / 4 / 2 / 6;\n}\n.details {\n  width: 100%;\n}\n.details p {\n  width: 100%;\n}\n.main-row {\n  width: inherit;\n}\n", ""]);
 
 // exports
 
@@ -10489,7 +10419,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#container-post {\n    margin-bottom: 1%;\n}\n.title-page {\n    font-weight: bold;\n    margin-bottom: 1%;\n    margin-top: 1.5%;\n}\n.container-tools {\n    height: 30px;\n}\n.ad {\n    background-color: transparent;\n}\n.parent {\n    display: grid;\n    grid-template-columns: repeat(2, 1fr);\n    grid-template-rows: 1fr;\n    grid-column-gap: 0px;\n    grid-row-gap: 0px;\n}\n.div1 {\n    grid-area: 1 / 1 / 2 / 2;\n    width: 10px;\n}\n.div2 {\n    grid-area: 1 / 2 / 2 / 3;\n}\n", ""]);
+exports.push([module.i, "\n#container-post {\n  margin-bottom: 1%;\n}\n.title-page {\n  font-weight: bold;\n  margin-bottom: 1%;\n  margin-top: 1.5%;\n}\n.container-tools {\n  height: 30px;\n}\n.ad {\n  background-color: transparent;\n}\n.parent {\n  display: grid;\n  grid-template-columns: repeat(2, 1fr);\n  grid-template-rows: 1fr;\n  grid-column-gap: 0px;\n  grid-row-gap: 0px;\n}\n.div1 {\n  grid-area: 1 / 1 / 2 / 2;\n  width: 10px;\n}\n.div2 {\n  grid-area: 1 / 2 / 2 / 3;\n}\n", ""]);
 
 // exports
 
@@ -50788,9 +50718,9 @@ var render = function() {
                       ? _c("i", { staticClass: "fa fa-wrench" })
                       : _c("i", { staticClass: "fas fa-car-side" }),
                     _vm._v(
-                      "\n                            " +
+                      "\n              " +
                         _vm._s(_vm.content) +
-                        "\n                        "
+                        "\n            "
                     )
                   ]),
                   _vm._v(" "),
@@ -50858,9 +50788,9 @@ var render = function() {
                       ? _c("i", { staticClass: "fa fa-wrench" })
                       : _c("i", { staticClass: "fas fa-car-side" }),
                     _vm._v(
-                      "\n                            " +
+                      "\n              " +
                         _vm._s(_vm.content) +
-                        "\n                        "
+                        "\n            "
                     )
                   ]),
                   _vm._v(" "),
@@ -50895,7 +50825,30 @@ var render = function() {
                       ? _c(
                           "div",
                           { staticClass: "dropdown show float-right grid-2" },
-                          [_vm._m(5)]
+                          [
+                            _c(
+                              "a",
+                              {
+                                staticStyle: { color: "grey" },
+                                attrs: {
+                                  "data-toggle": "modal",
+                                  "data-target": "#confirmDelete"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.setDeleteId(_vm.id)
+                                  }
+                                }
+                              },
+                              [
+                                _c("small", [
+                                  _vm._v(
+                                    "Eliminar publicación " + _vm._s(_vm.id)
+                                  )
+                                ])
+                              ]
+                            )
+                          ]
                         )
                       : _vm._e()
                   ])
@@ -50931,73 +50884,6 @@ var render = function() {
         {
           staticClass: "modal fade",
           attrs: {
-            id: "confirmDelete",
-            tabindex: "-1",
-            role: "dialog",
-            "aria-labelledby": "confirmDeleteLabel",
-            "aria-hidden": "true"
-          }
-        },
-        [
-          _c(
-            "div",
-            {
-              staticClass: "modal-dialog modal-dialog-centered",
-              attrs: { role: "document" }
-            },
-            [
-              _c("div", { staticClass: "modal-content" }, [
-                _vm._m(6),
-                _vm._v(" "),
-                _c("div", { staticClass: "modal-body" }, [
-                  _vm._v(
-                    "\n                    ¿Estás seguro de eliminar la publicación?\n                "
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "modal-footer" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-outline-danger",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.deletePost()
-                        }
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                        Eliminar\n                    "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-outline-dark",
-                      attrs: { type: "button", "data-dismiss": "modal" }
-                    },
-                    [
-                      _vm._v(
-                        "\n                        Cancelar\n                    "
-                      )
-                    ]
-                  )
-                ])
-              ])
-            ]
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "modal fade",
-          attrs: {
             id: "show-img",
             tabindex: "-1",
             role: "dialog",
@@ -51019,12 +50905,69 @@ var render = function() {
                     _vm._v(_vm._s(_vm.content))
                   ]),
                   _vm._v(" "),
-                  _vm._m(7)
+                  _vm._m(5)
                 ]),
                 _vm._v(" "),
+                _vm._m(6),
+                _vm._v(" "),
+                _vm._m(7)
+              ])
+            ]
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          attrs: {
+            id: "confirmDelete",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "confirmDeleteLabel",
+            "aria-hidden": "true"
+          }
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "modal-dialog modal-dialog-centered",
+              attrs: { role: "document" }
+            },
+            [
+              _c("div", { staticClass: "modal-content" }, [
                 _vm._m(8),
                 _vm._v(" "),
-                _vm._m(9)
+                _c("div", { staticClass: "modal-body" }, [
+                  _vm._v("¿Estás seguro de eliminar la publicación?")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-outline-danger",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.deletePost()
+                        }
+                      }
+                    },
+                    [_vm._v("Eliminar")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-outline-dark",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v("Cancelar")]
+                  )
+                ])
               ])
             ]
           )
@@ -51085,44 +51028,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c(
-      "a",
-      {
-        staticStyle: { color: "grey" },
-        attrs: { "data-toggle": "modal", "data-target": "#confirmDelete" }
-      },
-      [_c("small", [_vm._v("Eliminar publicación")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "h5",
-        { staticClass: "modal-title", attrs: { id: "confirmDeleteLabel" } },
-        [_c("b", [_vm._v("Advertencia")])]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
       "button",
       {
         staticClass: "close",
@@ -51156,7 +51061,32 @@ var staticRenderFns = [
           staticClass: "btn btn-success",
           attrs: { type: "button", "data-dismiss": "modal" }
         },
-        [_vm._v("\n                        Ok\n                    ")]
+        [_vm._v("Ok")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "confirmDeleteLabel" } },
+        [_c("b", [_vm._v("Advertencia")])]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
       )
     ])
   }
@@ -51486,13 +51416,13 @@ var render = function() {
                 _vm._v(" "),
                 _c("p", [
                   _vm._v(
-                    "\n                Facilita buscar piezas o refacciones en negocios de su\n                localidad, ya no necesitara caminar negocio por negocio ni\n                hacer llamadas, solo para saber si tienen lo que busca.\n            "
+                    "\n        Facilita buscar piezas o refacciones en negocios de su\n        localidad, ya no necesitara caminar negocio por negocio ni\n        hacer llamadas, solo para saber si tienen lo que busca.\n      "
                   )
                 ]),
                 _vm._v(" "),
                 _c("p", [
                   _vm._v(
-                    "\n                Ofrece a los negocios de autopartes usadas clientes\n                potenciales y publicidad sin costo, registrándose al correo\n                faryseccionderegistros@gmail.com Además una sección de venta\n                de autos chocados, arrumbados o desvielados con membresía\n                gratuita por apertura\n            "
+                    "\n        Ofrece a los negocios de autopartes usadas clientes\n        potenciales y publicidad sin costo, registrándose al correo\n        faryseccionderegistros@gmail.com Además una sección de venta\n        de autos chocados, arrumbados o desvielados con membresía\n        gratuita por apertura\n      "
                   )
                 ]),
                 _vm._v(" "),
@@ -51564,9 +51494,7 @@ var render = function() {
           !_vm.isBusqueda
             ? _c("div", { staticClass: "col-12 mt-4" }, [
                 _c("h4", [
-                  _vm._v(
-                    "\n                Crear Publicación\n                "
-                  ),
+                  _vm._v("\n        Crear Publicación\n        "),
                   _c(
                     "button",
                     {
@@ -51615,7 +51543,7 @@ var render = function() {
                   },
                   [
                     _c("i", { staticClass: "fas fa-times" }),
-                    _vm._v(" Deshacer busqueda\n            ")
+                    _vm._v(" Deshacer busqueda\n      ")
                   ]
                 )
               ])
@@ -51627,12 +51555,12 @@ var render = function() {
                   !_vm.isUrgentes
                     ? _c("h4", { staticStyle: { display: "inline" } }, [
                         _c("i", { staticClass: "fa fa-wrench" }),
-                        _vm._v(" Publicaciones de autopartes\n                ")
+                        _vm._v(" Publicaciones de autopartes\n        ")
                       ])
                     : _c("h4", { staticStyle: { display: "inline" } }, [
                         _c("i", { staticClass: "fa fa-wrench" }),
                         _vm._v(
-                          " Publicaciones de autopartes\n                    urgentes\n                "
+                          " Publicaciones de autopartes\n          urgentes\n        "
                         )
                       ])
                 ])
@@ -51654,7 +51582,7 @@ var render = function() {
                         [
                           _c("i", { staticClass: "fas fa-exclamation" }),
                           _vm._v(
-                            " Ver publicaciones\n                    urgentes\n                "
+                            " Ver publicaciones\n          urgentes\n        "
                           )
                         ]
                       )
@@ -51673,7 +51601,7 @@ var render = function() {
                         },
                         [
                           _c("i", { staticClass: "fas fa-arrow-left" }),
-                          _vm._v(" Regresar\n                ")
+                          _vm._v(" Regresar\n        ")
                         ]
                       )
                     : _vm._e()
@@ -51740,11 +51668,7 @@ var render = function() {
                   _vm._v(" "),
                   _vm.posts.length == 0 && _vm.isLoading == false
                     ? _c("div", { staticClass: "text-center pt-5" }, [
-                        _c("h3", [
-                          _vm._v(
-                            "\n                        Aún no se han hecho publicaciones\n                    "
-                          )
-                        ])
+                        _c("h3", [_vm._v("Aún no se han hecho publicaciones")])
                       ])
                     : _vm._e()
                 ])
@@ -51772,9 +51696,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("h4", [
       _c("i", { staticClass: "fa fa-car" }),
-      _vm._v(
-        " Publicaciones de Autos\n                    chocados\n                "
-      )
+      _vm._v(" Publicaciones de Autos\n          chocados\n        ")
     ])
   }
 ]
@@ -72864,15 +72786,15 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 Vue.use(vuex__WEBPACK_IMPORTED_MODULE_0__["default"]);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
   state: {
-    count: 0,
-    ads: []
+    ads: [],
+    deleteId: 0
   },
   mutations: {
-    incrementCounter: function incrementCounter(state, payload) {
-      state.count += payload;
-    },
     updateAds: function updateAds(state, payload) {
       state.ads = payload;
+    },
+    setDeleteId: function setDeleteId(state, payload) {
+      state.deleteId = payload;
     }
   },
   actions: {
@@ -72881,6 +72803,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
     },
     updateAction: function updateAction(context, payload) {
       context.commit("updateAds", payload);
+    },
+    setAction: function setAction(context, payload) {
+      context.commit("setDeleteId", payload);
     }
   },
   getters: {
@@ -72889,6 +72814,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
     },
     ads: function ads(state) {
       return state.ads;
+    },
+    deleteId: function deleteId(state) {
+      return state.deleteId;
     }
   }
 });

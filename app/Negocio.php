@@ -8,7 +8,7 @@ class Negocio extends Model
 {
     protected $table = "negocios";
     protected $fillable = [
-        'name', 'email', 'phone','address',"img",'owner_id','altitud','latitud'
+        'name', 'email', 'phone','address',"img",'owner_id','longitud','latitud'
     ];
 
     public function tipos()

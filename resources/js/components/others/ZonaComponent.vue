@@ -16,18 +16,18 @@ export default {
 
   data() {
     return {
-      tipos: []
+      tipos: [],
     };
   },
   methods: {
     getData() {
       fetch("/api/tipos")
-        .then(response => response.json())
-        .then(json => {
+        .then((response) => response.json())
+        .then((json) => {
           this.tipos = json.data;
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

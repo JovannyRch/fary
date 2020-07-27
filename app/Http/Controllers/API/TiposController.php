@@ -17,6 +17,12 @@ class TiposController extends Controller
     public function negocios($id){
         $tipo = Tipo::find($id);
         $negocios = $tipo->negocios;
+        /*
+        $tipo = Tipo::find($id);
+        $negocios = DB::statement("SELECT * FROM negocios where id in 
+        (SELECT negocio_id FROM tipos_negocios where tipo_id = )
+        ");
+        */
 
         $data['tipo'] = $tipo;
         $data['negocios'] = $negocios;

@@ -3579,7 +3579,14 @@ __webpack_require__.r(__webpack_exports__);
             text: "Se ha eliminado la publicación con éxito",
             type: "success"
           });
-        } else {//Error al eliminar el post
+        } else {
+          //Error al eliminar el post
+          Vue.notify({
+            group: "foo",
+            title: "Error",
+            text: "No se pudo eliminar la publicación",
+            type: "error"
+          });
         }
 
         $("#confirmDelete").modal("hide");
@@ -4195,8 +4202,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     ads: function ads() {
       return this.$store.getters.ads;
     },
-    idDelete: function idDelete() {
-      return this.$store.getters.ads;
+    deleteId: function deleteId() {
+      return this.$store.getters.deleteId;
     }
   },
   methods: {
@@ -4331,11 +4338,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.isBusqueda = false;
       this.isMyPosts = true;
     },
-    deletePost: function deletePost(index) {
-      this.posts.splice(index, 1);
+    deletePost: function deletePost() {
+      var _this4 = this;
+
+      this.posts = this.posts.filter(function (p) {
+        return p.id != _this4.deleteId;
+      });
     },
     buscar: function buscar() {
-      var _this4 = this;
+      var _this5 = this;
 
       if (!this.busqueda) {
         Vue.notify({
@@ -4354,16 +4365,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         navigator.geolocation.getCurrentPosition(function (location) {
           var lat = location.coords.latitude;
           var _long2 = location.coords.longitude;
-          var url = "api/search/".concat(_this4.typePosts, "/").concat(_this4.busqueda, "/").concat(lat, "/").concat(_long2);
+          var url = "api/search/".concat(_this5.typePosts, "/").concat(_this5.busqueda, "/").concat(lat, "/").concat(_long2);
 
-          _this4.loadData(url, true);
+          _this5.loadData(url, true);
 
           return;
         }, function (error) {
-          _this4.locationPermission = false;
-          var url = "api/search/".concat(_this4.typePosts, "/").concat(_this4.busqueda);
+          _this5.locationPermission = false;
+          var url = "api/search/".concat(_this5.typePosts, "/").concat(_this5.busqueda);
 
-          _this4.loadData(url, true);
+          _this5.loadData(url, true);
 
           return;
         });
@@ -50840,13 +50851,7 @@ var render = function() {
                                   }
                                 }
                               },
-                              [
-                                _c("small", [
-                                  _vm._v(
-                                    "Eliminar publicación " + _vm._s(_vm.id)
-                                  )
-                                ])
-                              ]
+                              [_c("small", [_vm._v("Eliminar publicación")])]
                             )
                           ]
                         )
@@ -51654,7 +51659,7 @@ var render = function() {
                                 },
                                 on: {
                                   updateData: function($event) {
-                                    return _vm.deletePost(index)
+                                    return _vm.deletePost()
                                   }
                                 }
                               })

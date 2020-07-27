@@ -126,7 +126,7 @@
                 :allComments="false"
                 :typePosts="typePosts"
                 :deleteUrl="defaultUrl"
-                @updateData="deletePost(index)"
+                @updateData="deletePost()"
               />
             </div>
           </div>
@@ -156,13 +156,13 @@ export default {
     LoaderComponent,
     PostCraeteComponent,
     CarCreateComponent,
-    HeaderComponent
+    HeaderComponent,
   },
   async mounted() {
     if (this.negocio) {
       this.negocio = JSON.parse(this.negocio);
     }
-    $(function() {
+    $(function () {
       $('[data-toggle="tooltip"]').tooltip();
     });
     this.showName = !(
@@ -229,16 +229,16 @@ export default {
         : null,
       negocio: document.querySelector('meta[name="negocio"]')
         ? document.querySelector('meta[name="negocio"]').getAttribute("content")
-        : null
+        : null,
     };
   },
   computed: {
     ads() {
       return this.$store.getters.ads;
     },
-    idDelete() {
-      return this.$store.getters.ads;
-    }
+    deleteId() {
+      return this.$store.getters.deleteId;
+    },
   },
   methods: {
     loadPostUrgentes() {
@@ -254,7 +254,7 @@ export default {
     clickAd(ad) {
       this.$emit("clickAd", ad);
     },
-    loadData: async function(url = null, isBusqueda = false) {
+    loadData: async function (url = null, isBusqueda = false) {
       if (url == null) {
         url = this.defaultUrl;
       }
@@ -262,7 +262,7 @@ export default {
       if (this.locationPermission && url == this.defaultUrl) {
         try {
           await navigator.geolocation.getCurrentPosition(
-            location => {
+            (location) => {
               let lat = location.coords.latitude;
               let long = location.coords.longitude;
 
@@ -274,7 +274,7 @@ export default {
               this.fetchData(this.defaultUrl);
               return;
             },
-            error => {
+            (error) => {
               this.locationPermission = false;
               this.$emit("setLocation", null, null);
               this.fetchData(url);
@@ -292,8 +292,8 @@ export default {
     },
     fetchData(url) {
       fetch(url)
-        .then(response => response.json())
-        .then(json => {
+        .then((response) => response.json())
+        .then((json) => {
           let data = json.data || [];
           let otros = json.otros || [];
           let myposts = json.myposts || [];
@@ -305,7 +305,7 @@ export default {
               group: "foo",
               title: "Éxito",
               text: "Busqueda completada",
-              type: "success"
+              type: "success",
             });
           }
         });
@@ -323,8 +323,8 @@ export default {
       this.isMyPosts = true;
     },
 
-    deletePost(index) {
-      this.posts.splice(index, 1);
+    deletePost() {
+      this.posts = this.posts.filter((p) => p.id != this.deleteId);
     },
     buscar() {
       if (!this.busqueda) {
@@ -332,7 +332,7 @@ export default {
           group: "foo",
           title: "Aviso",
           text: "El campo de búsqueda no puede estar vacío",
-          type: "warn"
+          type: "warn",
         });
 
         return;
@@ -342,14 +342,14 @@ export default {
 
       if (this.locationPermission) {
         navigator.geolocation.getCurrentPosition(
-          location => {
+          (location) => {
             let lat = location.coords.latitude;
             let long = location.coords.longitude;
             let url = `api/search/${this.typePosts}/${this.busqueda}/${lat}/${long}`;
             this.loadData(url, true);
             return;
           },
-          error => {
+          (error) => {
             this.locationPermission = false;
             let url = `api/search/${this.typePosts}/${this.busqueda}`;
             this.loadData(url, true);
@@ -360,8 +360,8 @@ export default {
         let url = `api/search/${this.typePosts}/${this.busqueda}`;
         this.loadData(url, true);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

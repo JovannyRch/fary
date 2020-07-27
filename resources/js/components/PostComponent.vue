@@ -91,7 +91,7 @@
                     @click="setDeleteId(id)"
                     style="color:grey"
                   >
-                    <small>Eliminar publicación {{id}}</small>
+                    <small>Eliminar publicación</small>
                   </a>
                 </div>
               </div>
@@ -179,7 +179,7 @@ export default {
   components: {
     DateComponent,
     CommentsComponent,
-    ImgCarouselComponent
+    ImgCarouselComponent,
   },
   props: [
     "content",
@@ -193,12 +193,12 @@ export default {
     "imgs",
     "typePosts",
     "allComments",
-    "deleteUrl"
+    "deleteUrl",
   ],
   computed: {
     deleteId() {
       return this.$store.getters.deleteId;
-    }
+    },
   },
   data() {
     return {
@@ -212,7 +212,7 @@ export default {
       auxImg: null,
       canComment: false,
       dialog: false,
-      showName: true
+      showName: true,
     };
   },
   created() {
@@ -232,7 +232,7 @@ export default {
   },
   mounted() {
     $(".dropdown-toggle").dropdown();
-    $("#show-img").on("show.bs.modal", function(event) {
+    $("#show-img").on("show.bs.modal", function (event) {
       var button = $(event.relatedTarget);
       var img = button.data("img");
       var content = button.data("post");
@@ -255,8 +255,8 @@ export default {
       let url = `api/${this.typePosts}/` + this.deleteId;
 
       fetch(url, {
-        method: "delete"
-      }).then(response => {
+        method: "delete",
+      }).then((response) => {
         if (response.status == 200) {
           //Éxito al eliminar el post
           this.$emit("updateData", "");
@@ -264,15 +264,21 @@ export default {
             group: "foo",
             title: "Aviso",
             text: "Se ha eliminado la publicación con éxito",
-            type: "success"
+            type: "success",
           });
         } else {
           //Error al eliminar el post
+          Vue.notify({
+            group: "foo",
+            title: "Error",
+            text: "No se pudo eliminar la publicación",
+            type: "error",
+          });
         }
         $("#confirmDelete").modal("hide");
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

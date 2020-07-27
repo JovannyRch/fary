@@ -137,7 +137,7 @@
     </div>
 @else
     <div >
-        <input type="hidden" name="tipos[]" value="2">
+        <input type="hidden" name="tipos[]" value="1">
     </div>
 @endif
 

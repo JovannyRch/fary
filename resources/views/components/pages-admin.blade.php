@@ -1,7 +1,7 @@
 <div>
     <ul class="list-group text-dark">
         <li class="list-group-item">
-            <a href="#"><b>{{ strtoupper(Auth::user()->name) }}</b> </a>
+            <a href="#"><b>{{ strtoupper(Auth::user()->name)}}</b> </a>
         </li>
         <li class="list-group-item">
             <a  href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" > <i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>

@@ -74,7 +74,7 @@
         <label for="rol"><b>Seleccionar tipo de usuario</b></label>
         <select class="custom-select" name="rol" id="rol">
             <option value="normal" @if ($user->rol == 'normal')selected @endif> Usuario normal </option>
-            <option value="owner" @if ($user->rol == 'owner')selected @endif>Dueño de negocios</option>
+            <option value="owner" select @if ($user->rol == 'owner')selected @endif>Dueño de negocios</option>
             <option value="admin" @if ($user->rol == 'admin')selected @endif>Administrador</option>
         </select>
     </div>

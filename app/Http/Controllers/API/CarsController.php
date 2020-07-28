@@ -14,18 +14,12 @@ class CarsController extends Controller
 {
    
     public function index($lat = null, $long = null){
-        if(Auth::check()){
-            return $this->withLogin($lat, $long);
-        }else{
-            return $this->withOutLogin($lat,$long);
-        }
+        return $this->withOutLogin($lat,$long);
     }
 
-    public function withLogin($lat, $long){
-        $user_id = Auth::user()->id;
-        $otros = [];
-        $cars = [];
+    public function postsWithLogin($user_id, $lat = null, $long = null){
         $myPosts = $this->myPosts($user_id);
+        $otros = [];
         if($lat == null && $long == null){
             $cars = $this->myNoPosts($user_id); 
         }else {
@@ -37,7 +31,7 @@ class CarsController extends Controller
             ->where("cars.user_id","!=",$user_id)
             ->toSql();
             
-            $cars = DB::select("select * from ($query) as tabla1 where distance <= rango or rango = 10000 order by created_at desc, distance asc");
+            $cars = DB::select("select * from ($query) as tabla1 where distance <= rango or rango = 10000 order by created_at desc, distance asc",[$user_id]);
             //posts sin ubicacion
             $otros = Car::
             join('users', 'users.id', '=', 'cars.user_id')
@@ -46,7 +40,7 @@ class CarsController extends Controller
             ->whereNull('latitud')
             ->whereNull('longitud')
             ->toSql();
-            $otros = DB::select($otros);
+            $otros = DB::select($otros,[$user_id]);
             $cars = $this->converJson($cars);
             $otros = $this->converJson($otros);
 
@@ -62,6 +56,8 @@ class CarsController extends Controller
         }  
         return response()->json(['data' => $cars, 'otros' =>  $otros,'myposts' => $myPosts], 200);
     }
+
+    
 
     public function myPosts($user_id){
         $cars = Car::

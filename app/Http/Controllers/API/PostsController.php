@@ -13,35 +13,32 @@ class PostsController extends Controller
 {   
 
     public function index($lat = null,$long = null){
-        if(Auth::check()){
-            return $this->withLogin($lat,$long);
-        }else{
-            return $this->withoutLogin($lat,$long);
-        }
-
+        return $this->withoutLogin($lat,$long);
     }  
-
-
-    public function withLogin($lat, $long){
-        $otros = [];
-        $user_id = Auth::user()->id;
+    
+    public function postsWithLogin($user_id, $lat = null, $long = null)
+    {   
+        
         $myPosts = $this->myPosts($user_id);
+        $otros = [];
         if($lat == null && $long == null){
-            $posts = $this->myNoPosts();
-            return response()->json(['data' => $posts,'otros' =>  $otros,'myPosts' => $myPosts], 200);
+            $posts = $this->myNoPosts($user_id);
+            return response()->json(['data' => $posts,'otros' =>  $otros,'myposts' => $myPosts], 200);
         }
         else{
             $location = $this->queryLocation($lat,$long,'posts');
-            $posts = Post::
+            $query = Post::
                 join('users', 'users.id', '=', 'posts.user_id')
                 ->select('posts.latitud','posts.longitud','posts.rango','posts.content','posts.created_at','posts.user_id','posts.img','posts.id',  'users.name as username','users.address', DB::raw($location))
                 ->where('posts.user_id','!=',$user_id)
                 ->toSql();
-            $posts = DB::select("select * from ($query) as tabla1 where distance <= rango and rango != 1000000 order by created_at desc, distance asc");
+            $posts = DB::select("select * from ($query) as tabla1 where distance <= rango and rango != 1000000 order by created_at desc, distance asc",[$user_id]);
            
         }
-        return response()->json(['data' => $posts, 'otros' =>  $otros,'myPosts' => $myPosts], 200);
+        return response()->json(['data' => $posts, 'otros' =>  $otros,'myposts' => $myPosts], 200);
     }
+
+   
 
     public function withoutLogin($lat,$long){
         $otros = [];
@@ -124,7 +121,7 @@ class PostsController extends Controller
             ->orderBy('created_at','desc')
             ->where("posts.user_id","=",$user_id)
             ->get();
-        return response()->json(['data' => $posts], 200);            
+        return $posts;       
     }
 
     public function myNoPosts($user_id){
@@ -135,7 +132,7 @@ class PostsController extends Controller
             ->where("posts.user_id","!=",$user_id)
             ->take(100)
             ->get();
-        return response()->json(['data' => $posts], 200);
+        return $posts;
     }
 
     public function postsWithoutRange(){

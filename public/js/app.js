@@ -4169,9 +4169,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.locationPermission = false;
               }
 
+              if (_this.user_id) {
+                _this.defaultUrl += "/user/" + _this.user_id;
+              }
+
               _this.loadData();
 
-            case 9:
+            case 10:
             case "end":
               return _context.stop();
           }

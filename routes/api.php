@@ -25,7 +25,8 @@ Route::middleware('auth:API')->get('/user', function (Request $request) {
  Route::delete('posts/{id}', 'API\PostsController@destroy');
  Route::get('posts/', 'API\PostsController@index');
  Route::get('posts/urgentes', 'API\PostsController@postsWithoutRange');
- Route::get('posts/user/{user_id}', 'API\PostsController@myPosts');
+ Route::get('posts/user/{user_id}/{lat}/{long}', 'API\PostsController@postsWithLogin');
+ Route::get('posts/user/{user_id}', 'API\PostsController@postsWithLogin');
  Route::get('posts/{lat}/{long}', 'API\PostsController@index');
  Route::get('search/posts/{content}', 'API\PostsController@search');
  Route::get('search/posts/{content}/{lat}/{long}', 'API\PostsController@search');
@@ -44,7 +45,8 @@ Route::middleware('auth:API')->get('/user', function (Request $request) {
  Route::get('cars/{id}','API\CarsController@show'); 
  Route::delete('cars/{id}','API\CarsController@destroy'); 
  Route::get('cars','API\CarsController@index'); 
- Route::get('cars/user/{user_id}','API\CarsController@myPosts'); 
+ Route::get('cars/user/{user_id}/{lat}/{long}', 'API\CarsController@postsWithLogin');
+ Route::get('cars/user/{user_id}', 'API\CarsController@postsWithLogin');
  Route::get('cars/{lat}/{long}','API\CarsController@index'); 
  Route::get('search/cars/{content}','API\CarsController@search'); 
  Route::get('search/cars/{content}/{lat}/{long}','API\CarsController@search'); 

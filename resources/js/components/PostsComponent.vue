@@ -189,6 +189,9 @@ export default {
       this.$emit("setLocation", null, null);
       this.locationPermission = false;
     }
+    if (this.user_id) {
+      this.defaultUrl += "/user/" + this.user_id;
+    }
 
     this.loadData();
   },

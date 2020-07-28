@@ -2492,9 +2492,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
-//
-//
 
 
 
@@ -2672,10 +2669,6 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-//
-//
-//
-//
 //
 //
 //
@@ -50215,14 +50208,14 @@ var render = function() {
       _c("div", { staticClass: "row" }, [
         _c(
           "div",
-          { staticClass: "col-md-2 d-none d-md-block" },
+          { staticClass: "col-md-3 d-none d-md-block" },
           [_c("AdsComponent", { attrs: { part: "1" } })],
           1
         ),
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "col-md-8 col-12 offset-md-0 pt-0 pl-3 pr-3" },
+          { staticClass: "col-md-6 col-12 offset-md-0 pt-0 pl-3 pr-3" },
           [
             _c("PostsComponent", {
               attrs: { typePosts: "cars" },
@@ -50234,7 +50227,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "col-md-2 d-none d-md-block" },
+          { staticClass: "col-md-3 d-none d-md-block" },
           [_c("AdsComponent", { attrs: { part: "2" } })],
           1
         )
@@ -50274,7 +50267,7 @@ var render = function() {
       _c("div", { staticClass: "row" }, [
         _c(
           "div",
-          { staticClass: "col-md-2 d-none d-md-block" },
+          { staticClass: "col-md-3 d-none d-md-block" },
           [
             _c("AdsComponent", {
               attrs: { part: "1" },
@@ -50286,7 +50279,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "col-md-8 col-12 offset-md-0 pt-0 pl-3 pr-3" },
+          { staticClass: "col-md-6 col-12 offset-md-0 pt-0 pl-3 pr-3" },
           [
             _c("PostsComponent", {
               attrs: { typePosts: "posts" },
@@ -50298,7 +50291,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "col-md-2 d-none d-md-block" },
+          { staticClass: "col-md-3 d-none d-md-block" },
           [
             _c("AdsComponent", {
               attrs: { part: "2" },

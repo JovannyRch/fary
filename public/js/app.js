@@ -3501,6 +3501,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -4939,7 +4944,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -5021,7 +5025,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AdsComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../AdsComponent.vue */ "./resources/js/components/AdsComponent.vue");
 /* harmony import */ var _NegociosComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../NegociosComponent.vue */ "./resources/js/components/NegociosComponent.vue");
-//
 //
 //
 //
@@ -5208,13 +5211,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -5294,6 +5290,22 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AdsComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../AdsComponent.vue */ "./resources/js/components/AdsComponent.vue");
+/* harmony import */ var _NegociosComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../NegociosComponent */ "./resources/js/components/NegociosComponent.vue");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 //
 //
 //
@@ -5304,16 +5316,76 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    this.getData();
+  components: {
+    AdsComponent: _AdsComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    NegociosComponent: _NegociosComponent__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
+      currentAds: [],
+      currentAds1: [],
+      currentAds2: [],
+      ads7s: [],
+      ads10s: [],
+      ads15s: [],
+      isLoading: false,
+      latitud: null,
+      longitud: null,
+      url: "/api/ads",
+      imageViewerFlag: false,
+      currentIndex: 0,
+      imgUrlList: [],
+      flickityOptions: {
+        initialIndex: 3,
+        prevNextButtons: false,
+        pageDots: false,
+        wrapAround: false
+      },
+      interval1: null,
+      interval2: null,
+      interval3: null,
       tipos: []
     };
   },
-  methods: {
+  mounted: function mounted() {
+    if (this.ads.length == 0) {//Cargar ads
+    }
+
+    this.getData();
+  },
+  computed: {
+    ads: function ads() {
+      return this.$store.getters.ads;
+    }
+  },
+  methods: _defineProperty({
     getData: function getData() {
       var _this = this;
 
@@ -5322,8 +5394,108 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (json) {
         _this.tipos = json.data;
       });
+    },
+    setLocation: function setLocation(lat, _long) {
+      if (lat && _long) {
+        this.latitud = lat;
+        this.longitud = _long;
+        this.url = "/api/ads/" + lat + "/" + _long;
+      }
+
+      this.getAds();
+    },
+    destroyed: function destroyed() {
+      clearInterval(this.interval1);
+      clearInterval(this.interval2);
+      clearInterval(this.interval3);
+    },
+    clickAd: function clickAd(ad) {
+      this.currentIndex = ad;
+      this.imageViewerFlag = true;
+    },
+    clickAd2: function clickAd2(ad) {
+      this.currentIndex = this.ads.length / 2 + ad;
+      this.imageViewerFlag = true;
+    },
+    getAdsByTime: function getAdsByTime() {
+      for (var i in this.ads) {
+        var ad = this.ads[i];
+
+        if (ad.tiempo == 15) {
+          this.ads15s.push(i);
+        } else if (ad.tiempo == 10) {
+          this.ads10s.push(i);
+        } else if (ad.tiempo == 7) {
+          this.ads7s.push(i);
+        }
+      }
+    },
+    getAds: function getAds() {
+      var _this2 = this;
+
+      this.isLoading = true;
+
+      if (!this.ads.length) {
+        fetch(this.url).then(function (response) {
+          return response.json();
+        }).then(function (json) {
+          _this2.$store.dispatch("updateAction", _toConsumableArray(json.data));
+
+          _this2.getAdsByTime();
+
+          _this2.initAds();
+
+          _this2.isLoading = false;
+        });
+      } else {
+        this.getAdsByTime();
+        this.initAds();
+        this.isLoading = false;
+      }
+    },
+    shuffle: function shuffle(array) {
+      array.sort(function () {
+        return Math.random() - 0.5;
+      });
+    },
+    changeAds: function changeAds(ads) {
+      if (ads.length) {
+        var auxState = _toConsumableArray(this.ads);
+
+        var newIndexes = this.shuffle(ads);
+
+        for (var i = 0; i < ads.length; i++) {
+          auxState[newIndexes[i]] = this.ads[ads[i]];
+        }
+
+        this.$store.dispatch("updateAction", auxState);
+      }
+    },
+    initAds: function initAds() {
+      var _this3 = this;
+
+      this.interval1 = setInterval(function () {
+        _this3.changeAds(_this3.ads7s);
+      }, 7000);
+      this.interval2 = setInterval(function () {
+        _this3.changeAds(_this3.ads10s);
+      }, 10000);
+      this.interval3 = setInterval(function () {
+        _this3.changeAds(_this3.ads15s);
+      }, 15000);
     }
-  }
+  }, "shuffle", function shuffle(b) {
+    var a = _toConsumableArray(b);
+
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var _ref = [a[j], a[i]];
+      a[i] = _ref[0];
+      a[j] = _ref[1];
+    }
+
+    return a;
+  })
 });
 
 /***/ }),
@@ -5337,6 +5509,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AdsComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../AdsComponent.vue */ "./resources/js/components/AdsComponent.vue");
 //
 //
 //
@@ -5367,7 +5540,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    AdsComponent: _AdsComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   data: function data() {
     return {
       id: this.$route.params.id,
@@ -50757,7 +50946,24 @@ var render = function() {
                       ? _c(
                           "div",
                           { staticClass: "dropdown show float-right grid-2" },
-                          [_vm._m(1)]
+                          [
+                            _c(
+                              "a",
+                              {
+                                staticStyle: { color: "grey" },
+                                attrs: {
+                                  "data-toggle": "modal",
+                                  "data-target": "#confirmDelete"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.setDeleteId(_vm.id)
+                                  }
+                                }
+                              },
+                              [_c("small", [_vm._v("Eliminar publicación")])]
+                            )
+                          ]
                         )
                       : _vm._e()
                   ])
@@ -50811,7 +51017,7 @@ var render = function() {
                   _c("div", { staticClass: "col-12" }, [
                     _vm.post_user_id != _vm.user_id
                       ? _c("span", { staticClass: "post-user" }, [
-                          _vm._m(2),
+                          _vm._m(1),
                           _vm._v(" "),
                           _c("small", [_vm._v(_vm._s(_vm.username))])
                         ])
@@ -50819,11 +51025,11 @@ var render = function() {
                     _vm._v(" "),
                     _vm.post_user_id == _vm.user_id
                       ? _c("span", { staticClass: "post-user" }, [
-                          _vm._m(3),
+                          _vm._m(2),
                           _vm._v(" "),
                           _c("br"),
                           _vm._v(" "),
-                          _vm._m(4),
+                          _vm._m(3),
                           _vm._v(" "),
                           _c("small", [_vm._v(_vm._s(_vm.username))])
                         ])
@@ -50913,12 +51119,12 @@ var render = function() {
                     _vm._v(_vm._s(_vm.content))
                   ]),
                   _vm._v(" "),
-                  _vm._m(5)
+                  _vm._m(4)
                 ]),
                 _vm._v(" "),
-                _vm._m(6),
+                _vm._m(5),
                 _vm._v(" "),
-                _vm._m(7)
+                _vm._m(6)
               ])
             ]
           )
@@ -50946,7 +51152,7 @@ var render = function() {
             },
             [
               _c("div", { staticClass: "modal-content" }, [
-                _vm._m(8),
+                _vm._m(7),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
                   _vm._v("¿Estás seguro de eliminar la publicación?")
@@ -50993,19 +51199,6 @@ var staticRenderFns = [
     return _c("span", { staticStyle: { color: "grey" } }, [
       _c("small", [_vm._v("Publicado por:")])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticStyle: { color: "grey" },
-        attrs: { "data-toggle": "modal", "data-target": "#confirmDelete" }
-      },
-      [_c("small", [_vm._v("Eliminar publicación")])]
-    )
   },
   function() {
     var _vm = this
@@ -51777,7 +51970,7 @@ var render = function() {
         _c(
           "div",
           { staticClass: "col-md-2 d-none d-md-block" },
-          [_c("NegociosComponent")],
+          [_c("AdsComponent", { attrs: { part: "2" } })],
           1
         )
       ])
@@ -51900,117 +52093,108 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "mt-4 main" },
-    [
-      _c("notifications", { attrs: { group: "foo" } }),
+  return _c("div", { staticClass: "mt-4 main" }, [
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col-md-2 d-none d-md-block" },
+        [_c("AdsComponent", { attrs: { ads: _vm.currentAds } })],
+        1
+      ),
       _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c(
-          "div",
-          { staticClass: "col-md-2 d-none d-md-block" },
-          [_c("AdsComponent", { attrs: { ads: _vm.currentAds } })],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "col-md-8 col-10 offset-1 offset-md-0 pt-0 pl-3 pr-3"
-          },
-          [
-            _c("div", { staticClass: "text-center" }, [
-              _c("div", { staticClass: "text-left" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "btn btn-outline-secondary mb-3",
-                    attrs: { href: "#" },
-                    on: {
-                      click: function($event) {
-                        return _vm.$router.go(-1)
-                      }
+      _c(
+        "div",
+        { staticClass: "col-md-8 col-10 offset-1 offset-md-0 pt-0 pl-3 pr-3" },
+        [
+          _c("div", { staticClass: "text-center" }, [
+            _c("div", { staticClass: "text-left" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-outline-secondary mb-3",
+                  attrs: { href: "#" },
+                  on: {
+                    click: function($event) {
+                      return _vm.$router.go(-1)
                     }
-                  },
-                  [
-                    _c("i", { staticClass: "fas fa-arrow-left" }),
-                    _vm._v(" Regresar\n          ")
-                  ]
-                )
-              ]),
+                  }
+                },
+                [
+                  _c("i", { staticClass: "fas fa-arrow-left" }),
+                  _vm._v(" Regresar\n          ")
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card" }, [
+              _vm._m(0),
               _vm._v(" "),
-              _c("div", { staticClass: "card" }, [
-                _vm._m(0),
-                _vm._v(" "),
-                _c("div", { staticClass: "card-body" }, [
-                  _c("div", [
-                    _c("ul", { staticClass: "list-group" }, [
-                      _c(
-                        "li",
-                        { staticClass: "list-group-item" },
-                        [
-                          _c("router-link", { attrs: { to: "/vision" } }, [
-                            _c("i", { staticClass: "fas fa-eye" }),
-                            _vm._v(" Visión\n                  ")
-                          ])
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "li",
-                        { staticClass: "list-group-item" },
-                        [
-                          _c("router-link", { attrs: { to: "/mision" } }, [
-                            _c("i", { staticClass: "fas fa-bookmark" }),
-                            _vm._v(" Misión\n                  ")
-                          ]),
-                          _vm._v(" "),
-                          _c("span", {
-                            staticClass: "badge badge-dark float-right"
-                          })
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _vm._m(1),
-                      _vm._v(" "),
-                      _c(
-                        "li",
-                        { staticClass: "list-group-item" },
-                        [
-                          _c("router-link", { attrs: { to: "/ayuda" } }, [
-                            _c("i", { staticClass: "fas fa-question" }),
-                            _vm._v(" Ayuda\n                  ")
-                          ]),
-                          _vm._v(" "),
-                          _c("span", {
-                            staticClass: "badge badge-dark float-right"
-                          })
-                        ],
-                        1
-                      )
-                    ]),
+              _c("div", { staticClass: "card-body" }, [
+                _c("div", [
+                  _c("ul", { staticClass: "list-group" }, [
+                    _c(
+                      "li",
+                      { staticClass: "list-group-item" },
+                      [
+                        _c("router-link", { attrs: { to: "/vision" } }, [
+                          _c("i", { staticClass: "fas fa-eye" }),
+                          _vm._v(" Visión\n                  ")
+                        ])
+                      ],
+                      1
+                    ),
                     _vm._v(" "),
-                    _vm._m(2)
-                  ])
+                    _c(
+                      "li",
+                      { staticClass: "list-group-item" },
+                      [
+                        _c("router-link", { attrs: { to: "/mision" } }, [
+                          _c("i", { staticClass: "fas fa-bookmark" }),
+                          _vm._v(" Misión\n                  ")
+                        ]),
+                        _vm._v(" "),
+                        _c("span", {
+                          staticClass: "badge badge-dark float-right"
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c(
+                      "li",
+                      { staticClass: "list-group-item" },
+                      [
+                        _c("router-link", { attrs: { to: "/ayuda" } }, [
+                          _c("i", { staticClass: "fas fa-question" }),
+                          _vm._v(" Ayuda\n                  ")
+                        ]),
+                        _vm._v(" "),
+                        _c("span", {
+                          staticClass: "badge badge-dark float-right"
+                        })
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(2)
                 ])
               ])
             ])
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-md-2 d-none d-md-block" },
-          [_c("NegociosComponent")],
-          1
-        )
-      ])
-    ],
-    1
-  )
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "col-md-2 d-none d-md-block" },
+        [_c("AdsComponent", { attrs: { part: "2" } })],
+        1
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
@@ -52442,61 +52626,52 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "mt-4 main" },
-    [
-      _c("notifications", { attrs: { group: "foo" } }),
+  return _c("div", { staticClass: "mt-4 main" }, [
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col-md-2 d-none d-md-block" },
+        [_c("AdsComponent", { attrs: { ads: _vm.currentAds } })],
+        1
+      ),
       _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c(
-          "div",
-          { staticClass: "col-md-2 d-none d-md-block" },
-          [_c("AdsComponent", { attrs: { ads: _vm.currentAds } })],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "col-md-8 col-10 offset-1 offset-md-0 pt-0 pl-3 pr-3"
-          },
-          [
-            _c("div", { staticClass: "text-center" }, [
-              _c("div", { staticClass: "text-left" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "btn btn-outline-secondary mb-3",
-                    attrs: { href: "#" },
-                    on: {
-                      click: function($event) {
-                        return _vm.$router.go(-1)
-                      }
+      _c(
+        "div",
+        { staticClass: "col-md-8 col-10 offset-1 offset-md-0 pt-0 pl-3 pr-3" },
+        [
+          _c("div", { staticClass: "text-center" }, [
+            _c("div", { staticClass: "text-left" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-outline-secondary mb-3",
+                  attrs: { href: "#" },
+                  on: {
+                    click: function($event) {
+                      return _vm.$router.go(-1)
                     }
-                  },
-                  [
-                    _c("i", { staticClass: "fas fa-arrow-left" }),
-                    _vm._v(" Regresar\n          ")
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _vm._m(0)
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-md-2 d-none d-md-block" },
-          [_c("NegociosComponent")],
-          1
-        )
-      ])
-    ],
-    1
-  )
+                  }
+                },
+                [
+                  _c("i", { staticClass: "fas fa-arrow-left" }),
+                  _vm._v(" Regresar\n          ")
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _vm._m(0)
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "col-md-2 d-none d-md-block" },
+        [_c("AdsComponent", { attrs: { part: "2" } })],
+        1
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
@@ -52579,61 +52754,52 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "mt-4 main" },
-    [
-      _c("notifications", { attrs: { group: "foo" } }),
+  return _c("div", { staticClass: "mt-4 main" }, [
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col-md-2 d-none d-md-block" },
+        [_c("AdsComponent", { attrs: { ads: _vm.currentAds } })],
+        1
+      ),
       _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c(
-          "div",
-          { staticClass: "col-md-2 d-none d-md-block" },
-          [_c("AdsComponent", { attrs: { ads: _vm.currentAds } })],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "col-md-8 col-10 offset-1 offset-md-0 pt-0 pl-3 pr-3"
-          },
-          [
-            _c("div", { staticClass: "text-center" }, [
-              _c("div", { staticClass: "text-left" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "btn btn-outline-secondary mb-3",
-                    attrs: { href: "#" },
-                    on: {
-                      click: function($event) {
-                        return _vm.$router.go(-1)
-                      }
+      _c(
+        "div",
+        { staticClass: "col-md-8 col-10 offset-1 offset-md-0 pt-0 pl-3 pr-3" },
+        [
+          _c("div", { staticClass: "text-center" }, [
+            _c("div", { staticClass: "text-left" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-outline-secondary mb-3",
+                  attrs: { href: "#" },
+                  on: {
+                    click: function($event) {
+                      return _vm.$router.go(-1)
                     }
-                  },
-                  [
-                    _c("i", { staticClass: "fas fa-arrow-left" }),
-                    _vm._v(" Regresar\n                    ")
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _vm._m(0)
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-md-2 d-none d-md-block" },
-          [_c("NegociosComponent")],
-          1
-        )
-      ])
-    ],
-    1
-  )
+                  }
+                },
+                [
+                  _c("i", { staticClass: "fas fa-arrow-left" }),
+                  _vm._v(" Regresar\n          ")
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _vm._m(0)
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "col-md-2 d-none d-md-block" },
+        [_c("AdsComponent", { attrs: { part: "2" } })],
+        1
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
@@ -52642,7 +52808,10 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card" }, [
       _c("div", { staticClass: "card-header" }, [
-        _c("h2", [_c("i", { staticClass: "fas fa-eye" }), _vm._v(" Visión")])
+        _c("h2", [
+          _c("i", { staticClass: "fas fa-eye" }),
+          _vm._v(" Visión\n            ")
+        ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "card-body" }, [
@@ -52658,7 +52827,7 @@ var staticRenderFns = [
             _c("div", { staticClass: "col-md-9 col-12 p-4" }, [
               _c("h5", [
                 _vm._v(
-                  "\n                                        Su vehículo estará a su servicio y\n                                        no usted al servicio de su vehículo,\n                                        buscando refacciones para su\n                                        mantenimiento u óptimo\n                                        funcionamiento\n                                    "
+                  "\n                    Su vehículo estará a su servicio y\n                    no usted al servicio de su vehículo,\n                    buscando refacciones para su\n                    mantenimiento u óptimo\n                    funcionamiento\n                  "
                 )
               ])
             ])
@@ -52689,27 +52858,87 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container mt-3" }, [
-    _c(
-      "ul",
-      { staticClass: "list-group" },
-      _vm._l(_vm.tipos, function(tipo) {
-        return _c(
-          "li",
-          { key: tipo.id, staticClass: "list-group-item" },
+  return _c(
+    "div",
+    { staticClass: "mt-4 main" },
+    [
+      _c("notifications", { attrs: { group: "foo" } }),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "div",
+          { staticClass: "col-md-2 d-none d-md-block" },
           [
-            _c(
-              "router-link",
-              { attrs: { to: "/zona-publicitaria/" + tipo.id } },
-              [_vm._v(_vm._s(tipo.name))]
-            )
+            _c("AdsComponent", {
+              attrs: { part: "1" },
+              on: { clickAd: _vm.clickAd }
+            })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-md-8 col-12 offset-md-0 pt-0 pl-3 pr-3" },
+          [
+            _c("div", { staticClass: "container mt-3" }, [
+              _c(
+                "ul",
+                { staticClass: "list-group" },
+                _vm._l(_vm.tipos, function(tipo) {
+                  return _c(
+                    "li",
+                    { key: tipo.id, staticClass: "list-group-item" },
+                    [
+                      _c(
+                        "router-link",
+                        { attrs: { to: "/zona-publicitaria/" + tipo.id } },
+                        [_vm._v(_vm._s(tipo.name))]
+                      )
+                    ],
+                    1
+                  )
+                }),
+                0
+              )
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-md-2 d-none d-md-block" },
+          [
+            _c("AdsComponent", {
+              attrs: { part: "2" },
+              on: { clickAd: _vm.clickAd2 }
+            })
           ],
           1
         )
-      }),
-      0
-    )
-  ])
+      ]),
+      _vm._v(" "),
+      _vm.imageViewerFlag
+        ? _c("image-viewer-vue", {
+            attrs: {
+              imgUrlList: _vm.imgUrlList,
+              index: _vm.currentIndex,
+              title: "Publicidad",
+              closable: true,
+              cyclical: false,
+              alt: "Fotos"
+            },
+            on: {
+              closeImageViewer: function($event) {
+                _vm.imageViewerFlag = false
+              },
+              clickImage: _vm.clickImage
+            }
+          })
+        : _vm._e()
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -52733,53 +52962,79 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container" },
-    [
-      _c("h2", [_vm._v(_vm._s(_vm.tipo.name))]),
+  return _c("div", { staticClass: "mt-4 main" }, [
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col-md-2 d-none d-md-block" },
+        [_c("AdsComponent", { attrs: { ads: _vm.currentAds } })],
+        1
+      ),
       _vm._v(" "),
-      _vm._l(_vm.negocios, function(negocio) {
-        return _c(
-          "div",
-          { key: negocio.id, staticClass: "card text-left mt-3" },
-          [
-            _c("div", { staticClass: "card-body" }, [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-3 col-12 p-2" }, [
-                  _c("img", {
-                    staticClass: "w-100",
-                    attrs: { src: negocio.img, alt: "" }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-9 pl-3 col-12" }, [
-                  _c("h4", [_c("b", [_vm._v(_vm._s(negocio.name))])]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("b", [_vm._v("Dirección:")]),
-                    _vm._v(
-                      "\n            " +
-                        _vm._s(negocio.address) +
-                        "\n          "
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("b", [_vm._v("Teléfono:")]),
-                    _vm._v(
-                      "\n            " + _vm._s(negocio.phone) + "\n          "
-                    )
-                  ])
-                ])
-              ])
-            ])
-          ]
-        )
-      })
-    ],
-    2
-  )
+      _c(
+        "div",
+        { staticClass: "col-md-8 col-10 offset-1 offset-md-0 pt-0 pl-3 pr-3" },
+        [
+          _c(
+            "div",
+            { staticClass: "container" },
+            [
+              _c("h2", [_vm._v(_vm._s(_vm.tipo.name))]),
+              _vm._v(" "),
+              _vm._l(_vm.negocios, function(negocio) {
+                return _c(
+                  "div",
+                  { key: negocio.id, staticClass: "card text-left mt-3" },
+                  [
+                    _c("div", { staticClass: "card-body" }, [
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-md-3 col-12 p-2" }, [
+                          _c("img", {
+                            staticClass: "w-100",
+                            attrs: { src: negocio.img, alt: "" }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-9 pl-3 col-12" }, [
+                          _c("h4", [_c("b", [_vm._v(_vm._s(negocio.name))])]),
+                          _vm._v(" "),
+                          _c("div", [
+                            _c("b", [_vm._v("Dirección:")]),
+                            _vm._v(
+                              "\n                  " +
+                                _vm._s(negocio.address) +
+                                "\n                "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", [
+                            _c("b", [_vm._v("Teléfono:")]),
+                            _vm._v(
+                              "\n                  " +
+                                _vm._s(negocio.phone) +
+                                "\n                "
+                            )
+                          ])
+                        ])
+                      ])
+                    ])
+                  ]
+                )
+              })
+            ],
+            2
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "col-md-2 d-none d-md-block" },
+        [_c("AdsComponent", { attrs: { part: "2" } })],
+        1
+      )
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -72234,14 +72489,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!**********************************************************!*\
   !*** ./resources/js/components/others/ZonaComponent.vue ***!
   \**********************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ZonaComponent_vue_vue_type_template_id_0bb114b4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ZonaComponent.vue?vue&type=template&id=0bb114b4& */ "./resources/js/components/others/ZonaComponent.vue?vue&type=template&id=0bb114b4&");
 /* harmony import */ var _ZonaComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ZonaComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/others/ZonaComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _ZonaComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _ZonaComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -72271,7 +72527,7 @@ component.options.__file = "resources/js/components/others/ZonaComponent.vue"
 /*!***********************************************************************************!*\
   !*** ./resources/js/components/others/ZonaComponent.vue?vue&type=script&lang=js& ***!
   \***********************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

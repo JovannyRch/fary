@@ -76,7 +76,7 @@
         </div>
       </div>
       <div class="col-md-2 d-none d-md-block">
-        <NegociosComponent />
+        <AdsComponent part="2" />
       </div>
     </div>
   </div>
@@ -89,7 +89,7 @@ import NegociosComponent from "./../NegociosComponent.vue";
 export default {
   components: {
     AdsComponent,
-    NegociosComponent
+    NegociosComponent,
   },
   data() {
     return {
@@ -98,7 +98,7 @@ export default {
       isLoading: false,
       latitud: null,
       longitud: null,
-      url: "/api/ads"
+      url: "/api/ads",
     };
   },
   mounted() {
@@ -118,8 +118,8 @@ export default {
     getAds() {
       this.isLoading = true;
       fetch(this.url)
-        .then(response => response.json())
-        .then(json => {
+        .then((response) => response.json())
+        .then((json) => {
           this.ads = json.data;
           console.log(json);
           if (this.ads.length >= 3) {
@@ -141,8 +141,8 @@ export default {
     },
     shuffle(array) {
       array.sort(() => Math.random() - 0.5);
-    }
-  }
+    },
+  },
 };
 </script>
 

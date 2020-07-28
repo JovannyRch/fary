@@ -5,7 +5,7 @@
       <div class="col-md-3 d-none d-md-block">
         <AdsComponent part="1" @clickAd="clickAd" />
       </div>
-      <div class="col-md-6 col-12 offset-md-0 pt-0 pl-3 pr-3">
+      <div class="col-md-6 col-12 offset-md-0 pt-0">
         <PostsComponent @clickAd="clickAd" @setLocation="setLocation" :typePosts="'posts'" />
       </div>
       <div class="col-md-3 d-none d-md-block">
@@ -66,10 +66,11 @@ export default {
       interval3: null,
     };
   },
-  mounted() {
-    if (this.ads.length == 0) {
-      //Cargar ads
-    }
+  mounted() {},
+  destroyed() {
+    clearInterval(this.interval1);
+    clearInterval(this.interval2);
+    clearInterval(this.interval3);
   },
   computed: {
     ads() {
@@ -86,11 +87,7 @@ export default {
 
       this.getAds();
     },
-    destroyed() {
-      clearInterval(this.interval1);
-      clearInterval(this.interval2);
-      clearInterval(this.interval3);
-    },
+
     clickAd(ad) {
       this.currentIndex = ad;
       this.imageViewerFlag = true;
@@ -146,6 +143,9 @@ export default {
     },
 
     initAds() {
+      clearInterval(this.interval1);
+      clearInterval(this.interval2);
+      clearInterval(this.interval3);
       this.interval1 = setInterval(() => {
         this.changeAds(this.ads7s);
       }, 7000);

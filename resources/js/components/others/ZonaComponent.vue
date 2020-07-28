@@ -2,10 +2,10 @@
   <div class="mt-4 main">
     <notifications group="foo" />
     <div class="row">
-      <div class="col-md-2 d-none d-md-block">
+      <div class="col-md-3 d-none d-md-block">
         <AdsComponent part="1" @clickAd="clickAd" />
       </div>
-      <div class="col-md-8 col-12 offset-md-0 pt-0 pl-3 pr-3">
+      <div class="col-md-6 col-12 offset-md-0 pt-0">
         <div class="container mt-3">
           <ul class="list-group">
             <li class="list-group-item" v-for="tipo in tipos" :key="tipo.id">
@@ -14,7 +14,7 @@
           </ul>
         </div>
       </div>
-      <div class="col-md-2 d-none d-md-block">
+      <div class="col-md-3 d-none d-md-block">
         <AdsComponent part="2" @clickAd="clickAd2" />
       </div>
     </div>
@@ -69,8 +69,11 @@ export default {
     };
   },
   mounted() {
-    if (this.ads.length == 0) {
-      //Cargar ads
+    if (this.ads.length) {
+      this.getAdsByTime();
+      this.initAds();
+    } else {
+      this.getAds();
     }
     this.getData();
   },
@@ -78,6 +81,11 @@ export default {
     ads() {
       return this.$store.getters.ads;
     },
+  },
+  destroyed() {
+    clearInterval(this.interval1);
+    clearInterval(this.interval2);
+    clearInterval(this.interval3);
   },
   methods: {
     getData() {
@@ -95,12 +103,6 @@ export default {
       }
 
       this.getAds();
-    },
-
-    destroyed() {
-      clearInterval(this.interval1);
-      clearInterval(this.interval2);
-      clearInterval(this.interval3);
     },
     clickAd(ad) {
       this.currentIndex = ad;
@@ -157,6 +159,9 @@ export default {
     },
 
     initAds() {
+      clearInterval(this.interval1);
+      clearInterval(this.interval2);
+      clearInterval(this.interval3);
       this.interval1 = setInterval(() => {
         this.changeAds(this.ads7s);
       }, 7000);

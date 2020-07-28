@@ -47,13 +47,13 @@
           </div>
           <hr />
         </div>
-        <div v-if="img || imgs" class="col-12 col-md-4 p-2 pl-4 text-center">
+        <div v-if="img || imgs" class="col-12 col-md-6 p-2 pl-4 text-center">
           <ImgCarouselComponent :title="content" :imgs="imgs" :img="img" :id="id" />
         </div>
         <div
           :class="
                         img || imgs
-                            ? 'col-12 col-md-8 pl-2 d-none d-md-block'
+                            ? 'col-12 col-md-6 pl-2 d-none d-md-block'
                             : 'col-12 col-md-12 pl-2 d-none d-md-block'
                     "
         >

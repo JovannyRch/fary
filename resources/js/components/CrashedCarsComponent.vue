@@ -5,7 +5,7 @@
       <div class="col-md-3 d-none d-md-block">
         <AdsComponent part="1" />
       </div>
-      <div class="col-md-6 col-12 offset-md-0 pt-0 pl-3 pr-3">
+      <div class="col-md-6 col-12 offset-md-0 pt-0">
         <PostsComponent @setLocation="setLocation" :typePosts="'cars'" />
       </div>
       <div class="col-md-3 d-none d-md-block">
@@ -98,6 +98,7 @@ export default {
 
     getAds() {
       this.isLoading = true;
+
       if (!this.ads.length) {
         fetch(this.url)
           .then((response) => response.json())
@@ -128,6 +129,9 @@ export default {
     },
 
     initAds() {
+      clearInterval(this.interval1);
+      clearInterval(this.interval2);
+      clearInterval(this.interval3);
       this.interval1 = setInterval(() => {
         this.changeAds(this.ads7s);
       }, 7000);

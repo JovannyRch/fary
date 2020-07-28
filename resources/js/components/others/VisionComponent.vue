@@ -1,10 +1,10 @@
 <template>
   <div class="mt-4 main">
     <div class="row">
-      <div class="col-md-2 d-none d-md-block">
+      <div class="col-md-3 d-none d-md-block">
         <AdsComponent :ads="currentAds" />
       </div>
-      <div class="col-md-8 col-10 offset-1 offset-md-0 pt-0 pl-3 pr-3">
+      <div class="col-md-6 col-10 offset-1 offset-md-0 pt-0">
         <div class="text-center">
           <div class="text-left">
             <a @click="$router.go(-1)" href="#" class="btn btn-outline-secondary mb-3">
@@ -39,7 +39,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-2 d-none d-md-block">
+      <div class="col-md-3 d-none d-md-block">
         <AdsComponent part="2" />
       </div>
     </div>

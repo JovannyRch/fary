@@ -2616,6 +2616,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     initAds: function initAds() {
       var _this2 = this;
 
+      clearInterval(this.interval1);
+      clearInterval(this.interval2);
+      clearInterval(this.interval3);
       this.interval1 = setInterval(function () {
         _this2.changeAds(_this2.ads7s);
       }, 7000);
@@ -2734,9 +2737,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       interval3: null
     };
   },
-  mounted: function mounted() {
-    if (this.ads.length == 0) {//Cargar ads
-    }
+  mounted: function mounted() {},
+  destroyed: function destroyed() {
+    clearInterval(this.interval1);
+    clearInterval(this.interval2);
+    clearInterval(this.interval3);
   },
   computed: {
     ads: function ads() {
@@ -2752,11 +2757,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       }
 
       this.getAds();
-    },
-    destroyed: function destroyed() {
-      clearInterval(this.interval1);
-      clearInterval(this.interval2);
-      clearInterval(this.interval3);
     },
     clickAd: function clickAd(ad) {
       this.currentIndex = ad;
@@ -2823,6 +2823,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     initAds: function initAds() {
       var _this2 = this;
 
+      clearInterval(this.interval1);
+      clearInterval(this.interval2);
+      clearInterval(this.interval3);
       this.interval1 = setInterval(function () {
         _this2.changeAds(_this2.ads7s);
       }, 7000);
@@ -3226,6 +3229,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PostComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PostComponent.vue */ "./resources/js/components/PostComponent.vue");
 /* harmony import */ var _utils_LoaderComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils/LoaderComponent.vue */ "./resources/js/components/utils/LoaderComponent.vue");
 /* harmony import */ var _utils_HeaderComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/HeaderComponent.vue */ "./resources/js/components/utils/HeaderComponent.vue");
+/* harmony import */ var _AdsComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AdsComponent */ "./resources/js/components/AdsComponent.vue");
 //
 //
 //
@@ -3262,6 +3266,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+
 
 
 
@@ -3269,7 +3276,8 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     PostComponent: _PostComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     LoaderComponent: _utils_LoaderComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    HeaderComponent: _utils_HeaderComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    HeaderComponent: _utils_HeaderComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    AdsComponent: _AdsComponent__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
     return {
@@ -3832,6 +3840,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PostComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PostComponent.vue */ "./resources/js/components/PostComponent.vue");
 /* harmony import */ var _utils_LoaderComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils/LoaderComponent.vue */ "./resources/js/components/utils/LoaderComponent.vue");
 /* harmony import */ var _utils_HeaderComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/HeaderComponent.vue */ "./resources/js/components/utils/HeaderComponent.vue");
+/* harmony import */ var _AdsComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AdsComponent */ "./resources/js/components/AdsComponent.vue");
 //
 //
 //
@@ -3872,6 +3881,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+
 
 
 
@@ -3879,7 +3891,8 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     PostComponent: _PostComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     LoaderComponent: _utils_LoaderComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    HeaderComponent: _utils_HeaderComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    HeaderComponent: _utils_HeaderComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    AdsComponent: _AdsComponent__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
     return {
@@ -5368,7 +5381,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     };
   },
   mounted: function mounted() {
-    if (this.ads.length == 0) {//Cargar ads
+    if (this.ads.length) {
+      this.getAdsByTime();
+      this.initAds();
+    } else {
+      this.getAds();
     }
 
     this.getData();
@@ -5377,6 +5394,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     ads: function ads() {
       return this.$store.getters.ads;
     }
+  },
+  destroyed: function destroyed() {
+    clearInterval(this.interval1);
+    clearInterval(this.interval2);
+    clearInterval(this.interval3);
   },
   methods: _defineProperty({
     getData: function getData() {
@@ -5396,11 +5418,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       }
 
       this.getAds();
-    },
-    destroyed: function destroyed() {
-      clearInterval(this.interval1);
-      clearInterval(this.interval2);
-      clearInterval(this.interval3);
     },
     clickAd: function clickAd(ad) {
       this.currentIndex = ad;
@@ -5467,6 +5484,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     initAds: function initAds() {
       var _this3 = this;
 
+      clearInterval(this.interval1);
+      clearInterval(this.interval2);
+      clearInterval(this.interval3);
       this.interval1 = setInterval(function () {
         _this3.changeAds(_this3.ads7s);
       }, 7000);
@@ -50215,7 +50235,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "col-md-6 col-12 offset-md-0 pt-0 pl-3 pr-3" },
+          { staticClass: "col-md-6 col-12 offset-md-0 pt-0" },
           [
             _c("PostsComponent", {
               attrs: { typePosts: "cars" },
@@ -50279,7 +50299,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "col-md-6 col-12 offset-md-0 pt-0 pl-3 pr-3" },
+          { staticClass: "col-md-6 col-12 offset-md-0 pt-0" },
           [
             _c("PostsComponent", {
               attrs: { typePosts: "posts" },
@@ -50815,11 +50835,16 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-2 d-none d-md-block" }),
+      _c(
+        "div",
+        { staticClass: "col-md-2 d-none d-md-block" },
+        [_c("AdsComponent", { attrs: { part: "1" } })],
+        1
+      ),
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "col-md-8 col-12 offset-md-0 pt-0 pl-3 pr-3" },
+        { staticClass: "col-md-8 col-12 offset-md-0 pt-0" },
         [
           _vm.user_id
             ? _c("HeaderComponent", { staticClass: "mb-3" })
@@ -50864,7 +50889,12 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-2 d-none d-md-block" })
+      _c(
+        "div",
+        { staticClass: "col-md-2 d-none d-md-block" },
+        [_c("AdsComponent", { attrs: { part: "2" } })],
+        1
+      )
     ])
   ])
 }
@@ -50970,7 +51000,7 @@ var render = function() {
           _vm.img || _vm.imgs
             ? _c(
                 "div",
-                { staticClass: "col-12 col-md-4 p-2 pl-4 text-center" },
+                { staticClass: "col-12 col-md-6 p-2 pl-4 text-center" },
                 [
                   _c("ImgCarouselComponent", {
                     attrs: {
@@ -50990,7 +51020,7 @@ var render = function() {
             {
               class:
                 _vm.img || _vm.imgs
-                  ? "col-12 col-md-8 pl-2 d-none d-md-block"
+                  ? "col-12 col-md-6 pl-2 d-none d-md-block"
                   : "col-12 col-md-12 pl-2 d-none d-md-block"
             },
             [
@@ -51505,11 +51535,11 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-2 d-none d-md-block" }),
+      _c("div", { staticClass: "col-md-3 d-none d-md-block" }),
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "col-md-8 col-12 offset-md-0 pt-0 pl-3 pr-3" },
+        { staticClass: "col-md-6 col-12 offset-md-0 pt-0" },
         [
           _vm.user_id
             ? _c("HeaderComponent", { staticClass: "mb-3" })
@@ -51564,7 +51594,12 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-2 d-none d-md-block" })
+      _c(
+        "div",
+        { staticClass: "col-md-3 d-none d-md-block" },
+        [_c("AdsComponent", { attrs: { part: "2" } })],
+        1
+      )
     ])
   ])
 }
@@ -51924,16 +51959,14 @@ var render = function() {
       _c("div", { staticClass: "row" }, [
         _c(
           "div",
-          { staticClass: "col-md-2 d-none d-md-block" },
+          { staticClass: "col-md-3 d-none d-md-block" },
           [_c("AdsComponent", { attrs: { ads: _vm.currentAds } })],
           1
         ),
         _vm._v(" "),
         _c(
           "div",
-          {
-            staticClass: "col-md-8 col-10 offset-1 offset-md-0 pt-0 pl-3 pr-3"
-          },
+          { staticClass: "col-md-6 col-10 offset-1 offset-md-0 pt-0" },
           [
             _c("div", { staticClass: "text-center" }, [
               _c("div", { staticClass: "text-left" }, [
@@ -51962,7 +51995,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "col-md-2 d-none d-md-block" },
+          { staticClass: "col-md-3 d-none d-md-block" },
           [_c("AdsComponent", { attrs: { part: "2" } })],
           1
         )
@@ -52090,99 +52123,95 @@ var render = function() {
     _c("div", { staticClass: "row" }, [
       _c(
         "div",
-        { staticClass: "col-md-2 d-none d-md-block" },
+        { staticClass: "col-md-3 d-none d-md-block" },
         [_c("AdsComponent", { attrs: { ads: _vm.currentAds } })],
         1
       ),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-md-8 col-10 offset-1 offset-md-0 pt-0 pl-3 pr-3" },
-        [
-          _c("div", { staticClass: "text-center" }, [
-            _c("div", { staticClass: "text-left" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-outline-secondary mb-3",
-                  attrs: { href: "#" },
-                  on: {
-                    click: function($event) {
-                      return _vm.$router.go(-1)
-                    }
+      _c("div", { staticClass: "col-md-6 col-10 offset-1 offset-md-0 pt-0" }, [
+        _c("div", { staticClass: "text-center" }, [
+          _c("div", { staticClass: "text-left" }, [
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-outline-secondary mb-3",
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    return _vm.$router.go(-1)
                   }
-                },
-                [
-                  _c("i", { staticClass: "fas fa-arrow-left" }),
-                  _vm._v(" Regresar\n          ")
-                ]
-              )
-            ]),
+                }
+              },
+              [
+                _c("i", { staticClass: "fas fa-arrow-left" }),
+                _vm._v(" Regresar\n          ")
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card" }, [
+            _vm._m(0),
             _vm._v(" "),
-            _c("div", { staticClass: "card" }, [
-              _vm._m(0),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-body" }, [
-                _c("div", [
-                  _c("ul", { staticClass: "list-group" }, [
-                    _c(
-                      "li",
-                      { staticClass: "list-group-item" },
-                      [
-                        _c("router-link", { attrs: { to: "/vision" } }, [
-                          _c("i", { staticClass: "fas fa-eye" }),
-                          _vm._v(" Visión\n                  ")
-                        ])
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "list-group-item" },
-                      [
-                        _c("router-link", { attrs: { to: "/mision" } }, [
-                          _c("i", { staticClass: "fas fa-bookmark" }),
-                          _vm._v(" Misión\n                  ")
-                        ]),
-                        _vm._v(" "),
-                        _c("span", {
-                          staticClass: "badge badge-dark float-right"
-                        })
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _vm._m(1),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "list-group-item" },
-                      [
-                        _c("router-link", { attrs: { to: "/ayuda" } }, [
-                          _c("i", { staticClass: "fas fa-question" }),
-                          _vm._v(" Ayuda\n                  ")
-                        ]),
-                        _vm._v(" "),
-                        _c("span", {
-                          staticClass: "badge badge-dark float-right"
-                        })
-                      ],
-                      1
-                    )
-                  ]),
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", [
+                _c("ul", { staticClass: "list-group" }, [
+                  _c(
+                    "li",
+                    { staticClass: "list-group-item" },
+                    [
+                      _c("router-link", { attrs: { to: "/vision" } }, [
+                        _c("i", { staticClass: "fas fa-eye" }),
+                        _vm._v(" Visión\n                  ")
+                      ])
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
-                  _vm._m(2)
-                ])
+                  _c(
+                    "li",
+                    { staticClass: "list-group-item" },
+                    [
+                      _c("router-link", { attrs: { to: "/mision" } }, [
+                        _c("i", { staticClass: "fas fa-bookmark" }),
+                        _vm._v(" Misión\n                  ")
+                      ]),
+                      _vm._v(" "),
+                      _c("span", {
+                        staticClass: "badge badge-dark float-right"
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    { staticClass: "list-group-item" },
+                    [
+                      _c("router-link", { attrs: { to: "/ayuda" } }, [
+                        _c("i", { staticClass: "fas fa-question" }),
+                        _vm._v(" Ayuda\n                  ")
+                      ]),
+                      _vm._v(" "),
+                      _c("span", {
+                        staticClass: "badge badge-dark float-right"
+                      })
+                    ],
+                    1
+                  )
+                ]),
+                _vm._v(" "),
+                _vm._m(2)
               ])
             ])
           ])
-        ]
-      ),
+        ])
+      ]),
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "col-md-2 d-none d-md-block" },
+        { staticClass: "col-md-3 d-none d-md-block" },
         [_c("AdsComponent", { attrs: { part: "2" } })],
         1
       )
@@ -52623,43 +52652,39 @@ var render = function() {
     _c("div", { staticClass: "row" }, [
       _c(
         "div",
-        { staticClass: "col-md-2 d-none d-md-block" },
+        { staticClass: "col-md-3 d-none d-md-block" },
         [_c("AdsComponent", { attrs: { ads: _vm.currentAds } })],
         1
       ),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-md-8 col-10 offset-1 offset-md-0 pt-0 pl-3 pr-3" },
-        [
-          _c("div", { staticClass: "text-center" }, [
-            _c("div", { staticClass: "text-left" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-outline-secondary mb-3",
-                  attrs: { href: "#" },
-                  on: {
-                    click: function($event) {
-                      return _vm.$router.go(-1)
-                    }
+      _c("div", { staticClass: "col-md-6 col-10 offset-1 offset-md-0 pt-0" }, [
+        _c("div", { staticClass: "text-center" }, [
+          _c("div", { staticClass: "text-left" }, [
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-outline-secondary mb-3",
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    return _vm.$router.go(-1)
                   }
-                },
-                [
-                  _c("i", { staticClass: "fas fa-arrow-left" }),
-                  _vm._v(" Regresar\n          ")
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _vm._m(0)
-          ])
-        ]
-      ),
+                }
+              },
+              [
+                _c("i", { staticClass: "fas fa-arrow-left" }),
+                _vm._v(" Regresar\n          ")
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _vm._m(0)
+        ])
+      ]),
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "col-md-2 d-none d-md-block" },
+        { staticClass: "col-md-3 d-none d-md-block" },
         [_c("AdsComponent", { attrs: { part: "2" } })],
         1
       )
@@ -52751,43 +52776,39 @@ var render = function() {
     _c("div", { staticClass: "row" }, [
       _c(
         "div",
-        { staticClass: "col-md-2 d-none d-md-block" },
+        { staticClass: "col-md-3 d-none d-md-block" },
         [_c("AdsComponent", { attrs: { ads: _vm.currentAds } })],
         1
       ),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-md-8 col-10 offset-1 offset-md-0 pt-0 pl-3 pr-3" },
-        [
-          _c("div", { staticClass: "text-center" }, [
-            _c("div", { staticClass: "text-left" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-outline-secondary mb-3",
-                  attrs: { href: "#" },
-                  on: {
-                    click: function($event) {
-                      return _vm.$router.go(-1)
-                    }
+      _c("div", { staticClass: "col-md-6 col-10 offset-1 offset-md-0 pt-0" }, [
+        _c("div", { staticClass: "text-center" }, [
+          _c("div", { staticClass: "text-left" }, [
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-outline-secondary mb-3",
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    return _vm.$router.go(-1)
                   }
-                },
-                [
-                  _c("i", { staticClass: "fas fa-arrow-left" }),
-                  _vm._v(" Regresar\n          ")
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _vm._m(0)
-          ])
-        ]
-      ),
+                }
+              },
+              [
+                _c("i", { staticClass: "fas fa-arrow-left" }),
+                _vm._v(" Regresar\n          ")
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _vm._m(0)
+        ])
+      ]),
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "col-md-2 d-none d-md-block" },
+        { staticClass: "col-md-3 d-none d-md-block" },
         [_c("AdsComponent", { attrs: { part: "2" } })],
         1
       )
@@ -52860,7 +52881,7 @@ var render = function() {
       _c("div", { staticClass: "row" }, [
         _c(
           "div",
-          { staticClass: "col-md-2 d-none d-md-block" },
+          { staticClass: "col-md-3 d-none d-md-block" },
           [
             _c("AdsComponent", {
               attrs: { part: "1" },
@@ -52870,37 +52891,33 @@ var render = function() {
           1
         ),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-md-8 col-12 offset-md-0 pt-0 pl-3 pr-3" },
-          [
-            _c("div", { staticClass: "container mt-3" }, [
-              _c(
-                "ul",
-                { staticClass: "list-group" },
-                _vm._l(_vm.tipos, function(tipo) {
-                  return _c(
-                    "li",
-                    { key: tipo.id, staticClass: "list-group-item" },
-                    [
-                      _c(
-                        "router-link",
-                        { attrs: { to: "/zona-publicitaria/" + tipo.id } },
-                        [_vm._v(_vm._s(tipo.name))]
-                      )
-                    ],
-                    1
-                  )
-                }),
-                0
-              )
-            ])
-          ]
-        ),
+        _c("div", { staticClass: "col-md-6 col-12 offset-md-0 pt-0" }, [
+          _c("div", { staticClass: "container mt-3" }, [
+            _c(
+              "ul",
+              { staticClass: "list-group" },
+              _vm._l(_vm.tipos, function(tipo) {
+                return _c(
+                  "li",
+                  { key: tipo.id, staticClass: "list-group-item" },
+                  [
+                    _c(
+                      "router-link",
+                      { attrs: { to: "/zona-publicitaria/" + tipo.id } },
+                      [_vm._v(_vm._s(tipo.name))]
+                    )
+                  ],
+                  1
+                )
+              }),
+              0
+            )
+          ])
+        ]),
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "col-md-2 d-none d-md-block" },
+          { staticClass: "col-md-3 d-none d-md-block" },
           [
             _c("AdsComponent", {
               attrs: { part: "2" },
@@ -52959,70 +52976,66 @@ var render = function() {
     _c("div", { staticClass: "row" }, [
       _c(
         "div",
-        { staticClass: "col-md-2 d-none d-md-block" },
+        { staticClass: "col-md-3 d-none d-md-block" },
         [_c("AdsComponent", { attrs: { ads: _vm.currentAds } })],
         1
       ),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-md-8 col-10 offset-1 offset-md-0 pt-0 pl-3 pr-3" },
-        [
-          _c(
-            "div",
-            { staticClass: "container" },
-            [
-              _c("h2", [_vm._v(_vm._s(_vm.tipo.name))]),
-              _vm._v(" "),
-              _vm._l(_vm.negocios, function(negocio) {
-                return _c(
-                  "div",
-                  { key: negocio.id, staticClass: "card text-left mt-3" },
-                  [
-                    _c("div", { staticClass: "card-body" }, [
-                      _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-md-3 col-12 p-2" }, [
-                          _c("img", {
-                            staticClass: "w-100",
-                            attrs: { src: negocio.img, alt: "" }
-                          })
+      _c("div", { staticClass: "col-md-6 col-10 offset-1 offset-md-0 pt-0" }, [
+        _c(
+          "div",
+          { staticClass: "container-fluid" },
+          [
+            _c("h2", [_vm._v(_vm._s(_vm.tipo.name))]),
+            _vm._v(" "),
+            _vm._l(_vm.negocios, function(negocio) {
+              return _c(
+                "div",
+                { key: negocio.id, staticClass: "card text-left mt-3" },
+                [
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-3 col-12 p-2" }, [
+                        _c("img", {
+                          staticClass: "w-100",
+                          attrs: { src: negocio.img, alt: "" }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-9 pl-3 col-12" }, [
+                        _c("h4", [_c("b", [_vm._v(_vm._s(negocio.name))])]),
+                        _vm._v(" "),
+                        _c("div", [
+                          _c("b", [_vm._v("Dirección:")]),
+                          _vm._v(
+                            "\n                  " +
+                              _vm._s(negocio.address) +
+                              "\n                "
+                          )
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "col-md-9 pl-3 col-12" }, [
-                          _c("h4", [_c("b", [_vm._v(_vm._s(negocio.name))])]),
-                          _vm._v(" "),
-                          _c("div", [
-                            _c("b", [_vm._v("Dirección:")]),
-                            _vm._v(
-                              "\n                  " +
-                                _vm._s(negocio.address) +
-                                "\n                "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", [
-                            _c("b", [_vm._v("Teléfono:")]),
-                            _vm._v(
-                              "\n                  " +
-                                _vm._s(negocio.phone) +
-                                "\n                "
-                            )
-                          ])
+                        _c("div", [
+                          _c("b", [_vm._v("Teléfono:")]),
+                          _vm._v(
+                            "\n                  " +
+                              _vm._s(negocio.phone) +
+                              "\n                "
+                          )
                         ])
                       ])
                     ])
-                  ]
-                )
-              })
-            ],
-            2
-          )
-        ]
-      ),
+                  ])
+                ]
+              )
+            })
+          ],
+          2
+        )
+      ]),
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "col-md-2 d-none d-md-block" },
+        { staticClass: "col-md-3 d-none d-md-block" },
         [_c("AdsComponent", { attrs: { part: "2" } })],
         1
       )
@@ -72482,15 +72495,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!**********************************************************!*\
   !*** ./resources/js/components/others/ZonaComponent.vue ***!
   \**********************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ZonaComponent_vue_vue_type_template_id_0bb114b4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ZonaComponent.vue?vue&type=template&id=0bb114b4& */ "./resources/js/components/others/ZonaComponent.vue?vue&type=template&id=0bb114b4&");
 /* harmony import */ var _ZonaComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ZonaComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/others/ZonaComponent.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _ZonaComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _ZonaComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -72520,7 +72532,7 @@ component.options.__file = "resources/js/components/others/ZonaComponent.vue"
 /*!***********************************************************************************!*\
   !*** ./resources/js/components/others/ZonaComponent.vue?vue&type=script&lang=js& ***!
   \***********************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

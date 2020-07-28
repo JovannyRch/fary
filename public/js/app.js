@@ -5822,7 +5822,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   mounted: function mounted() {
     $(".carousel").carousel();
-    $(".carousel").carousel("pause");
+    $(".carousel").carousel("play");
   },
   methods: (_methods = {
     next: function next() {

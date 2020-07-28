@@ -73,7 +73,7 @@ import Flickity from "vue-flickity";
 
 export default {
   components: {
-    Flickity
+    Flickity,
   },
   data() {
     return {
@@ -84,8 +84,8 @@ export default {
         initialIndex: 3,
         prevNextButtons: false,
         pageDots: false,
-        wrapAround: false
-      }
+        wrapAround: false,
+      },
     };
   },
   props: ["imgs", "id", "img", "title"],
@@ -94,7 +94,7 @@ export default {
   },
   mounted() {
     $(".carousel").carousel();
-    $(".carousel").carousel("pause");
+    $(".carousel").carousel("play");
   },
   methods: {
     next() {
@@ -118,11 +118,11 @@ export default {
       if (this.img) {
         res.push(this.img);
       } else {
-        res = this.imgs.map(img => img.url);
+        res = this.imgs.map((img) => img.url);
       }
       return res;
-    }
-  }
+    },
+  },
 };
 </script>
 

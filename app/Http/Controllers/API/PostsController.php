@@ -25,7 +25,7 @@ class PostsController extends Controller
     public function withLogin($lat, $long){
         $otros = [];
         $user_id = Auth::user()->id;
-        $myPosts = $this->myPosts($lat,$long);
+        $myPosts = $this->myPosts($user_id);
         if($lat == null && $long == null){
             $posts = $this->myNoPosts();
             return response()->json(['data' => $posts,'otros' =>  $otros,'myPosts' => $myPosts], 200);

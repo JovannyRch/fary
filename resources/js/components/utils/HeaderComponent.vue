@@ -9,7 +9,7 @@
           </h3>
 
           <div v-if="type == 'owner'">
-            <div class="row">
+            <div class="row" v-if="negocio">
               <div class="col-4 col-md-2">
                 <img :src="negocio.img" class="img-thumbnail" />
               </div>
@@ -19,6 +19,9 @@
                 </h3>
                 <b>Cuenta de negocio</b>
               </div>
+            </div>
+            <div v-else class="alert alert-warning">
+              <a href="/register/negocio/paso2">Registra tu negocio aquí</a>
             </div>
           </div>
         </div>
@@ -51,14 +54,14 @@ export default {
         : null,
       type: document.querySelector('meta[name="type"]')
         ? document.querySelector('meta[name="type"]').getAttribute("content")
-        : null
+        : null,
     };
   },
   created() {
     if (this.negocio) {
       this.negocio = JSON.parse(this.negocio);
     }
-  }
+  },
 };
 </script>
 

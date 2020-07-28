@@ -16,7 +16,8 @@ class CheckOwner
      */
     public function handle($request, Closure $next)
     {
-        if(!Auth::check()){
+        return $next($request);
+       /*  if(!Auth::check()){
             return $next($request);
         }
         if(Auth::user()->rol == 'owner'){
@@ -26,6 +27,6 @@ class CheckOwner
             }
             return $next($request);
         }
-        return $next($request);
+        return $next($request); */
     }
 }

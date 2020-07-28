@@ -5482,6 +5482,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -52851,20 +52854,26 @@ var render = function() {
           _vm._v(" "),
           _vm.type == "owner"
             ? _c("div", [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-4 col-md-2" }, [
-                    _c("img", {
-                      staticClass: "img-thumbnail",
-                      attrs: { src: _vm.negocio.img }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-8 col-md-8" }, [
-                    _c("h3", [_c("b", [_vm._v(_vm._s(_vm.negocio.name))])]),
-                    _vm._v(" "),
-                    _c("b", [_vm._v("Cuenta de negocio")])
-                  ])
-                ])
+                _vm.negocio
+                  ? _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-4 col-md-2" }, [
+                        _c("img", {
+                          staticClass: "img-thumbnail",
+                          attrs: { src: _vm.negocio.img }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-8 col-md-8" }, [
+                        _c("h3", [_c("b", [_vm._v(_vm._s(_vm.negocio.name))])]),
+                        _vm._v(" "),
+                        _c("b", [_vm._v("Cuenta de negocio")])
+                      ])
+                    ])
+                  : _c("div", { staticClass: "alert alert-warning" }, [
+                      _c("a", { attrs: { href: "/register/negocio/paso2" } }, [
+                        _vm._v("Registra tu negocio aquí")
+                      ])
+                    ])
               ])
             : _vm._e()
         ])

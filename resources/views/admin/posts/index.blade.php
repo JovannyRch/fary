@@ -98,9 +98,9 @@
 
 <script>
  window.onload = function(event){
-     console.log("Hola");
+    
     $('#delete-data').on('show.bs.modal', function (event) {
-        console.log("hola");
+       
         var button = $(event.relatedTarget) 
         var id = button.data('id') 
         var action = button.data('action') 

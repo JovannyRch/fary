@@ -93,8 +93,7 @@ export default {
     this.imgUrlList = this.toArray();
   },
   mounted() {
-    $(".carousel").carousel();
-    $(".carousel").carousel("play");
+    $(".carousel").carousel({ interval: 5000 });
   },
   methods: {
     next() {

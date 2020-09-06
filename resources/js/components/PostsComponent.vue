@@ -181,13 +181,12 @@ export default {
         "Realiza tu anuncio detallando la marca, submarca, modelo, si es vehículo nacional o extranjero, factura original o refacturado y especifica la situación en la que se encuentre.";
     }
     let result = await navigator.permissions.query({ name: "geolocation" });
-
-    if (result.state === "granted" || result.state == "prompt") {
-      this.locationPermission = true;
+    if (result.state === "granted" || result.state === "prompt") {
+      if (!this.location) {
+        this.setLocation(true);
+      }
     } else {
-      /* console.log("emmit load ads"); */
       this.$emit("setLocation", null, null);
-      this.locationPermission = false;
     }
     if (this.user_id) {
       this.defaultUrl += "/user/" + this.user_id;
@@ -212,9 +211,9 @@ export default {
       busqueda: "",
       busquedaAux: "",
       isBusqueda: false,
-      locationPermission: false,
+
       showName: false,
-      isSetLocation: false,
+
       publicacionesUrgentes: [],
       isUrgentes: false,
       urlDelete: "",
@@ -242,6 +241,9 @@ export default {
     deleteId() {
       return this.$store.getters.deleteId;
     },
+    location() {
+      return this.$store.getters.location;
+    },
   },
   methods: {
     loadPostUrgentes() {
@@ -257,35 +259,37 @@ export default {
     clickAd(ad) {
       this.$emit("clickAd", ad);
     },
+    setLocation(val) {
+      this.$store.dispatch("updateLocationAction", val);
+    },
     loadData: async function (url = null, isBusqueda = false) {
       if (url == null) {
         url = this.defaultUrl;
       }
       this.isLoading = true;
-      if (this.locationPermission && url == this.defaultUrl) {
+      if (this.location && url == this.defaultUrl) {
         try {
-          await navigator.geolocation.getCurrentPosition(
-            (location) => {
-              let lat = location.coords.latitude;
-              let long = location.coords.longitude;
-
-              if (!this.isSetLocation) {
-                this.isSetLocation = true;
+          if (this.location.lat && this.location.long) {
+            this.defaultUrl = `${this.defaultUrl}/${this.location.lat}/${this.location.long}`;
+            this.fetchData(this.defaultUrl);
+            return;
+          } else {
+            await navigator.geolocation.getCurrentPosition(
+              (location) => {
+                let lat = location.coords.latitude;
+                let long = location.coords.longitude;
                 this.$emit("setLocation", lat, long);
+                this.defaultUrl = `${this.defaultUrl}/${lat}/${long}`;
+                this.fetchData(this.defaultUrl);
+                return;
+              },
+              (error) => {
+                this.fetchData(url);
+                return;
               }
-              this.defaultUrl = `${this.defaultUrl}/${lat}/${long}`;
-              this.fetchData(this.defaultUrl);
-              return;
-            },
-            (error) => {
-              this.locationPermission = false;
-              this.$emit("setLocation", null, null);
-              this.fetchData(url);
-              return;
-            }
-          );
+            );
+          }
         } catch (error) {
-          this.locationPermission = false;
           this.$emit("setLocation", null, null);
           this.fetchData(url);
         }

@@ -251,6 +251,7 @@ export default {
     setDeleteId(id) {
       this.$store.dispatch("setAction", id);
     },
+
     showPost() {
       $("#img-post").attr("src", this.img);
       $("#show-img").modal("show");

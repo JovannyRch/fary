@@ -2,7 +2,7 @@
   <div class="mt-4 main">
     <div class="row">
       <div class="col-md-3 d-none d-md-block">
-        <AdsComponent :ads="currentAds" />
+        <AdsComponent part="1" />
       </div>
       <div class="col-md-6 col-10 offset-1 offset-md-0 pt-0">
         <div class="container-fluid">

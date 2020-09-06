@@ -6,6 +6,10 @@
         <AdsComponent part="1" @clickAd="clickAd" />
       </div>
       <div class="col-md-6 col-12 offset-md-0 pt-0">
+        Location value: {{ location }}
+        <pre>
+          {{ coords }}
+        </pre>
         <PostsComponent @clickAd="clickAd" @setLocation="setLocation" :typePosts="'posts'" />
       </div>
       <div class="col-md-3 d-none d-md-block">
@@ -49,8 +53,7 @@ export default {
       ads10s: [],
       ads15s: [],
       isLoading: false,
-      latitud: null,
-      longitud: null,
+
       url: "/api/ads",
       imageViewerFlag: false,
       currentIndex: 0,
@@ -76,13 +79,27 @@ export default {
     ads() {
       return this.$store.getters.ads;
     },
+    location() {
+      return this.$store.getters.location;
+    },
+    coords() {
+      return this.$store.getters.coords;
+    },
   },
   methods: {
+    setLocationStore(val) {
+      this.$store.dispatch("updateLocationAction", val);
+    },
+    setCoords(lat, long) {
+      this.$store.dispatch("setCoords", { lat, long });
+    },
     setLocation(lat, long) {
       if (lat && long) {
-        this.latitud = lat;
-        this.longitud = long;
         this.url = "/api/ads/" + lat + "/" + long;
+        this.setCoords(lat, long);
+        this.setLocationStore(true);
+      } else {
+        this.setLocationStore(false);
       }
 
       this.getAds();

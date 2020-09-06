@@ -6,10 +6,6 @@
         <AdsComponent part="1" @clickAd="clickAd" />
       </div>
       <div class="col-md-6 col-12 offset-md-0 pt-0">
-        Location value: {{ location }}
-        <pre>
-          {{ coords }}
-        </pre>
         <PostsComponent @clickAd="clickAd" @setLocation="setLocation" :typePosts="'posts'" />
       </div>
       <div class="col-md-3 d-none d-md-block">

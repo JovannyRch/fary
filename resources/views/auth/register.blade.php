@@ -118,9 +118,9 @@
                                 </div>
 
                                 <div class="col-md-8 p-9 offset-md-2 text-center" style="color: grey">
-                                    Al hacer clic en "Registrarme" aceptas nuestras condiciones y
+                                    Al hacer clic en "Registrarme" aceptas nuestros <a href="/docs/contrato.pdf" target="_blank" style="color: rgb(105, 140, 150);" >terminos, condiciones</a> y la
                                     <a href="#" style="color: rgb(105, 140, 150);" data-toggle="modal"
-                                        data-target="#user-register">la política de privacidad</a>.
+                                        data-target="#user-register">política de privacidad</a>.
                                 </div>
 
                                 <div class="form-group row mb-0  text-center">

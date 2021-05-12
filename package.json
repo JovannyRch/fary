@@ -28,7 +28,7 @@
         "blueimp-file-upload": "^10.29.0",
         "image-viewer-vue": "^2.0.6",
         "javascript-time-ago": "^2.0.7",
-        "swiper": "^5.4.1",
+        "swiper": "^6.5.1",
         "vue-awesome-swiper": "^4.1.1",
         "vue-flickity": "^1.2.1",
         "vue-notification": "^1.3.20",
